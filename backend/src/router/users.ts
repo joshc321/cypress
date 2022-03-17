@@ -20,6 +20,12 @@ router.get('/users', authenticateToken, (req,res,next)=>{
     }).catch(next);
 });
 
+router.get('/users/me', authenticateToken, (req,res,next)=>{
+    User.findById(req.user.id).then((users)=>{
+        res.send(users);
+    }).catch(next);
+});
+
 router.get('/users/:id', authenticateToken, (req,res,next)=>{
 
     const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };

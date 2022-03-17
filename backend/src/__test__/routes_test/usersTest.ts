@@ -20,6 +20,16 @@ function testUsers(app) {
         const auth1 = await login(app, level2User);
         const auth2 = await login(app, otherCompanyUser);
 
+        //test level0 user get self
+        await supertest(app)
+            .get("/api/users/me")
+            .set('Authorization', 'bearer ' + auth0)
+            .expect(200)
+            .then(async (response) => {
+                expect(response.body).toBeTruthy()
+                expect(response.body.first).toBe(level0User.first)
+            })
+
         //test level0 user
         await supertest(app)
             .get("/api/users")
