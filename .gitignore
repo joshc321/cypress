@@ -3,4 +3,3 @@
 .env
 .env.test
 node_modules/
-./backend/package-lock.json
