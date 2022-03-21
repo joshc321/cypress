@@ -13,6 +13,7 @@ import companyRoute          from './router/company'
 import customerRoute         from './router/customer'
 import serviceRecordRoute    from './router/serviceRecord'
 import scheduledServiceRoute from './router/scheduledService'
+import schedulePlannerRoute  from './router/schedulePlanner'
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api', companyRoute);
 app.use('/api', customerRoute);
 app.use('/api', serviceRecordRoute);
 app.use('/api', scheduledServiceRoute);
+app.use('/api', schedulePlannerRoute)
 
 app.use((req, res, next)=>{
   res.status(404).send({error: 'not found'});

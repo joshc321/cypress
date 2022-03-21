@@ -4,3 +4,4 @@
 .env.test
 node_modules/
 coverage/
+dist/

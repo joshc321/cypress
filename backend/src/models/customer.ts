@@ -3,7 +3,6 @@
 */
 
 import { Schema, model } from 'mongoose';
-import moment from 'moment';
 import { NextFunction } from 'express';
 
 import addToDate from '../helpers/addToDate'

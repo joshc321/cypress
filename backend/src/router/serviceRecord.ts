@@ -4,6 +4,7 @@
 
 import express from "express";
 import ServiceRecord from "../models/servicerecord";
+import Customer from "../models/customer";
 
 //helpers
 import authenticateToken from "../middleWare/authorization";
@@ -15,8 +16,14 @@ const router = express.Router()
 
 router.post('/servicerecord', authenticateToken, setCompany,(req, res, next) => {
     ServiceRecord.create(req.body).then((servicerecord) =>{
+        if(servicerecord.fullService){
+            Customer.findByIdAndUpdate(servicerecord.customer, {nextService: servicerecord.date}).then((customer) => {
+                customer.setNextServiceDate();
+                customer.save();
+            })
+        }
         res.send(servicerecord);
-    })
+    }).catch(next)
 })
 
 router.get('/servicerecord', authenticateToken, (req,res,next)=>{

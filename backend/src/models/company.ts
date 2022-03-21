@@ -18,7 +18,7 @@ const CompanySchema = new Schema({
     active: {
         type: Boolean,
         required: [true, 'Active Field is Required'],
-        default: false
+        default: true
     }
 },
 {

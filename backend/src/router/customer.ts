@@ -18,7 +18,7 @@ router.post('/customer', authenticateToken, setCompany,(req, res, next) => {
         customer.setNextServiceDate();
         customer.save();
         res.send(customer);
-    })
+    }).catch(next)
 })
 
 router.get('/customer', authenticateToken, (req,res,next)=>{

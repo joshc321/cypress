@@ -23,7 +23,7 @@ router.get('/serviceschedule', authenticateToken, (req,res,next)=>{
     
     const body = req.user.permissionLevel == 2 ? {} : { company: req.user.company };
 
-    ServiceSchedule.find(body).sort({'date': 1}).then(async (serviceschedules)=>{
+    ServiceSchedule.find(body).sort('date').then(async (serviceschedules)=>{
         res.send(serviceschedules);
     }).catch(next);
 });
