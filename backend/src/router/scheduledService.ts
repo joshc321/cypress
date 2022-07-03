@@ -16,7 +16,7 @@ const router = express.Router()
 router.post('/serviceschedule', authenticateToken, setCompany,(req, res, next) => {
     ServiceSchedule.create(req.body).then((serviceschedule) =>{
         res.send(serviceschedule);
-    })
+    }).catch(next);
 })
 
 router.get('/serviceschedule', authenticateToken, (req,res,next)=>{
@@ -43,7 +43,7 @@ router.put('/serviceschedule/:id', authenticateToken, permissionLevel, async (re
     const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     ServiceSchedule.findOneAndUpdate(body,req.body).then(()=>{
-        ServiceSchedule.findOne({_id: req.params.id}).then((serviceschedule)=>{
+        ServiceSchedule.findOne(body).then((serviceschedule)=>{
             if(serviceschedule) res.send(serviceschedule)
             else res.status(404).send({ 'error' : 'Service Schedule not found' })
         });

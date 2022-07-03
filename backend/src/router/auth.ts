@@ -26,7 +26,7 @@ router.post('/login', (req,res,next)=>{
             res.send({user, token: token});
         }
         else{
-            res.status(404).send({error: 'Invalid Login'});
+            res.status(401).send({error: 'Invalid Login'});
         }
     }).catch(next);
 });

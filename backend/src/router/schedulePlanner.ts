@@ -20,5 +20,14 @@ router.get('/scheduleplanner', authenticateToken, (req,res,next)=>{
     }).catch(next);
 });
 
+router.get('/stragglers', authenticateToken, (req,res,next)=>{
+    
+    const body = req.user.permissionLevel == 2 ? { active: true, straggler: true } : { company: req.user.company, active: true, straggler: true };
+
+    Customer.find(body).sort('nextService').then((customers)=>{
+        res.send(customers);
+    }).catch(next);
+});
+
 
 export default router
