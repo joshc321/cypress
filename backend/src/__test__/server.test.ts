@@ -17,7 +17,7 @@ dotenv.config()
 mongoose.connect(process.env.MONGO_TEST_URI);
 mongoose.Promise = global.Promise;
 
-beforeEach((done) => {
+beforeAll((done) => {
 	mongoose.connect(
 		process.env.MONGO_TEST_URI,
 		() => done()
@@ -25,6 +25,10 @@ beforeEach((done) => {
 })
 
 afterEach((done) => {
+	mongoose.connection.db.dropDatabase(() => done())
+})
+
+afterAll((done) => {
 	mongoose.connection.db.dropDatabase(() => {
 		mongoose.connection.close(() => done())
 	})
@@ -36,5 +40,5 @@ const app = createServer()
 // testing
 
 authTest(app);
-userTest(app);
-companyTest(app);
+// userTest(app);
+// companyTest(app);

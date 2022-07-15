@@ -15,6 +15,8 @@ import serviceRecordRoute    from './router/serviceRecord'
 import scheduledServiceRoute from './router/scheduledService'
 import schedulePlannerRoute  from './router/schedulePlanner'
 
+import CreateFirstUser from './helpers/createFirstUser'
+
 const app = express();
 
 mongoose.connect(process.env.MONGO_URI);
@@ -23,6 +25,9 @@ mongoose.Promise = global.Promise;
 app.use(express.static('public'));
 
 app.use(express.json());
+
+//Create First User, only run once
+CreateFirstUser();
 
 // Define Custom Routes
 app.use('/api',authRoute);
