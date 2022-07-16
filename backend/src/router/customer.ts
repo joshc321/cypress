@@ -23,7 +23,7 @@ router.post('/customer', authenticateToken, setCompany,(req, res, next) => {
 
 router.get('/customer', authenticateToken, (req,res,next)=>{
     
-    const body = req.user.permissionLevel == 2 ? {} : { company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? {} : { company: req.user.company };
 
     Customer.find(body).then((customers)=>{
         res.send(customers);
@@ -32,7 +32,7 @@ router.get('/customer', authenticateToken, (req,res,next)=>{
 
 router.get('/customer/:id', authenticateToken, (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     Customer.findOne(body).then(async (customer) =>{
         
@@ -46,7 +46,7 @@ router.get('/customer/:id', authenticateToken, (req,res,next)=>{
 
 router.put('/customer/:id', authenticateToken, permissionLevel, async (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     Customer.findOneAndUpdate(body,req.body).then(()=>{
         Customer.findOne(body).then((customer)=>{
@@ -62,7 +62,7 @@ router.put('/customer/:id', authenticateToken, permissionLevel, async (req,res,n
 
 router.delete('/customer/:id', authenticateToken, permissionLevel, (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     Customer.findOneAndDelete(body).then((customer)=>{
         if(customer) res.send(customer)

@@ -8,9 +8,9 @@ import createServer from './server'
 
 
 //test scripts imports
-import authTest from './routes_test/authTest'
-import userTest from './routes_test/usersTest'
-import companyTest from './routes_test/companyTest'
+import authTest from './routes_test/authT'
+import userTest from './routes_test/usersT'
+import companyTest from './routes_test/companyT'
 
 dotenv.config()
 
@@ -40,5 +40,5 @@ const app = createServer()
 // testing
 
 authTest(app);
-// userTest(app);
-// companyTest(app);
+userTest(app);
+companyTest(app);

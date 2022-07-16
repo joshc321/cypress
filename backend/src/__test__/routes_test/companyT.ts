@@ -8,7 +8,7 @@ import supertest from "supertest"
 import login from '../helpers/login'
 import createUser from '../helpers/createUser'
 import createUsers from '../helpers/createUsers'
-import { level2User } from '../model_data/userExamples'
+import { level0User, level1User, level2User } from '../model_data/userExamples'
 
  
 async function createCompany(body){
@@ -36,9 +36,35 @@ function testCompanys(app) {
     
     test("POST /api/company", async () => {
 
-        //test create company
+        const { user0, user1, user2, userC } = await createUsers();
+        const auth0 = await login(app, level0User);
+        const auth1 = await login(app, level1User);
+        const auth2 = await login(app, level2User);
+
+        //user with auth level 0 cannot create company
         await supertest(app)
             .post("/api/company")
+            .set('Authorization', 'bearer ' + auth0)
+            .send(company1)
+            .expect(403)
+            .then(async () => {
+                const pcompany = await Company.findOne({'name': company1.name});
+                expect(pcompany).toBeFalsy()
+            })
+        //user with auth level 1 cannot create company
+        await supertest(app)
+            .post("/api/company")
+            .set('Authorization', 'bearer ' + auth1)
+            .send(company1)
+            .expect(403)
+            .then(async () => {
+                const pcompany = await Company.findOne({'name': company1.name});
+                expect(pcompany).toBeFalsy()
+            })
+        //user with auth level 2 can create company
+        await supertest(app)
+            .post("/api/company")
+            .set('Authorization', 'bearer ' + auth2)
             .send(company1)
             .expect(200)
             .then(async (response) => {

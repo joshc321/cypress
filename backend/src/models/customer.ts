@@ -119,6 +119,8 @@ const CustomerSchema = new Schema({
     toObject: { virtuals: true }
 });
 
+CustomerSchema.index({'$**': 'text'});
+
 CustomerSchema.virtual('services', {
     ref: 'ServiceRecord',
     localField: '_id',

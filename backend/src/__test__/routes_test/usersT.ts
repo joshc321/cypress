@@ -15,10 +15,11 @@ function testUsers(app) {
 
 
         //create users and login with each
-        const { user0, user1, user2, userC } = await createUsers();
+        await createUsers();
         const auth0 = await login(app, level0User);
-        const auth1 = await login(app, level2User);
-        const auth2 = await login(app, otherCompanyUser);
+        const auth1 = await login(app, level1User);
+        const auth2 = await login(app, level2User);
+        const auth3 = await login(app, otherCompanyUser);
 
         //test level0 user get self
         await supertest(app)
@@ -30,7 +31,7 @@ function testUsers(app) {
                 expect(response.body.first).toBe(level0User.first)
             })
 
-        //test level0 user
+        //test level0 user only can view users in own company
         await supertest(app)
             .get("/api/users")
             .set('Authorization', 'bearer ' + auth0)
@@ -40,10 +41,20 @@ function testUsers(app) {
                 expect(response.body.length).toBe(3)
             })
         
-        //test level2 user
+        //test level1 user only can view users in own company
         await supertest(app)
         .get("/api/users")
         .set('Authorization', 'bearer ' + auth1)
+        .expect(200)
+        .then(async (response) => {
+            expect(response.body).toBeTruthy()
+            expect(response.body.length).toBe(3)
+        })
+        
+        //test level2 user can view all users
+        await supertest(app)
+        .get("/api/users")
+        .set('Authorization', 'bearer ' + auth2)
         .expect(200)
         .then(async (response) => {
             expect(response.body).toBeTruthy()
@@ -53,7 +64,7 @@ function testUsers(app) {
         //test user of other company
         await supertest(app)
             .get("/api/users")
-            .set('Authorization', 'bearer ' + auth2)
+            .set('Authorization', 'bearer ' + auth3)
             .expect(200)
             .then(async (response) => {
                 expect(response.body).toBeTruthy()
@@ -69,9 +80,11 @@ function testUsers(app) {
     test("GET /api/users/:id", async () =>  {
         const { user0, user1, user2, userC } = await createUsers();
         const auth0 = await login(app, level0User);
-        const auth1 = await login(app, level2User);
+        const auth1 = await login(app, level1User);
+        const auth2 = await login(app, level2User);
+        const auth3 = await login(app, otherCompanyUser);
 
-        //test level0 user
+        //test level0 user get level0 user of own company
         await supertest(app)
             .get(`/api/users/${user0.id}`)
             .set('Authorization', 'bearer ' + auth0)
@@ -80,27 +93,36 @@ function testUsers(app) {
                 expect(response.body).toBeTruthy()
                 expect(response.body.first).toBe(user0.first)
             })
+        //test level0 user get level2 user of own company
+        await supertest(app)
+            .get(`/api/users/${user2.id}`)
+            .set('Authorization', 'bearer ' + auth0)
+            .expect(200)
+            .then(async (response) => {
+                expect(response.body).toBeTruthy()
+                expect(response.body.first).toBe(user2.first)
+            })
 
-        //test level1 user
+        //test level1 user get level1 user of own company
         await supertest(app)
             .get(`/api/users/${user1.id}`)
-            .set('Authorization', 'bearer ' + auth0)
+            .set('Authorization', 'bearer ' + auth1)
             .expect(200)
             .then(async (response) => {
                 expect(response.body).toBeTruthy()
                 expect(response.body.first).toBe(user1.first)
             })
         
-        //test level1 user
-        await supertest(app)
-        .get(`/api/users/${userC.id}`)
-        .set('Authorization', 'bearer ' + auth0)
-        .expect(404)
-
-        //test level2 user
+        //test level1 user get user from different company
         await supertest(app)
         .get(`/api/users/${userC.id}`)
         .set('Authorization', 'bearer ' + auth1)
+        .expect(404)
+
+        //test level2 user get user from different company
+        await supertest(app)
+        .get(`/api/users/${userC.id}`)
+        .set('Authorization', 'bearer ' + auth2)
         .expect(200)
         .then(async (response) => {
             expect(response.body).toBeTruthy()
@@ -110,11 +132,11 @@ function testUsers(app) {
 
     test("PUT /api/users/:id", async () =>  {
         const { user0, user1, user2, userC } = await createUsers();
-        const auth0  = await login(app, level0User);
-        const auth01 = await login(app, level1User)
-        const auth1  = await login(app, level2User);
+        const auth0 = await login(app, level0User);
+        const auth1 = await login(app, level1User);
+        const auth2 = await login(app, level2User);
 
-        //test level0 user PUT
+        //test level0 cannot modify users
         await supertest(app)
             .put(`/api/users/${user0.id}`)
             .set('Authorization', 'bearer ' + auth0)
@@ -124,10 +146,10 @@ function testUsers(app) {
                 expect(user0.first).toBe(level0User.first)
             })
         
-        //test level1 user
+        //test level1 user modifying name of user in same company
         await supertest(app)
         .put(`/api/users/${user0.id}`)
-        .set('Authorization', 'bearer ' + auth01)
+        .set('Authorization', 'bearer ' + auth1)
         .send({ first: 'put1' })
         .expect(200)
         .then(async (response) => {
@@ -135,10 +157,10 @@ function testUsers(app) {
             const euser = await User.findById(user0.id) 
             expect(euser.first).toBe('put1')
         })
-        //test level2 user
+        //test level2 user modifying name of user in different company
         await supertest(app)
         .put(`/api/users/${userC.id}`)
-        .set('Authorization', 'bearer ' + auth1)
+        .set('Authorization', 'bearer ' + auth2)
         .send({ first: 'put2' })
         .expect(200)
         .then(async (response) => {
@@ -147,26 +169,28 @@ function testUsers(app) {
             expect(euser.first).toBe('put2')
         })
 
-        //test level1 user
+        //test level1 user modifying user in different company fails
         await supertest(app)
         .put(`/api/users/${userC.id}`)
-        .set('Authorization', 'bearer ' + auth01)
-        .send({ first: 'put01' })
+        .set('Authorization', 'bearer ' + auth1)
+        .send({ first: 'put3' })
         .expect(404)
         .then(async () => {
             const euser = await User.findById(userC.id);
-            expect(euser.first !== 'put01').toBeTruthy();
+            expect(euser.first !== 'put3').toBeTruthy();
         })
+
 
     });
 
     test("DELETE /api/users/:id", async () =>  {
         const { user0, user1, user2, userC } = await createUsers();
-        const auth0  = await login(app, level0User);
-        const auth01 = await login(app, level1User)
-        const auth1  = await login(app, level2User);
+        const auth0 = await login(app, level0User);
+        const auth1 = await login(app, level1User);
+        const auth2 = await login(app, level2User);
+        
 
-        //test level0 user DELETE
+        //test level0 user cannot delete users
         await supertest(app)
             .delete(`/api/users/${user0.id}`)
             .set('Authorization', 'bearer ' + auth0)
@@ -176,30 +200,30 @@ function testUsers(app) {
                 expect(duser).toBeTruthy();
             })
         
-        //test level1 user DELETE of other company user
+        //test level1 user cannot delete user of other company
         await supertest(app)
         .delete(`/api/users/${userC.id}`)
-        .set('Authorization', 'bearer ' + auth01)
+        .set('Authorization', 'bearer ' + auth1)
         .expect(404)
         .then( async() => {
             const duser = await User.findById(userC.id);
             expect(duser).toBeTruthy();
         })
 
-        //test level1 user DELETE of higher auth user
+        //test level1 user cannot delete user of higher auth
         await supertest(app)
         .delete(`/api/users/${user2.id}`)
-        .set('Authorization', 'bearer ' + auth01)
+        .set('Authorization', 'bearer ' + auth1)
         .expect(403)
         .then( async () => {
             const duser = await User.findById(user2.id);
             expect(duser).toBeTruthy();
         })
 
-        //test level1 user DELETE 
+        //test level1 user can delete lower auth users 
         await supertest(app)
         .delete(`/api/users/${user0.id}`)
-        .set('Authorization', 'bearer ' + auth01)
+        .set('Authorization', 'bearer ' + auth1)
         .expect(200)
         .then( async (response) => {
             expect(response.body.first).toBe(level0User.first);
@@ -207,10 +231,21 @@ function testUsers(app) {
             expect(duser).toBeFalsy();
         })
 
-        //test level2 user DELETE
+        //test level1 user can delete same auth users 
+        await supertest(app)
+        .delete(`/api/users/${user1.id}`)
+        .set('Authorization', 'bearer ' + auth1)
+        .expect(200)
+        .then( async (response) => {
+            expect(response.body.first).toBe(level1User.first);
+            const duser = await User.findById(user1.id);
+            expect(duser).toBeFalsy();
+        })
+
+        //test level2 user can delete user of another company
         await supertest(app)
         .delete(`/api/users/${userC.id}`)
-        .set('Authorization', 'bearer ' + auth1)
+        .set('Authorization', 'bearer ' + auth2)
         .expect(200)
         .then( async (response) => {
             expect(response.body.first).toBe(otherCompanyUser.first);

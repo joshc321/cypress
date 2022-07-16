@@ -2,11 +2,11 @@
  * @module Login
  */
 
-import supertest from 'supertest'
+import request from 'supertest'
 
 async function login(app, user) {
     let auth = null
-    await supertest(app)
+    await request(app)
         .post("/api/login")
         .send(user)
         .expect(200)
