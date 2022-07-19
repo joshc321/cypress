@@ -11,9 +11,16 @@ import permissionLevel from "../middleWare/permissionLevel";
 
 const router = express.Router()
 
+/*
+    level0 user; base user; view only of own company
+    level1 user; company admins; can modify users of own company
+    level2 user; system admins; can modify all users
+*/
+
+
 router.get('/users', authenticateToken, (req,res,next)=>{
     
-    const body = req.user.permissionLevel == 2 ? {} : { company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? {} : { company: req.user.company };
 
     User.find(body).then((users)=>{
         res.send(users);
@@ -28,7 +35,7 @@ router.get('/users/me', authenticateToken, (req,res,next)=>{
 
 router.get('/users/:id', authenticateToken, (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     User.findOne(body).then((user) =>{
         if(user) res.send(user)
@@ -38,7 +45,7 @@ router.get('/users/:id', authenticateToken, (req,res,next)=>{
 
 router.put('/users/:id', authenticateToken, permissionLevel, async (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     if('password' in req.body) req.body['password'] = await encryptPassword(req.body['password']);
     User.findOneAndUpdate(body,req.body).then(()=>{
@@ -51,7 +58,7 @@ router.put('/users/:id', authenticateToken, permissionLevel, async (req,res,next
 
 router.delete('/users/:id', authenticateToken, permissionLevel, (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     User.findOne(body).then((user)=>{
         if(!user) res.status(404).send({ 'error' : 'User not found' })

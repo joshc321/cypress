@@ -21,7 +21,7 @@ router.post('/serviceschedule', authenticateToken, setCompany,(req, res, next) =
 
 router.get('/serviceschedule', authenticateToken, (req,res,next)=>{
     
-    const body = req.user.permissionLevel == 2 ? {} : { company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? {} : { company: req.user.company };
 
     ServiceSchedule.find(body).sort('date').then(async (serviceschedules)=>{
         res.send(serviceschedules);
@@ -30,7 +30,7 @@ router.get('/serviceschedule', authenticateToken, (req,res,next)=>{
 
 router.get('/serviceschedule/:id', authenticateToken, (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     ServiceSchedule.findOne(body).then(async (serviceschedule) =>{
         if(serviceschedule) res.send(serviceschedule)
@@ -38,9 +38,19 @@ router.get('/serviceschedule/:id', authenticateToken, (req,res,next)=>{
     }).catch(next);
 });
 
+router.get('/serviceschedule/s', authenticateToken, (req,res,next)=>{
+
+    const body = req.user.permissionLevel >= 2 ? {  } : { company: req.user.company };
+
+    ServiceSchedule.findOne(body, req.body).then(async (serviceschedule) =>{
+        if(serviceschedule) res.send(serviceschedule)
+        else res.status(404).send({ 'error' : 'Service Schedule not found' })
+    }).catch(next);
+});
+
 router.put('/serviceschedule/:id', authenticateToken, permissionLevel, async (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     ServiceSchedule.findOneAndUpdate(body,req.body).then(()=>{
         ServiceSchedule.findOne(body).then((serviceschedule)=>{
@@ -52,7 +62,7 @@ router.put('/serviceschedule/:id', authenticateToken, permissionLevel, async (re
 
 router.delete('/serviceschedule/:id', authenticateToken, permissionLevel, (req,res,next)=>{
 
-    const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
+    const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
     ServiceSchedule.findOneAndDelete(body).then((serviceschedule)=>{
         if(serviceschedule) res.send(serviceschedule)

@@ -8,11 +8,12 @@ import Company from "../models/company";
 import authenticateToken from "../middleWare/authorization";
 import checkCompany from "../middleWare/checkCompany";
 import permissionLevel from "../middleWare/permissionLevel";
+import adminPermissionLevel from "../middleWare/adminPermissionLevel";
 
 const router = express.Router()
 
 
-router.post('/company', (req,res,next)=>{
+router.post('/company', authenticateToken, adminPermissionLevel, (req,res,next)=>{
     Company.create(req.body).then((company)=>{
         res.send(company);
     }).catch(next);
