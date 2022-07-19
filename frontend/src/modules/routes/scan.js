@@ -2,7 +2,7 @@ import { Grid, Fab } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { useEffect, useRef, useCallback } from 'react'
 import BottomNavigationBar from "../components/bottomNavigationBar"
-import QrReader from 'react-qr-reader'
+import { QrReader } from 'react-qr-reader'
 import useWindowDimensions from '../components/useWindowDimensions'
 import { useNavigate } from 'react-router-dom'
 import disableScroll from 'disable-scroll';
