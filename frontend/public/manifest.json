@@ -1,0 +1,15 @@
+{
+  "name": "Cypress Beta 1",
+  "short_name": "Cypress",
+  "lang": "en-US",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1f1f1f",
+  "icons": [
+    {
+      "src": "icons-512.png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#ffffff"
+}

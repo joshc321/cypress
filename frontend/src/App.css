@@ -1,0 +1,55 @@
+@import url("./modules/fonts/fonts.css");
+
+body {
+    font-family: 'Proxima Nova';
+    font-weight: semibold;
+    font-size: 24px;
+    line-height: 29px;
+    color: #ff0000;
+}
+
+.login {
+
+    position: absolute;
+    left: 5.87%;
+    right: 78.13%;
+    top: 12.07%;
+    bottom: 84.24%;
+
+    
+}
+
+.h3 {
+    font-family: 'Proxima Nova';
+    font-weight: semibold;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+}
+
+.title {
+    position: absolute;
+    top: 28%;
+    height: 88px;
+    width: 100%;
+    left:0px;
+    text-align: center;
+    font-family: 'Proxima Nova';
+    font-weight: bold;
+    font-size: 72px;
+    line-height: 88px;
+    color: #000000
+}
+
+.login-form{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60%;
+    top: 60%;
+}
+
+.input {
+    padding: 16px;
+    width: 327px;
+    height: 50px;
+}

@@ -1,0 +1,54 @@
+@font-face {
+    font-family: Proxima Nova Alt;
+    font-variant: alt;
+    font-weight: 600;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Alt-Bold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: Proxima Nova Alt;
+    font-weight: 300;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Alt-Light.otf) format('opentype');
+}
+
+@font-face {
+    font-family: ProximaNova Alt;
+    font-weight: 200;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Alt-Thin.otf) format('opentype');
+}
+
+@font-face {
+    font-family: Proxima Nova;
+    font-weight: 800;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Black.otf) format('opentype');
+}
+
+@font-face {
+    font-family: Proxima Nova;
+    font-weight: 600;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Bold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: Proxima Nova;
+    font-weight: 700;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Extrabold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: Proxima Nova;
+    font-weight: 500;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Semibold.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: Proxima Nova;
+    font-weight: 200;
+    src: local('ProximaNova') ,url(./Proxima-Nova-Thin.otf) format('opentype');
+}
+
+@font-face {
+    font-family: Proxima Nova;
+    font-weight: 400;
+    src: local('ProximaNova') ,url(./ProximaNova-Regular.otf) format('opentype');
+}
