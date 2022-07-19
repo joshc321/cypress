@@ -6,7 +6,7 @@ const noCompanyUser = {
     first: "no",
     last: "company",
     email: "aa@gmail.com",
-    password: "123456",
+    password: "akjsdhf&78",
 }
 
 const level2User = {
@@ -15,7 +15,7 @@ const level2User = {
     email: "a@gmail.com",
     permissionLevel: 2,
     company: "622aa4f76d5744019a22cd4e",
-    password: "123456",
+    password: "asd)*(&S^DF",
 }
 
 const level1User = {
@@ -24,7 +24,7 @@ const level1User = {
     email: "b@gmail.com",
     permissionLevel: 1,
     company: "622aa4f76d5744019a22cd4e",
-    password: "123456",
+    password: "asdf)*&^",
 }
 
 const level0User = {
@@ -33,7 +33,7 @@ const level0User = {
     email: "c@gmail.com",
     permissionLevel: 0,
     company: "622aa4f76d5744019a22cd4e",
-    password: "123456",
+    password: "dsf;khjg09z*&^",
 }
 
 const otherCompanyUser = {
@@ -42,7 +42,7 @@ const otherCompanyUser = {
     email: "d@gmail.com",
     permissionLevel: 0,
     company: "622aa4f76d5744019a22cd4b",
-    password: "123456",
+    password: "asdf(*&^",
 }
 
 export { level2User, level1User, level0User, otherCompanyUser, noCompanyUser }

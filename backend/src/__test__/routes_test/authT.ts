@@ -7,6 +7,7 @@ import { level0User, level1User, level2User, noCompanyUser, otherCompanyUser } f
 import supertest from "supertest"
 import login from '../helpers/login'
 import createUser from '../helpers/createUser'
+import { response } from 'express'
 
 
 function testAuth(app) {
@@ -27,6 +28,23 @@ function testAuth(app) {
                 expect(response.body.user.email).toBe(level1User.email);
                 expect(response.body.token).toBeTruthy();
             })
+    })
+
+    test("POST /api/newuser password is encrypted", async () => {
+        await createUser(level2User)
+        const auth = await login(app, level2User);
+
+        await supertest(app)
+            .post("/api/newuser")
+            .set('Authorization', 'bearer ' + auth)
+            .send(noCompanyUser)
+            .expect(200)
+            .then(async (response) => {
+                expect(response.body.password === noCompanyUser.password).toBeFalsy()
+                const usr = await User.findById(response.body._id)
+                expect(await usr.validatePassword(noCompanyUser.password)).toBeTruthy()
+            })
+
     })
 
     test("POST /api/newuser", async () => {

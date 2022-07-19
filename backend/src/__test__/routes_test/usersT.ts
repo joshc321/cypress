@@ -130,6 +130,23 @@ function testUsers(app) {
         })
     });
 
+    test("PUT /api/users/:id password is encrypted", async () => {
+        const { user0 } = await createUsers();
+        const auth = await login(app, level2User);
+
+        await supertest(app)
+            .put(`/api/users/${user0.id}`)
+            .set('Authorization', 'bearer ' + auth)
+            .send({ password: 'newpassword' })
+            .expect(200)
+            .then(async (response) => {
+                expect(response.body.password === 'newpassword').toBeFalsy()
+                const usr = await User.findById(response.body._id);
+                expect(await usr.validatePassword('newpassword')).toBeTruthy()
+                expect(await usr.validatePassword(user0.password)).toBeFalsy()
+            })
+    })
+
     test("PUT /api/users/:id", async () =>  {
         const { user0, user1, user2, userC } = await createUsers();
         const auth0 = await login(app, level0User);
