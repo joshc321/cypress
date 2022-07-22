@@ -19,6 +19,8 @@ import Scan from './modules/routes/scan';
 import NotFound from './modules/routes/notFound'
 import Calendar from './modules/routes/calendar';
 
+import Test from './modules/routes/test';
+
 function App() {
   return (
     <BrowserRouter>
@@ -39,6 +41,7 @@ function App() {
         <Route path="/new-service/:slug" element={<NewService />} />
         <Route path="/scan" element={<Scan />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/test" element={<Test />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

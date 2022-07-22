@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import SwiperCore, { Virtual } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import moment from 'moment';
@@ -8,39 +8,96 @@ import { Button, Fab, Box, Stack, IconButton, Typography,
   ListItemText,Divider
 } from '@mui/material'
 
+import { ArrowBackIos, ArrowForwardIos, Add } from '@mui/icons-material'
+
+import CalendarTopView from '../components/calendarTopView';
+
 
 // Import Swiper styles
 import 'swiper/css';
 
 // install Virtual module
-SwiperCore.use([Virtual]);
+SwiperCore.use([Virtual])
 
-export default function App() {
+export default function Calendar() {
+  //swiper data
   const [swiperRef, setSwiperRef] = useState(null);
-  const appendNumber = useRef(500);
-  const prependNumber = useRef(1);
+  const appendNumber = useRef(2);
+  const prependNumber = useRef(-2);
+  const todayNumber = useRef(2);
+  const swipeToSpeed = useRef(500);
+
+  //date date
+  const [selectedDate, setSelectedDate] = useState(moment().startOf('day'))
+
   // Create array with 500 slides
   const [slides, setSlides] = useState(
-    Array.from({ length: 500 }).map((_, index) => `Slide ${index + 1}`)
+   [-2,-1,0,1,2]
   );
 
   const prepend = () => {
     setSlides([
-      `Slide ${prependNumber.current - 2}`,
-      `Slide ${prependNumber.current - 1}`,
+      prependNumber.current - 1,
       ...slides,
     ]);
-    prependNumber.current = prependNumber.current - 2;
-    swiperRef.slideTo(swiperRef.activeIndex + 2, 0);
+    prependNumber.current = prependNumber.current - 1;
+    swiperRef.slideTo(swiperRef.activeIndex + 1, 0);
+    setSelectedDate(moment(selectedDate).subtract(1,'week').startOf('day'))
   };
 
+
+
   const append = () => {
-    setSlides([...slides, 'Slide ' + ++appendNumber.current]);
+    setSlides([...slides, ++appendNumber.current]);
+  };
+
+  const onSlideChange = (e) => {
+    const {isBeginning, isEnd} = e;
+    if(isBeginning)
+    {
+      todayNumber.current = todayNumber.current + 1;
+      prepend();
+    }
+    else if(isEnd)
+    {
+      append();
+    }
+  }
+
+  const onStartSlideChange = (e) => {
+    const { swipeDirection, activeIndex, previousIndex } = e;
+    console.log(e)
+    console.log(swipeDirection, activeIndex, previousIndex)
+
+    if(activeIndex > previousIndex)
+    {
+      setSelectedDate(moment(selectedDate).add(1,'week').startOf('day'))
+    }
+    else if(activeIndex < previousIndex)
+    {
+      setSelectedDate(moment(selectedDate).subtract(1,'week').startOf('day'))
+    }
+
+
+    // if(swipeDirection === "prev") setSelectedDate(selectedDate.subtract(1,'week').startOf('day'))
+    // else if(swipeDirection === "next") setSelectedDate(selectedDate.add(1,'week').startOf('day'))
+
+  }
+
+  const slideRight = () => {
+    slideTo(swiperRef.activeIndex + 1);
+  };
+  const slideLeft = () => {
+    slideTo(swiperRef.activeIndex - 1);
   };
 
   const slideTo = (index) => {
-    swiperRef.slideTo(index - 1, 0);
+    swiperRef.slideTo(index, swipeToSpeed.current);
   };
+
+  const setSlide = (index) => {
+    swiperRef.slideTo(index, 0);
+  }
 
   return (
     <>
@@ -53,24 +110,46 @@ export default function App() {
             pb:2,
           }}
       >
-      
+        
+        <Stack sx={{pt: 2, px: 2}} flexDirection='row' justifyContent='space-between'>
+          <Button onClick={() => setSlide(todayNumber.current)}>
+            {selectedDate.format("MMMM YYYY")}
+          </Button>
+          <Box>
+            <IconButton onClick={slideLeft}>
+              <ArrowBackIos fontSize='small'/>
+            </IconButton>
+            <IconButton onClick={slideRight}>
+              <ArrowForwardIos fontSize='small' />
+            </IconButton>
+          </Box>
+        </Stack>
+
         <Swiper
           onSwiper={setSwiperRef}
-          centeredSlides={true}
-          navigation={true}
+          onActiveIndexChange={onStartSlideChange}
+          // onReachEnd={() => append()}
+          // onReachBeginning={() => prepend()}
+          // onSlideChangeTransitionStart={onStartSlideChange}
+          onSlideChangeTransitionEnd={onSlideChange}
+          initialSlide={2}
           virtual
         >
           {slides.map((slideContent, index) => (
             <SwiperSlide key={slideContent} virtualIndex={index}>
-              {slideContent}
+                <CalendarTopView weeksPastToday={slideContent} selectedDate={selectedDate} handleClick={setSelectedDate}/>
             </SwiperSlide>
           ))}
         </Swiper>
-
+        <Button onClick={() => console.log(selectedDate.format())}>
+          values
+        </Button>
+        <CalendarTopView weeksPastToday={1} selectedDate={selectedDate} handleClick={setSelectedDate}/>
       </Paper>
     </>
   );
 }
+
 
 
 // import React from 'react'
