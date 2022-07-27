@@ -1,4 +1,4 @@
-import {Button, IconButton, Typography, Stack
+import {IconButton, Typography, Stack
 } from '@mui/material';
 
 import moment from 'moment';
@@ -28,7 +28,7 @@ function weekDays(startDate){
       <IconButton sx={{
         backgroundColor:backGroundColor(date, selectedDate)
         }} 
-        key={date} onClick={() => handleClick(date.startOf('day'))}>
+        onClick={() => handleClick(date.startOf('day'))}>
         <Typography color={date.dayOfYear() === moment().dayOfYear() ? 'common.white' : ''} >{date.date()}</Typography>
       </IconButton>
     )
@@ -42,7 +42,7 @@ function CalendarTopView({weeksPastToday, selectedDate, handleClick})
   return(
     <Stack key={weeksPastToday} flexDirection='row' justifyContent='space-around' alignItems='baseline'>
       {weekList.map((date, index) => (
-      <Stack key={date} direction='column' alignItems='center'>
+      <Stack direction='column' alignItems='center'>
         <Typography
           sx={{
             fontFamily: "Proxima Nova Alt",

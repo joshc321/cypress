@@ -22,17 +22,18 @@ SwiperCore.use([Virtual])
 export default function Calendar() {
   //swiper data
   const [swiperRef, setSwiperRef] = useState(null);
-  const appendNumber = useRef(2);
-  const prependNumber = useRef(-2);
-  const todayNumber = useRef(2);
+  const appendNumber = useRef(4);
+  const prependNumber = useRef(-30);
+  const todayNumber = useRef(30);
   const swipeToSpeed = useRef(500);
+  const initialSlide = useRef(30)
 
   //date date
   const [selectedDate, setSelectedDate] = useState(moment().startOf('day'))
 
   // Create array with 500 slides
   const [slides, setSlides] = useState(
-   [-2,-1,0,1,2]
+    Array.from({length: 35}, (_, i) => i - 30)
   );
 
   const prepend = () => {
@@ -71,10 +72,12 @@ export default function Calendar() {
 
     if(activeIndex > previousIndex)
     {
+      console.log("adding 1")
       setSelectedDate(moment(selectedDate).add(1,'week').startOf('day'))
     }
     else if(activeIndex < previousIndex)
     {
+      console.log("subtracting 1")
       setSelectedDate(moment(selectedDate).subtract(1,'week').startOf('day'))
     }
 
@@ -99,6 +102,11 @@ export default function Calendar() {
     swiperRef.slideTo(index, 0);
   }
 
+  const homeSlide = () => {
+    setSlide(todayNumber.current);
+    setSelectedDate(moment().startOf('day'))
+  }
+
   return (
     <>
       <Paper 
@@ -112,7 +120,7 @@ export default function Calendar() {
       >
         
         <Stack sx={{pt: 2, px: 2}} flexDirection='row' justifyContent='space-between'>
-          <Button onClick={() => setSlide(todayNumber.current)}>
+          <Button onClick={homeSlide}>
             {selectedDate.format("MMMM YYYY")}
           </Button>
           <Box>
@@ -132,7 +140,8 @@ export default function Calendar() {
           // onReachBeginning={() => prepend()}
           // onSlideChangeTransitionStart={onStartSlideChange}
           onSlideChangeTransitionEnd={onSlideChange}
-          initialSlide={2}
+          initialSlide={initialSlide.current}
+          onAfterInit={() => setSelectedDate(moment().startOf('day'))}
           virtual
         >
           {slides.map((slideContent, index) => (
@@ -144,7 +153,7 @@ export default function Calendar() {
         <Button onClick={() => console.log(selectedDate.format())}>
           values
         </Button>
-        <CalendarTopView weeksPastToday={1} selectedDate={selectedDate} handleClick={setSelectedDate}/>
+
       </Paper>
     </>
   );
