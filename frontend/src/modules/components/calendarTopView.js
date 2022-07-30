@@ -29,7 +29,7 @@ function weekDays(startDate){
         backgroundColor:backGroundColor(date, selectedDate)
         }} 
         onClick={() => handleClick(date.startOf('day'))}>
-        <Typography color={date.dayOfYear() === moment().dayOfYear() ? 'common.white' : ''} >{date.date()}</Typography>
+        <Typography color={date.isSame(moment(), 'day') ? 'common.white' : ''} >{date.date()}</Typography>
       </IconButton>
     )
   }
@@ -40,9 +40,9 @@ function CalendarTopView({weeksPastToday, selectedDate, handleClick})
   const days = moment.weekdaysShort()
 
   return(
-    <Stack key={weeksPastToday} flexDirection='row' justifyContent='space-around' alignItems='baseline'>
+    <Stack flexDirection='row' justifyContent='space-around' alignItems='baseline'>
       {weekList.map((date, index) => (
-      <Stack direction='column' alignItems='center'>
+      <Stack key={date} direction='column' alignItems='center'>
         <Typography
           sx={{
             fontFamily: "Proxima Nova Alt",
