@@ -8,7 +8,8 @@ import { useState, useEffect, useCallback } from 'react'
 import AppForm from '../components/AppForm';
 import { useNavigate } from 'react-router-dom';
 import PostCustomer from '../components/api/postCustomer'
-import CheckAuth from '../components/api/authorized';
+
+import SimpleTopBar from '../components/simpleTopBar';
 
 function CreateCustomer() {
 
@@ -25,21 +26,9 @@ function CreateCustomer() {
         state: '',
         zip: '',
         system: '',
-        notes: '',
+        notes: ''
       });
       
-      const authed = useCallback(async() =>{
-        const auth = await CheckAuth()
-        if(auth === false){
-            navigate('/login')
-        }
-        else{
-        }
-    }, [navigate])
-    
-    useEffect(() => {
-        authed()
-    }, [authed])
 
       const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -56,27 +45,14 @@ function CreateCustomer() {
 
         if(values.last && values.first && values.phone && values.address){
             const data = await PostCustomer(values)
-            //console.log(values, data['id']);
             navigate(`/customer/:${data['id']}`)
         }
       }
 
     return(
         <Box sx={{ pb: 10 }}>
-            <Box sx={{ml: 0, mt:0}}>
-                <IconButton
-                    aria-label="back button"
-                    onClick={()=>navigate(-1)}
-                    edge="end"
-                    >
-                    {<ArrowBackIosNew/>}
-                </IconButton>
-            </Box>
-            <Box sx={{ml: 2, mt: 2}}>
-                <Typography fontWeight="fontWeightBold" variant="h4">Create Customer</Typography>
-            </Box>
+            <SimpleTopBar to={-1} text={"Create Customer"}/>
             <AppForm top={1}>
-
                 <form noValidate onSubmit={handleSubmit}>
                     <Stack spacing={2}>
                         <Box sx={{ mt: 2}}>
@@ -147,11 +123,13 @@ function CreateCustomer() {
                         <TextField 
                             label="System"
                             fullWidth
+                            multiline
                             value={values.system}
                             onChange={handleChange('system')}
                         />
                         <TextField 
                             label="Notes"
+                            multiline
                             fullWidth
                             value={values.notes}
                             onChange={handleChange('notes')}

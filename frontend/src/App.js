@@ -19,6 +19,10 @@ import Scan from './modules/routes/scan';
 import NotFound from './modules/routes/notFound'
 import Calendar from './modules/routes/calendar';
 import ScheduleService from './modules/routes/scheduleService';
+import SelectCustomer from './modules/routes/selectCustomer';
+import ViewScheduledService from './modules/routes/viewScheduledService';
+import Stragglers from './modules/routes/stragglers';
+import NeededServices from './modules/routes/neededServices';
 
 import Test from './modules/routes/test';
 
@@ -43,6 +47,10 @@ function App() {
         <Route path="/scan" element={<Scan />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/scheduleservice" element={<ScheduleService />} />
+        <Route path="/selectcustomer" element={<SelectCustomer />} />
+        <Route path="/viewscheduledservice/:slug" element={<ViewScheduledService />} />
+        <Route path="/stragglers" element={<Stragglers />} />
+        <Route path="/upcoming" element={<NeededServices />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

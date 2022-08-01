@@ -42,12 +42,16 @@ const CustomerSchema = new Schema({
     },
     phone: {
         type: String,
-        maxlength: 15,
+        maxlength: 31,
     },
     address: {
         street: {
             type: String,
             maxlength: 255,
+        },
+        city: {
+            type: String,
+            maxlength: 31,
         },
         state: {
             type: String,

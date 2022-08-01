@@ -36,7 +36,7 @@ function TopBar(props){
                 </Box>
 
             </Paper>
-            {!props.id ?
+            {(!props.id && props.secondary ) ?
             <div>
                 <Grid container direction="row" justifyContent="space-between" alignItems="center" sx={{ml: 2, mt: 1, pr: 4}}>
                     <Grid>
