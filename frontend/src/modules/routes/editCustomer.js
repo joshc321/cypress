@@ -10,6 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import GetCustomer from '../components/api/getCustomer';
 import UpdateCustomer from '../components/api/updateCustomer';
 import CheckAuth from '../components/api/authorized';
+import TopBar from '../components/topBar';
+import moment from 'moment';
 
 function EditCustomer() {
     let { slug } = useParams(); 
@@ -18,46 +20,10 @@ function EditCustomer() {
     const navigate = useNavigate();
 
     const [error, setError] = useState(false);
-    const [values, setValues] = useState({
-        first: '',
-        last: '',
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
-        system: '',
-        notes: '',
-      });
-
-      const getCust = useCallback(async() =>{
-        const authed = await CheckAuth();
-        if(authed === false){
-            navigate('/login')
-        }
-        else{
-            const cust = await GetCustomer(slug)
-            //console.log(cust)
-            const defaultValues = {
-                first: cust.first || '',
-                last: cust.last || '',
-                phone: cust.phone || '',
-                address: cust.address || '',
-                city: cust.city || '',
-                state: cust.state || '',
-                zip: cust.zip || '',
-                system: cust.system || '',
-                notes: cust.notes || '',
-            }
-            setValues(defaultValues)
-        }
-    }, [navigate, slug])
-    useEffect(() =>{
-        getCust();
-    }, [getCust])
+    const [customer, setCustomer] = useState(customerExample);
     
       const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
+        setCustomer({ ...customer, [prop]: event.target.value });
       };
 
 
@@ -65,121 +31,154 @@ function EditCustomer() {
         e.preventDefault()
         setError(false)
         
-        if(values.last === '' || values.first === '' || values.phone === '' || values.address === ''){
+        if(customer.last === '' || customer.first === '' || customer.phone === '' || customer.address === ''){
             setError(true)
         }
 
-        if(values.last && values.first && values.phone && values.address){
-            //console.log(values);
-            UpdateCustomer(values, slug)
+        if(customer.last && customer.first && customer.phone && customer.address){
+            //console.log(customer);
+            UpdateCustomer(customer, slug)
             navigate(-1)
         }
       }
 
     return(
-        <Box sx={{ pb: 10 }}>
-            <Box sx={{ml: 0, mt:0}}>
-                <IconButton
-                    aria-label="back button"
-                    onClick={()=>navigate(-1)}
-                    edge="end"
-                    >
-                    {<ArrowBackIosNew/>}
-                </IconButton>
-            </Box>
-            <Box sx={{ml: 2, mt: 2}}>
-                <Typography fontWeight="fontWeightBold" variant="h4">Edit Customer</Typography>
-            </Box>
-            <AppForm top={1}>
+        <div>
+            <TopBar primary={!error ? customer.first + ' ' + customer.last : 'Customer Not Found'} secondary="Edit Customer"/>
+            <Box sx={{ pt: 25, pb: 10 }}>
+                <AppForm top={1}>
 
-                <form noValidate onSubmit={handleSubmit}>
-                    <Stack spacing={2}>
-                        <Box sx={{ mt: 2}}>
-                            <Typography fontWeight="fontWeightSemibold" variant="h6">Info</Typography>
-                        </Box>
-                        <Grid container direction="row" justifyContent="space-between" alignItems="center">
+                    <form noValidate onSubmit={handleSubmit}>
+                        <Stack spacing={2}>
+                            <Box sx={{ mt: 2}}>
+                                <Typography fontWeight="fontWeightSemibold" variant="h6">Info</Typography>
+                            </Box>
+                            <Grid container direction="row" justifyContent="space-between" alignItems="center">
+                                <TextField 
+                                    label="First name"
+                                    autoComplete="given-name"
+                                    sx={{width: "49%"}}
+                                    error={error}
+                                    value={customer.first}
+                                    onChange={handleChange('first')}
+                                    required
+                                />
+                                <TextField 
+                                    label="Last name"
+                                    autoComplete="family-name"
+                                    sx={{width: "49%"}}
+                                    error={error}
+                                    value={customer.last}
+                                    onChange={handleChange('last')}
+                                    required
+                                />
+                            </Grid>
                             <TextField 
-                                label="First name"
-                                autoComplete="given-name"
-                                sx={{width: "49%"}}
+                                type="phone"
+                                label="Phone"
+                                autoComplete="tel-national"
+                                fullWidth
                                 error={error}
-                                value={values.first}
-                                onChange={handleChange('first')}
+                                value={customer.phone}
+                                onChange={handleChange('phone')}
                                 required
                             />
                             <TextField 
-                                label="Last name"
-                                autoComplete="family-name"
-                                sx={{width: "49%"}}
+                                autoComplete="street-address"
+                                label="Address"
+                                fullWidth
                                 error={error}
-                                value={values.last}
-                                onChange={handleChange('last')}
+                                value={customer.address}
+                                onChange={handleChange('address')}
                                 required
                             />
-                        </Grid>
-                        <TextField 
-                            type="phone"
-                            label="Phone"
-                            autoComplete="tel-national"
-                            fullWidth
-                            error={error}
-                            value={values.phone}
-                            onChange={handleChange('phone')}
-                            required
-                        />
-                        <TextField 
-                            autoComplete="street-address"
-                            label="Address"
-                            fullWidth
-                            error={error}
-                            value={values.address}
-                            onChange={handleChange('address')}
-                            required
-                        />
-                        <TextField 
-                            label="City"
-                            autoComplete="address-level2"
-                            fullWidth
-                            value={values.city}
-                            onChange={handleChange('city')}
-                        />
-                        <Grid container direction="row" justifyContent="space-between" alignItems="center">
                             <TextField 
-                                label="State"
-                                autoComplete="address-level1"
-                                sx={{width: "49%"}}
-                                value={values.state}
-                                onChange={handleChange('state')}
+                                label="City"
+                                autoComplete="address-level2"
+                                fullWidth
+                                value={customer.city}
+                                onChange={handleChange('city')}
+                            />
+                            <Grid container direction="row" justifyContent="space-between" alignItems="center">
+                                <TextField 
+                                    label="State"
+                                    autoComplete="address-level1"
+                                    sx={{width: "49%"}}
+                                    value={customer.state}
+                                    onChange={handleChange('state')}
+                                />
+                                <TextField 
+                                    label="Zip"
+                                    autoComplete="postal-code"
+                                    sx={{width: "49%"}}
+                                    value={customer.zip}
+                                    onChange={handleChange('zip')}
+                                />
+                            </Grid>
+                            <TextField 
+                                label="System"
+                                fullWidth
+                                value={customer.system}
+                                onChange={handleChange('system')}
                             />
                             <TextField 
-                                label="Zip"
-                                autoComplete="postal-code"
-                                sx={{width: "49%"}}
-                                value={values.zip}
-                                onChange={handleChange('zip')}
+                                label="Notes"
+                                autoComplete="address-level2"
+                                fullWidth
+                                value={customer.notes}
+                                onChange={handleChange('notes')}
                             />
-                        </Grid>
-                        <TextField 
-                            label="System"
-                            fullWidth
-                            value={values.system}
-                            onChange={handleChange('system')}
-                        />
-                        <TextField 
-                            label="Notes"
-                            autoComplete="address-level2"
-                            fullWidth
-                            value={values.notes}
-                            onChange={handleChange('notes')}
-                        />
-                        {error ? <Typography variant="body2" color="error" >Please input required fields</Typography> : ""}
-                        <MainButton text={"Update"} />
-                    </Stack>
-                </form>
-            </AppForm>
+                            {error ? <Typography variant="body2" color="error" >Please input required fields</Typography> : ""}
+                            <MainButton text={"Update"} />
+                        </Stack>
+                    </form>
+                </AppForm>
+            </Box>
             <BottomNavigationBar />
-        </Box>
+        </div>
     )
 }
 
 export default EditCustomer
+
+
+const customerExample = {
+    _id: '98s7fd098',
+    first: 'Joshua',
+    last: 'Cordero',
+    phone: '951 537 4949',
+    address: {
+        street: '1123 S State Street',
+        city: 'hemet',
+        state: 'CA',
+        zip: '92543',
+    },
+    system: 'has a thing',
+    notes: 'some notes here',
+    lastServiced: moment(),
+    serviceInterval: {
+        duration: 1,
+        unit: 'years',
+    },
+    nextService: moment().add(1, 'year'),
+    straggler: false,
+    active: true,
+    services: [
+        {
+            _id: '0897ydfs98g',
+            date: moment(),
+            service: 'serviced some things',
+            notes: 'notes mroe ww',
+            bill: '32',
+            cost: '10',
+        },
+        {
+            _id: '0897ydfs98g',
+            date: moment(),
+            service: 'serviced some things',
+            notes: 'notes mroe ww',
+            bill: '32',
+            cost: '10',
+        },
+    ]
+}
