@@ -1,5 +1,5 @@
-import { IconButton, Box, Typography,
-    Stack, TextField, Grid
+import { Box, Typography,
+    Stack, TextField, Grid, FormControlLabel, Checkbox, MenuItem
 } from '@mui/material';
 import { ArrowBackIosNew } from '@mui/icons-material';
 import MainButton from '../components/mainbutton';
@@ -9,9 +9,14 @@ import AppForm from '../components/AppForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import GetCustomer from '../components/api/getCustomer';
 import UpdateCustomer from '../components/api/updateCustomer';
+import SimpleFormTopper from '../components/simpleFormTopper';
 import CheckAuth from '../components/api/authorized';
 import TopBar from '../components/topBar';
 import moment from 'moment';
+import NameField from '../components/formComponents/nameField';
+import PhoneField from '../components/formComponents/phoneField';
+import AddressField from '../components/formComponents/addressField';
+import DurationField from '../components/formComponents/durationField';
 
 function EditCustomer() {
     let { slug } = useParams(); 
@@ -21,10 +26,14 @@ function EditCustomer() {
 
     const [error, setError] = useState(false);
     const [customer, setCustomer] = useState(customerExample);
+    const [checked, setChecked] = useState(true);
     
       const handleChange = (prop) => (event) => {
         setCustomer({ ...customer, [prop]: event.target.value });
       };
+      const handleEmbededChange = (prop1) => (prop2) => (event) => {
+        setCustomer({ ...customer, [prop1]:{ ...customer[prop1], [prop2]: event.target.value } });
+      }
 
 
       const handleSubmit = async e => {
@@ -50,84 +59,27 @@ function EditCustomer() {
 
                     <form noValidate onSubmit={handleSubmit}>
                         <Stack spacing={2}>
-                            <Box sx={{ mt: 2}}>
-                                <Typography fontWeight="fontWeightSemibold" variant="h6">Info</Typography>
-                            </Box>
-                            <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                                <TextField 
-                                    label="First name"
-                                    autoComplete="given-name"
-                                    sx={{width: "49%"}}
-                                    error={error}
-                                    value={customer.first}
-                                    onChange={handleChange('first')}
-                                    required
-                                />
-                                <TextField 
-                                    label="Last name"
-                                    autoComplete="family-name"
-                                    sx={{width: "49%"}}
-                                    error={error}
-                                    value={customer.last}
-                                    onChange={handleChange('last')}
-                                    required
-                                />
-                            </Grid>
-                            <TextField 
-                                type="phone"
-                                label="Phone"
-                                autoComplete="tel-national"
-                                fullWidth
-                                error={error}
-                                value={customer.phone}
-                                onChange={handleChange('phone')}
-                                required
-                            />
-                            <TextField 
-                                autoComplete="street-address"
-                                label="Address"
-                                fullWidth
-                                error={error}
-                                value={customer.address}
-                                onChange={handleChange('address')}
-                                required
-                            />
-                            <TextField 
-                                label="City"
-                                autoComplete="address-level2"
-                                fullWidth
-                                value={customer.city}
-                                onChange={handleChange('city')}
-                            />
-                            <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                                <TextField 
-                                    label="State"
-                                    autoComplete="address-level1"
-                                    sx={{width: "49%"}}
-                                    value={customer.state}
-                                    onChange={handleChange('state')}
-                                />
-                                <TextField 
-                                    label="Zip"
-                                    autoComplete="postal-code"
-                                    sx={{width: "49%"}}
-                                    value={customer.zip}
-                                    onChange={handleChange('zip')}
-                                />
-                            </Grid>
+                            <SimpleFormTopper text="Info" label="Simple" checked={checked} setChecked={setChecked} />
+                            <NameField first={customer.first} last={customer.last} error={error} handleChange={handleChange} />
+                            <PhoneField phone={customer.phone} handleChange={handleChange} error={error} />
+                            <AddressField address={customer.address} handleChange={handleEmbededChange('address')} error={error} />
                             <TextField 
                                 label="System"
                                 fullWidth
+                                multiline
                                 value={customer.system}
                                 onChange={handleChange('system')}
                             />
                             <TextField 
                                 label="Notes"
-                                autoComplete="address-level2"
                                 fullWidth
+                                multiline
                                 value={customer.notes}
                                 onChange={handleChange('notes')}
                             />
+                            {!checked ?
+                            <DurationField duration={customer.serviceInterval} handleChange={handleEmbededChange('serviceInterval')}/>
+                            : ''}
                             {error ? <Typography variant="body2" color="error" >Please input required fields</Typography> : ""}
                             <MainButton text={"Update"} />
                         </Stack>
@@ -140,7 +92,6 @@ function EditCustomer() {
 }
 
 export default EditCustomer
-
 
 const customerExample = {
     _id: '98s7fd098',

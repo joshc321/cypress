@@ -8,7 +8,7 @@ import { Home,
 function BottomNavigationBar(props){
     
     return(
-        <Paper sx={{position: 'fixed' ,bottom: 0, left: 0, right: 0, height: 70, zIndex: 'tooltip',}} elevation={2}>
+        <Paper sx={{position: 'fixed' ,bottom: 0, left: 0, right: 0, height: 70, zIndex: 100,}} elevation={2}>
             <BottomNavigation
                 showLabels
                 value={props.value}

@@ -118,5 +118,19 @@ const customerExample = {
             bill: '32',
             cost: '10',
         },
-    ]
+    ],
+    scheduledService: {
+        _id: '28093489023',
+        date: moment(),
+        service: 'did some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some things',
+        notes: 'they were there',
+        estimate: '32.32',
+        customer: 
+        {
+          _id: 'a9s8df70a9d',
+          first: 'Coral',
+          last: 'Raymond',
+          address: '1123 S State Street Hemet CA'
+        }
+    }
 }
