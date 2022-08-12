@@ -25,6 +25,15 @@ function Scan(){
         }
     })
 
+    const handleResult = (result, error) => {
+        if(!!result){
+            console.log("QR SCANNED!", result?.text)
+        }
+        if(!!error){
+            console.info(error)
+        }
+    }
+
     const handleScan = (data) => {
         if(data){
             if (data.startsWith('cypr:')){
@@ -53,25 +62,10 @@ function Scan(){
                 sx={{pb: 10}}
             >
                 <Grid item>
-                    <QrReader
-                        delay={300}
-                        onError={handleError}
-                        onScan={handleScan}
-                        style={{ 
-                            width: frame
-                        }}
-                        showViewFinder={false}
-                    />
-                    <QrReader
-                        ref={qrRef}
-                        delay={300}
-                        onError={handleError}
-                        onScan={handleScan}
-                        style={{ 
-                            width: frame
-                        }}
-                        showViewFinder={false}
-                        legacyMode
+                    <QrReader 
+                        scanDelay={500}
+                        onResult={handleResult}
+                        style={{width: '100%', height: '100%'}}
                     />
                     
                 </Grid>
