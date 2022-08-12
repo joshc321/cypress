@@ -11,6 +11,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PostService from '../components/api/postService'
 import CheckAuth from '../components/api/authorized';
 import ConvertDate from '../components/helpers/convertDate';
+import SimpleFormTopper from '../components/simpleFormTopper';
+import AddressField from '../components/formComponents/addressField';
+import DateField from '../components/formComponents/dateField';
+import PriceField from '../components/formComponents/priceField';
+import MultiBaseField from '../components/formComponents/multiBaseField';
+
+import moment from 'moment';
+import SimpleTopBar from '../components/simpleTopBar';
+import TextBaseField from '../components/formComponents/textBaseField';
 
 function NewService() {
 
@@ -21,33 +30,13 @@ function NewService() {
 
     const [checked, setChecked] = useState(true);
 
-    const authed = useCallback(async() =>{
-        const auth = await CheckAuth()
-        if(auth === false){
-            navigate('/login')
-        }
-        else{
-        }
-    },[navigate])
-    
-    useEffect(() => {
-        authed()
-    }, [authed])
-
-    const [values, setValues] = useState({
-        date: Date.now(), 
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
-        service: '',
-        notes: '',
-        bill: '',
-        price: '',
-      });
+    const [values, setValues] = useState(serviceRecordExample);
     
       const handleCheck = (e) => {
           setChecked(!checked)
+      }
+      const handleEmbededChange = (prop1) => (prop2) => (event) => {
+        setValues({ ...values, [prop1]:{ ...values[prop1], [prop2]: event.target.value } });
       }
 
       const handleChange = (prop) => (event) => {
@@ -82,103 +71,23 @@ function NewService() {
 
     return(
         <Box sx={{ pb: 10 }}>
-            <Box sx={{ml: 0, mt:0}}>
-                <IconButton
-                    aria-label="back button"
-                    onClick={()=>navigate(-1)}
-                    edge="end"
-                    >
-                    {<ArrowBackIosNew/>}
-                </IconButton>
-            </Box>
-            <Box sx={{ml: 2, mt: 2}}>
-                <Typography fontWeight="fontWeightBold" variant="h4">New Service Record</Typography>
-            </Box>
+            <SimpleTopBar to={-1} text={"New Service Record"} />
             
             <AppForm top={1}>
 
                 <form noValidate onSubmit={handleSubmit}>
                     <Stack spacing={2}>
-                        <Box sx={{ pt: 0 }}>
-                            <Grid container direction="row" justifyContent="space-between" alignItems="center" sx={{ml: 2, mt: 1, pr: 4}}>
-                                <Grid >
-                                <Typography fontWeight="fontWeightSemibold" variant="h6">Info</Typography>
-                                </Grid>
-                                <Grid >
-                                <FormControlLabel labelPlacement="start" control={
-                                    <Checkbox 
-                                        checked={checked}
-                                        onChange={handleCheck}
-                                        color="primary"
-                                    />
-                                } label={<Typography fontWeight="fontWeightThin" variant="body2">Default</Typography>} />                            </Grid>
-                            </Grid> 
-                        </Box>
-                            <TextField 
-                                id="datetime"
-                                type="datetime-local"
-                                label="Date Time"
-                                value={ConvertDate(values.date)}
-                                fullWidth
-                                onChange={handleDate('date')}
-                                InputLabelProps={{
-                                    shrink: true,
-                                  }}
-                              />
-                        
+                        <SimpleFormTopper text="Info" label="Default" checked={checked} setChecked={handleCheck} />
+                        <DateField value={values.date} handleChange={handleChange('date')} required={false} />
+
                         {!checked ? 
-                        <Stack spacing={2}>
-                        <TextField 
-                            autoComplete="street-address"
-                            label="Address"
-                            fullWidth
-                            value={values.address}
-                            onChange={handleChange('address')}
-                        />
-                        <TextField 
-                            label="City"
-                            autoComplete="address-level2"
-                            fullWidth
-                            value={values.city}
-                            onChange={handleChange('city')}
-                        />
-                        <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                            <TextField 
-                                label="State"
-                                autoComplete="address-level1"
-                                sx={{width: "49%"}}
-                                value={values.state}
-                                onChange={handleChange('state')}
-                            />
-                            <TextField 
-                                label="Zip"
-                                autoComplete="postal-code"
-                                sx={{width: "49%"}}
-                                value={values.zip}
-                                onChange={handleChange('zip')}
-                            />
-                        </Grid> 
-                        </Stack>
+                            <AddressField address={values.address} handleChange={handleEmbededChange('address')} required={false} />
                         : ''}
-                        <TextField 
-                            label="Service"
-                            fullWidth
-                            value={values.service}
-                            onChange={handleChange('service')}
-                        />
-                        <TextField 
-                            label="Notes"
-                            fullWidth
-                            value={values.notes}
-                            onChange={handleChange('notes')}
-                        />
-                        <TextField 
-                            label="Bill"
-                            type="number"
-                            fullWidth
-                            value={values.price}
-                            onChange={handleChange('price')}
-                        />
+                        
+                        <MultiBaseField label={"Service"} value={values.service} handleChange={handleChange('service')} />
+                        <MultiBaseField label={"Notes"} value={values.notes} handleChange={handleChange('notes')} />
+                        <TextBaseField label="Notes" value={values.notes} handleChange={handleChange('notes')}/>
+                        <PriceField value={values.bill} handleChange={handleChange('bill')} label="Bill"/>
                         <MainButton text={"Create"} />
                     </Stack>
                 </form>
@@ -189,3 +98,18 @@ function NewService() {
 }
 
 export default NewService
+
+
+const serviceRecordExample = {
+    date: moment(),
+    address: {
+        street: 'test',
+        city: 'uhhh',
+        state: 'CA',
+        zip: 'idk'
+    },
+    service: 'some things',
+    notes: 'ds;flaksd',
+    bill: '43',
+    cost: '23',
+}

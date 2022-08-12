@@ -15,7 +15,7 @@ import { ArrowForwardIos, PinDrop,
      Event, LocalAtm, Notes, Note
 } from '@mui/icons-material'
 
-function SimpleScheduledServiceView({data})
+export default function SimpleServiceView({data})
 {
     const windowDimensions = useWindowDimensions()
 
@@ -37,7 +37,7 @@ function SimpleScheduledServiceView({data})
                 <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
                 <TextListItemButton text={data.customer.address.street} icon={<PinDrop />} handleClick={() => MapsSelector(data.customer.address.street)}/>
                 <TextListItem text={data.date.format()} icon={<Event />} />
-                <TextListItem text={data.estimate ? '$ '+ data.estimate : 'No Price'} icon={<LocalAtm />} />
+                <TextListItem text={data.bill ? '$ '+ data.bill : 'No Price'} icon={<LocalAtm />} />
                 <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
                 <TextListItem text={data.service} icon={<Note />}/>
                 <TextListItem text={data.notes} icon={<Notes />}/>
@@ -46,5 +46,3 @@ function SimpleScheduledServiceView({data})
         </Box>
     )
 }
-
-export default SimpleScheduledServiceView;

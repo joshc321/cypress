@@ -17,16 +17,6 @@ function Scan(){
     let frame = (height < width) ? width: height;
     const qrRef = useRef(null);
     
-    const authed = useCallback(async() =>{
-        const auth = await CheckAuth()
-        if(auth === false){
-            navigate('/login')
-        }
-    },[navigate])
-
-    useEffect(() =>{
-        authed()
-    }, [authed])
 
     useEffect(() => {
         disableScroll.on()
@@ -94,7 +84,7 @@ function Scan(){
             }}>
                 <Add  />
             </Fab>
-            <BottomNavigationBar value={1}/>
+            <BottomNavigationBar value={2}/>
         </div>
     )
 }

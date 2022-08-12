@@ -8,6 +8,11 @@ import { useState, useEffect, useCallback } from 'react'
 import AppForm from '../components/AppForm';
 import { useNavigate } from 'react-router-dom';
 import PostCustomer from '../components/api/postCustomer'
+import NameField from '../components/formComponents/nameField';
+import PhoneField from '../components/formComponents/phoneField';
+import AddressField from '../components/formComponents/addressField';
+import MultiBaseField from '../components/formComponents/multiBaseField';
+
 
 import SimpleTopBar from '../components/simpleTopBar';
 
@@ -33,6 +38,9 @@ function CreateCustomer() {
       const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
       };
+      const handleEmbededChange = (prop1) => (prop2) => (event) => {
+        setValues({ ...values, [prop1]:{ ...values[prop1], [prop2]: event.target.value } });
+      }
 
 
       const handleSubmit = async e => {
@@ -58,82 +66,11 @@ function CreateCustomer() {
                         <Box sx={{ mt: 2}}>
                             <Typography fontWeight="fontWeightSemibold" variant="h6">Info</Typography>
                         </Box>
-                        <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                            <TextField 
-                                label="First name"
-                                autoComplete="given-name"
-                                sx={{width: "49%"}}
-                                error={error}
-                                value={values.first}
-                                onChange={handleChange('first')}
-                                required
-                            />
-                            <TextField 
-                                label="Last name"
-                                autoComplete="family-name"
-                                sx={{width: "49%"}}
-                                error={error}
-                                value={values.last}
-                                onChange={handleChange('last')}
-                                required
-                            />
-                        </Grid>
-                        <TextField 
-                            type="phone"
-                            label="Phone"
-                            autoComplete="tel-national"
-                            fullWidth
-                            error={error}
-                            value={values.phone}
-                            onChange={handleChange('phone')}
-                            required
-                        />
-                        <TextField 
-                            autoComplete="street-address"
-                            label="Address"
-                            fullWidth
-                            error={error}
-                            required
-                            value={values.address}
-                            onChange={handleChange('address')}
-                        />
-                        <TextField 
-                            label="City"
-                            autoComplete="address-level2"
-                            fullWidth
-                            value={values.city}
-                            onChange={handleChange('city')}
-                        />
-                        <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                            <TextField 
-                                label="State"
-                                autoComplete="address-level1"
-                                sx={{width: "49%"}}
-                                value={values.state}
-                                onChange={handleChange('state')}
-                            />
-                            <TextField 
-                                label="Zip"
-                                autoComplete="postal-code"
-                                sx={{width: "49%"}}
-                                value={values.zip}
-                                onChange={handleChange('zip')}
-                            />
-                        </Grid>
-                        <TextField 
-                            label="System"
-                            fullWidth
-                            multiline
-                            value={values.system}
-                            onChange={handleChange('system')}
-                        />
-                        <TextField 
-                            label="Notes"
-                            multiline
-                            fullWidth
-                            value={values.notes}
-                            onChange={handleChange('notes')}
-                        />
+                        <NameField first={values.first} last={values.last} error={error} handleChange={handleChange} />
+                        <PhoneField phone={values.phone} handleChange={handleChange} error={error} />
+                        <AddressField address={values.address} handleChange={handleEmbededChange('address')} error={error} />
+                        <MultiBaseField label={"System"} value={values.system} handleChange={handleChange('system')} />
+                        <MultiBaseField label={"Notes"} value={values.notes} handleChange={handleChange('notes')} />
                         {error ? <Typography variant="body2" color="error" >Please input required fields</Typography> : ""}
                         <MainButton text={"Create"} />
                     </Stack>

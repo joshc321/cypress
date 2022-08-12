@@ -35,6 +35,11 @@ const dataExample =
       _id: 'a9s8df70a9d',
       first: 'Coral',
       last: 'Raymond',
-      address: '1123 S State Street Hemet CA'
+      address: {
+        street: '1123 S State Street',
+        city: 'hemet',
+        state: 'CA',
+        zip: '92543',
+        },
     }
 }

@@ -17,6 +17,7 @@ import NameField from '../components/formComponents/nameField';
 import PhoneField from '../components/formComponents/phoneField';
 import AddressField from '../components/formComponents/addressField';
 import DurationField from '../components/formComponents/durationField';
+import MultiBaseField from '../components/formComponents/multiBaseField';
 
 function EditCustomer() {
     let { slug } = useParams(); 
@@ -63,20 +64,8 @@ function EditCustomer() {
                             <NameField first={customer.first} last={customer.last} error={error} handleChange={handleChange} />
                             <PhoneField phone={customer.phone} handleChange={handleChange} error={error} />
                             <AddressField address={customer.address} handleChange={handleEmbededChange('address')} error={error} />
-                            <TextField 
-                                label="System"
-                                fullWidth
-                                multiline
-                                value={customer.system}
-                                onChange={handleChange('system')}
-                            />
-                            <TextField 
-                                label="Notes"
-                                fullWidth
-                                multiline
-                                value={customer.notes}
-                                onChange={handleChange('notes')}
-                            />
+                            <MultiBaseField label={"System"} value={customer.system} handleChange={handleChange('system')} />
+                            <MultiBaseField label={"Notes"} value={customer.notes} handleChange={handleChange('notes')} />
                             {!checked ?
                             <DurationField duration={customer.serviceInterval} handleChange={handleEmbededChange('serviceInterval')}/>
                             : ''}

@@ -11,6 +11,12 @@ import SimpleTopBar from "../components/simpleTopBar"
 import BottomNavigationBar from "../components/bottomNavigationBar"
 import AppForm from "../components/AppForm"
 import MainButton from "../components/mainbutton"
+import DateField from "../components/formComponents/dateField";
+import TextBaseField from "../components/formComponents/textBaseField";
+import MultiBaseField from "../components/formComponents/multiBaseField";
+import PriceField from "../components/formComponents/priceField";
+import CustomerSelectorField from "../components/formComponents/customerSelectorField";
+import SimpleFormTopper from "../components/simpleFormTopper";
 
 function ScheduleService()
 {
@@ -48,72 +54,16 @@ function ScheduleService()
     return(
         <div>
             <Box sx={{ pb: 10 }}>
-                <SimpleTopBar to={'/calendar'} text={"Schedule Service"}/>
+                <SimpleTopBar to={-1} text={"Schedule Service"}/>
             <AppForm top={1}>
                 <form noValidate onSubmit={handleSubmit}>
                         <Stack spacing={2}>
-                            <Box sx={{ mt: 2}}>
-                                <Typography fontWeight="fontWeightSemibold" variant="h6">Info</Typography>
-                            </Box>
-                            <TextField 
-                                style={{ textDecoration: 'none' }}
-                                sx={{
-                                    '&:hover': {
-                                        opacity: [0.7,0.8,0.8],
-                                      },
-                                }}
-                                disabled
-                                component={Link}
-                                to={'/selectcustomer'}
-                                label="Customer"
-                                fullWidth
-                                InputProps={{
-                                    endAdornment: (
-                                      <InputAdornment position="end">
-                                        <ArrowForwardIos fontSize="small" />
-                                      </InputAdornment>  
-                                    ),
-                                }}
-                                error={error}
-                                value={values.customer}
-                                required
-                            />
-                            <TextField 
-                                type="datetime-local"
-                                label="Date"
-                                fullWidth
-                                error={error}
-                                value={moment(values.date).format("YYYY-MM-DDTHH:mm")}
-                                onChange={handleChange('date')}
-                                required
-                            />
-                            <TextField 
-                                label="Service"
-                                fullWidth
-                                value={values.service}
-                                onChange={handleChange('service')}
-                            />
-                            <TextField 
-                                type="number"
-                                label="Estimate"
-                                fullWidth
-                                InputProps={{
-                                    startAdornment: (
-                                      <InputAdornment position="start">
-                                        $
-                                      </InputAdornment>  
-                                    ),
-                                }}
-                                value={values.estimate}
-                                onChange={handleChange('estimate')}
-                            />
-                            <TextField 
-                                label="Notes"
-                                fullWidth
-                                multiline
-                                value={values.notes}
-                                onChange={handleChange('notes')}
-                            />
+                            <SimpleFormTopper text="Info" />
+                            <CustomerSelectorField value={values.customer} error={error} />
+                            <DateField value={values.date} handleChange={handleChange('date')} error={error} required/>
+                            <MultiBaseField label="Service" value={values.service} handleChange={handleChange('service')} />
+                            <PriceField  value={values.estimate} handleChange={handleChange('estimate')} />
+                            <MultiBaseField label="Notes" value={values.notes} handleChange={handleChange('notes')} />
                             {error ? <Typography variant="body2" color="error" >Please input required fields</Typography> : ""}
                             <MainButton text={"Create"} />
                         </Stack>

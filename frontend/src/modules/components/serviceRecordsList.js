@@ -23,7 +23,7 @@ function ServiceRecordsList({services})
                             <ListItemButton 
                                 sx={{p: 0}} 
                                 component={Link} 
-                                to={`/logs/:${data._id}`}
+                                to={`/logs/${data._id}`}
                             >
                                 <List>
                                     <TextListItem text={data.date.format()} icon={<Event />} />
