@@ -4,13 +4,18 @@ import {IconButton, Box, Typography, Stack,
 import { ArrowBackIosNew
  } from '@mui/icons-material';
 import AppForm from '../components/AppForm';
-import PasswordTextField from '../components/passwordTextField';
+import PasswordTextField from '../components/formComponents/passwordTextField';
 import BottomNavigationBar from '../components/bottomNavigationBar';
 import { useState, useEffect, useCallback } from 'react';
 import MainButton from '../components/mainbutton';
 import { useNavigate } from 'react-router-dom';
 import PostUser from '../components/api/postUser';
 import CheckAuth from '../components/api/authorized';
+import SimpleTopBar from '../components/simpleTopBar';
+import SimpleFormTopper from '../components/simpleFormTopper';
+import NameField from '../components/formComponents/nameField';
+import EmailField from '../components/formComponents/emailField';
+import SelectionField from '../components/formComponents/selectionField';
 
 function AddUser() {
 
@@ -18,27 +23,8 @@ function AddUser() {
 
     const [errorText, setErrorText] = useState("Please input required fields")
     const [error, setError] = useState(false);
-    const [values, setValues] = useState({
-        first: '',
-        last: '',
-        email: '',
-        role: '',
-        company: '',
-        password: '',
-      });
+    const [values, setValues] = useState(userDemo);
     
-      const authed = useCallback(async() =>{
-        const auth = await CheckAuth()
-        if(auth === false){
-            navigate('/login')
-        }
-        else{
-        }
-    }, [navigate])
-    
-    useEffect(() => {
-        authed()
-    }, [authed])
 
       const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -66,66 +52,19 @@ function AddUser() {
 
     return(
         <Box sx={{ pb: 10 }}>
-            <Box sx={{ml: 0, mt:0}}>
-                <IconButton
-                    aria-label="back button"
-                    onClick={()=>navigate('/account')}
-                    edge="end"
-                    >
-                    {<ArrowBackIosNew/>}
-                </IconButton>
-            </Box>
-            <Box sx={{ml: 2, mt: 2}}>
-                <Typography fontWeight="fontWeightBold" variant="h4">Add User</Typography>
-            </Box>
+            <SimpleTopBar to={-1} text="Add User"/>
             <AppForm top={1}>
 
                 <form noValidate onSubmit={handleSubmit}>
                     <Stack spacing={2}>
-                        <Box sx={{ mt: 2}}>
-                            <Typography fontWeight="fontWeightSemibold" variant="h6">Info</Typography>
-                        </Box>
-                        <TextField 
-                            label="First name"
-                            autoComplete="given-name"
-                            fullWidth
-                            error={error}
-                            value={values.first}
-                            onChange={handleChange('first')}
-                            required
-                        />
-                        <TextField 
-                            label="Last name"
-                            autoComplete="family-name"
-                            fullWidth
-                            error={error}
-                            value={values.last}
-                            onChange={handleChange('last')}
-                            required
-                        />
-                        <TextField 
-                            type="email"
-                            label="Email"
-                            autoComplete="email"
-                            fullWidth
-                            error={error}
-                            value={values.email}
-                            onChange={handleChange('email')}
-                            required
-                        />
-                        <TextField 
+                        <SimpleFormTopper text="Info" />
+                        <NameField first={values.first} last={values.last} handleChange={handleChange} error={error} />
+                        <EmailField value={values.email} error={error} handleChange={handleChange('email')} />
+                        <SelectionField 
                             label="Role"
-                            autoComplete="organization-title"
-                            fullWidth
-                            value={values.role}
-                            onChange={handleChange('role')}
-                        />
-                        <TextField 
-                            label="Company"
-                            autoComplete="organization"
-                            fullWidth
-                            value={values.company}
-                            onChange={handleChange('company')}
+                            value={values.permissionLevel}
+                            handleChange={handleChange('permissionLevel')}
+                            options={permissions.filter(perm => perm.value <= values.permissionLevel)}
                         />
                         <PasswordTextField error={error} message={errorText} password={values.password} handleChange={handleChange('password')}/>
                         <MainButton text={"Create"} />
@@ -138,3 +77,27 @@ function AddUser() {
 }
 
 export default AddUser
+
+const permissions = [
+    {
+        value: 0,
+        text: 'Viewer',
+    },
+    {
+        value: 1,
+        text: 'Editor'
+    },
+    {
+        value: 2,
+        text: 'Admin',
+    }
+]
+
+const userDemo = {
+    first: 'Josh',
+    last: 'Cordero',
+    email: 'Josh@email.com',
+    permissionLevel: 0,
+    company: '9a8sd7f09a8sd',
+    password: 'my-password'
+}

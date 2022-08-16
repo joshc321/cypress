@@ -1,10 +1,11 @@
 import TopBase from "../components/topbase"
 import { useState } from "react"
 import AppForm from "../components/AppForm"
-import { TextField, Stack } from "@mui/material"
+import { TextField, Stack, Typography } from "@mui/material"
 import MainButton from "../components/mainbutton"
 import { useNavigate } from 'react-router-dom'
 import PostForgot from "../components/api/postForgot"
+import EmailField from "../components/formComponents/emailField"
 
 function Forgot(){
 
@@ -37,17 +38,8 @@ function Forgot(){
             <AppForm>
                 <form noValidate onSubmit={handleSubmit}>
                     <Stack spacing={2}>
-                    <TextField 
-                        type="email"
-                        label="Email"
-                        autoComplete="email"
-                        fullWidth
-                        error={error}
-                        value={email}
-                        onChange={handleChange('email')}
-                        required
-                        helperText = {error ? 'Input valid email' : ''}
-                    />
+                    <EmailField value={email} error={error} handleChange={handleChange('email')}/>
+                    {error ? <Typography variant="body2" color="error" >Input valid email</Typography> : ""}
                     <MainButton text={"Send"} />
                     </Stack>
                 </form>

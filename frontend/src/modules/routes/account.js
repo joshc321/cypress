@@ -8,26 +8,13 @@ import Cookies from 'js-cookie'
 import CheckAuth from '../components/api/authorized'
 import { useState, useEffect, useCallback } from 'react'
 import GetUser from '../components/api/getUser'
+import SingleListItem from '../components/singleListItem'
 
 function Account(){
     const navigate = useNavigate();
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(userDemo)
 
-    const authed = useCallback(async() =>{
-        const auth = await CheckAuth()
-        if(auth === false){
-            navigate('/login')
-        }
-        else{
-            const data = await GetUser()
-            //console.log(data)
-            setUser(data)
-        }
-    }, [navigate])
     
-    useEffect(() => {
-        authed()
-    }, [authed])
 
     const logout = () =>{
         Cookies.remove('access_token')
@@ -40,63 +27,29 @@ function Account(){
             <Box>
                 <nav aria-label="main user actions">
                     <List>
-                        <ListItem sx={{p: 0}} >
-                            <ListItemButton component={Link} to="/user-customers" sx={{ height: 75}}>
-                                <ListItemText primary={
-                                    <Typography fontWeight="fontWeightBold" variant="body1">Your Customers</Typography>
-                                }
-                                />
-                                <ArrowForwardIos />
-                            </ListItemButton>
-                        </ListItem>
-                        <Divider />
-                        <ListItem sx={{p: 0}} >
-                            <ListItemButton component={Link} to="/logs" sx={{ height: 75}}>
-                                <ListItemText primary={
-                                    <Typography fontWeight="fontWeightBold" variant="body1">Your Service Logs</Typography>
-                                }
-                                />
-                                <ArrowForwardIos />
-                            </ListItemButton>
-                        </ListItem>
-                        <Divider />
-                        <ListItem sx={{p: 0}} >
-                            <ListItemButton component={Link} to="/adduser" sx={{ height: 75}}>
-                                <ListItemText primary={
-                                    <Typography fontWeight="fontWeightBold" variant="body1">Add User</Typography>
-                                }
-                                />
-                                <ArrowForwardIos />
-                            </ListItemButton>
-                        </ListItem>
+                        <SingleListItem text="Stragglers" to="/stragglers" divider/>
+                        <SingleListItem text="New User" to="/adduser" divider/>
+                        <SingleListItem text="Users" to="/users"/>
+
                         <Divider sx={{ borderBottomWidth: 28 }}/>
-                        <ListItem sx={{p: 0}} >
-                            <ListItemButton component={Link} to="/edit-account" sx={{ height: 75}}>
-                                <ListItemText primary={
-                                    <Typography fontWeight="fontWeightBold" variant="body1">Edit Account</Typography>
-                                }
-                                />
-                                <ArrowForwardIos />
-                            </ListItemButton>
-                        </ListItem>
-                        <Divider />
-                        <ListItem sx={{p: 0}} >
-                            <ListItemButton onClick={logout} sx={{ height: 75}}>
-                                <ListItemText primary={
-                                    <Typography fontWeight="fontWeightBold" variant="body1" color="error.dark">Logout</Typography>
-                                }
-                                />
-                                <ArrowForwardIos />
-                            </ListItemButton>
-                        </ListItem>
-                        <Divider />
+                        <SingleListItem text="Edit Account" to="/edit-account" divider/>
+                        <SingleListItem text="Logout" to="/logout" color="error.dark" divider/>
                     </List>
                 </nav>
             </Box>
-            <BottomNavigationBar value={2} />
+            <BottomNavigationBar value={4} />
         </Box>
 
     )
 }
 
 export default Account
+
+const userDemo = {
+    first: 'Josh',
+    last: 'Cordero',
+    email: 'Josh@email.com',
+    permissionLevel: 2,
+    company: '9a8sd7f09a8sd',
+    password: 'a-9sd8fyvn-a9w8dufaiousdyf098a7sdf'
+}

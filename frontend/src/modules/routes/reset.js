@@ -2,7 +2,7 @@ import TopBase from "../components/topbase"
 import { useState } from "react"
 import AppForm from "../components/AppForm"
 import { Stack } from "@mui/material"
-import PasswordTextField from "../components/passwordTextField"
+import PasswordTextField from "../components/formComponents/passwordTextField"
 import MainButton from "../components/mainbutton"
 import { useNavigate, useParams } from 'react-router-dom'
 import PostResetPassword from "../components/api/postResetPassword"

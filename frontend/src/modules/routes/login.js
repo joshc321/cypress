@@ -6,11 +6,12 @@ import { Typography ,
 import { useState } from 'react';
 import AppForm from '../components/AppForm'
 import TopBase from '../components/topbase';
-import PasswordTextField from '../components/passwordTextField';
+import PasswordTextField from '../components/formComponents/passwordTextField';
 import MainButton from '../components/mainbutton'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import PostLogin from '../components/api/postLogin'
+import EmailField from '../components/formComponents/emailField';
 
 
 function Login(){
@@ -74,16 +75,7 @@ function Login(){
             <AppForm>
            <form noValidate onSubmit={handleSubmit}>
                <Stack spacing={2}>
-                    <TextField 
-                        type="email"
-                        label="Email"
-                        autoComplete="email"
-                        fullWidth
-                        error={error}
-                        value={values.email}
-                        onChange={handleChange('email')}
-                        required
-                    />
+                    <EmailField value={values.email} error={error} handleChange={handleChange('email')} />
                     <PasswordTextField error={error} password={values.password} handleChange={handleChange('password')}/>
                     <Grid>
                         <Grid container direction="row" justifyContent="space-between" alignItems="center">

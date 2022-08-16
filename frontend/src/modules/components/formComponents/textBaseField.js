@@ -6,6 +6,7 @@ export default function TextBaseField({label, value, handleChange})
         <TextField 
             label={label}
             fullWidth
+            type="text"
             value={value}
             onChange={handleChange}
         />

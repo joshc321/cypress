@@ -8,8 +8,6 @@ import Account from './modules/routes/account';
 import Home from './modules/routes/home';
 import withRoot from './modules/withRoot';
 import EditAccount from './modules/routes/editAccount';
-import Logs from './modules/routes/logs';
-import UserCustomers from './modules/routes/userCustomers';
 import ServiceRecord from './modules/routes/serviceRecord';
 import Customer from './modules/routes/customer';
 import EditCustomer from './modules/routes/editCustomer';
@@ -37,9 +35,7 @@ function App() {
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/account" element={<Account />} />
         <Route path="/edit-account" element={<EditAccount />} />
-        <Route path="/logs" element={<Logs />} />
         <Route path="/logs/:slug" element={<ServiceRecord />} />
-        <Route path="/user-customers" element={<UserCustomers />} />
         <Route path="/customer/:slug" element={<Customer />} />
         <Route path="/edit-customer/:slug" element={<EditCustomer />} />
         <Route path="/create-customer" element={<CreateCustomer />} />
