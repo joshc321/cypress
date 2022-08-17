@@ -24,7 +24,6 @@ import moment from 'moment'
 function Customer(){
     const navigate = useNavigate();
     let { slug } = useParams(); 
-    slug = slug.substring(1);
     const [showQR, setShowQR] = useState(false)
     const [status, setStatus] = useState({
         loading: true,

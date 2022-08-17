@@ -21,6 +21,8 @@ import SelectCustomer from './modules/routes/selectCustomer';
 import ViewScheduledService from './modules/routes/viewScheduledService';
 import Stragglers from './modules/routes/stragglers';
 import NeededServices from './modules/routes/neededServices';
+import Users from './modules/routes/users';
+import User from './modules/routes/user';
 
 import Test from './modules/routes/test';
 
@@ -47,6 +49,8 @@ function App() {
         <Route path="/viewscheduledservice/:slug" element={<ViewScheduledService />} />
         <Route path="/stragglers" element={<Stragglers />} />
         <Route path="/upcoming" element={<NeededServices />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/user/:slug" element={<User />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

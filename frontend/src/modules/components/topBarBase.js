@@ -2,7 +2,7 @@ import { Paper,Typography,Box, IconButton, Divider, Grid, Link, Stack } from '@m
 import { ArrowBackIosNew } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-function TopBar(props){
+function TopBarBase(props){
 
     const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ function TopBar(props){
                 </Box>
 
             </Paper>
-            {(!props.id && props.secondary ) ?
+            {(!props.handleClick && props.secondary ) ?
             <div>
                 <Stack  direction="row" justifyContent="space-between" alignItems="center" sx={{ml: 2, mt: 1, mr: 2}}>
                     <Typography fontWeight="fontWeightBold" variant="h4">{props.secondary}</Typography>
@@ -44,11 +44,11 @@ function TopBar(props){
                 <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
             </div> : ''}
         </Paper>
-        {props.id ?
+        {props.handleClick ?
             <Box sx={{ pt: 19 }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ml: 2, mt: 1, mr: 2}}>
-                    <Link onClick={props.onClick} fontWeight="fontWeightBold" variant="h4" underline="hover">{props.secondary}</Link>
-                    <Link onClick={()=> navigate(`/edit-customer/:${props.id}`)} color='inherit' underline="hover" variant='body1'>Edit</Link>
+                    <Link onClick={props.onClick} fontWeight="fontWeightBold" variant="h4" underline="none">{props.secondary}</Link>                    
+                    <Link onClick={props.handleClick} color='inherit' underline="hover" variant='body1'>{props.final}</Link>
                 </Stack> 
                 <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/> 
             </Box>
@@ -58,4 +58,4 @@ function TopBar(props){
     )
 }
 
-export default TopBar;
+export default TopBarBase;
