@@ -1,3 +1,4 @@
+import './App.css'
 
 import Login from './modules/routes/login'
 import Forgot from './modules/routes/forgot';

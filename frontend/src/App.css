@@ -16,7 +16,11 @@ body {
     top: 12.07%;
     bottom: 84.24%;
 
-    
+}
+
+
+.video-container > .scan-region-highlight > .scan-region-highlight-svg {
+    stroke: #ffffff !important;
 }
 
 .h3 {

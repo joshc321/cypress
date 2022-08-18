@@ -2,12 +2,14 @@ import { Fab } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { Link } from "react-router-dom";
 
-function AddButton({linkTo})
+function AddButton(props)
 {
     return(
         <Fab
-        component={Link}
-        to={linkTo}
+        onClick={props?.onClick}
+        
+        component={props?.linkTo ? Link : ''}
+        to={props?.linkTo}
         color="primary"
         sx={{
           position: "fixed",
