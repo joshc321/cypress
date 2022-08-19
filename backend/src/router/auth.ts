@@ -31,4 +31,8 @@ router.post('/login', (req,res,next)=>{
     }).catch(next);
 });
 
+router.get('/auth', authenticateToken, ( req, res, next ) => {
+    res.send({'authed': true});
+})
+
 export default router

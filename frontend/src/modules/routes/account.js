@@ -9,18 +9,14 @@ import CheckAuth from '../components/api/authorized'
 import { useState, useEffect, useCallback } from 'react'
 import GetUser from '../components/api/getUser'
 import SingleListItem from '../components/singleListItem'
+import GetMe from '../components/api/getMe'
+import useAuth from '../components/api/useAuth'
 
 function Account(){
-    const navigate = useNavigate();
-    const [user, setUser] = useState(userDemo)
+    useAuth();
+    const [user, loading] = GetMe();
 
-    
-
-    const logout = () =>{
-        Cookies.remove('access_token')
-        navigate('/login')
-    }
-
+    if(!loading){
     return(
         <Box sx={{pb: 10}}>
             <TopBarLarge primary={"Cypress"} secondary={user.first + ' ' +user.last}/>
@@ -40,7 +36,12 @@ function Account(){
             <BottomNavigationBar value={4} />
         </Box>
 
-    )
+    )}
+    else{
+        return(
+            'loading...'
+        )
+    }
 }
 
 export default Account

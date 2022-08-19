@@ -5,7 +5,7 @@ async function PostLogin(data={}) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     };
-    const response = await fetch('/api/auth/login', requestOptions)
+    const response = await fetch('/api/login', requestOptions)
     return response.json()
 }
 

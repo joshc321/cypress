@@ -1,5 +1,5 @@
 import { Typography , 
-    TextField, Stack, Checkbox,
+    Stack, Checkbox,
     FormControlLabel,
     Grid, Link
 } from '@mui/material';
@@ -19,11 +19,10 @@ function Login(){
     const navigate = useNavigate();
 
     const [error, setError] = useState(false)
+    const [checked, setChecked] = useState(false)
     const [values, setValues] = useState({
         email: '',
         password: '',
-        checked: false,
-        showPassword: false,
       });
     
       const handleChange = (prop) => (event) => {
@@ -31,13 +30,10 @@ function Login(){
       };
       
       const handleCheck = () => {
-          setValues({
-              ...values,
-              checked: !values.checked
-          })
+          setChecked(!checked)
       }
 
-      const handleSubmit = async e => {
+      const handleSubmit = e => {
         e.preventDefault()
         setError(false)
         
@@ -46,25 +42,19 @@ function Login(){
         }
 
         if(values.email && values.password){
-            //console.log(values);
-            const data = await PostLogin({ email: values.email, password: values.password })
-            if(data['status']){
-                setError(true)
-                //console.log(data['message'])
-            }
-            else if(data['token']){
-                //console.log(data['token'])
-                if(data.checked){
-                    Cookies.set('access_token', data['token'], { expires: 7 })
-                }
-                else{
-                    Cookies.set('access_token', data['token'])
-                }
-                navigate('/')
-            }
-            else{
-                //console.log(data)
-            }
+
+            PostLogin(values)
+              .then((rsp) =>{
+                    if(rsp?.error) setError(true)
+                    else if(rsp?.token)
+                    {
+                        if(checked) Cookies.set('access_token', rsp.token, { expires: 7 })
+                        else Cookies.set('access_token', rsp.token)
+                        navigate('/')
+                    }
+                    else console.log(rsp)
+                })
+              .catch(e => console.log(e))
         }
       }
 

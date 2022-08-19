@@ -24,6 +24,7 @@ import Stragglers from './modules/routes/stragglers';
 import NeededServices from './modules/routes/neededServices';
 import Users from './modules/routes/users';
 import User from './modules/routes/user';
+import Logout from './modules/routes/logout';
 
 import Test from './modules/routes/test';
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/upcoming" element={<NeededServices />} />
         <Route path="/users" element={<Users />} />
         <Route path="/user/:slug" element={<User />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
