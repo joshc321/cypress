@@ -1,17 +1,7 @@
-import Cookies from 'js-cookie'
+import postData from './postData'
 
-async function PostUser(data={}) {
-    const requestOptions = {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 
-            'Authorization': 'Bearer ' + Cookies.get('access_token'),
-            'Content-Type': 'application/json'
-         },
-        body: JSON.stringify(data)
-    };
-    const response = await fetch('/api/auth/newuser', requestOptions)
-    return response.json()
+function PostUser(data={}) {
+    return postData('/api/newuser', data)
 }
 
 export default PostUser

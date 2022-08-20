@@ -17,6 +17,7 @@ import MultiBaseField from "../components/formComponents/multiBaseField";
 import PriceField from "../components/formComponents/priceField";
 import CustomerSelectorField from "../components/formComponents/customerSelectorField";
 import SimpleFormTopper from "../components/simpleFormTopper";
+import postScheduledService from "../components/api/postScheduledService";
 
 function ScheduleService()
 {
@@ -46,7 +47,26 @@ function ScheduleService()
         }
         else
         {
-            navigate('/calendar')
+            postScheduledService(values)
+            .then(rsp => {
+                const [body, status] = rsp;
+                switch(status)
+                {
+                    case 200:
+                        navigate(`/viewscheduledservice/${body._id}`);
+                        break;
+                    case 422:
+                        setError(true);
+                        console.log(rsp)
+                        break;
+                    case 401:
+                        navigate('/logout');
+                        break;
+                    default:
+                        setError(true);
+                        console.error(body)
+                }
+              })
         }
     }
 

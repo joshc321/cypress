@@ -15,21 +15,17 @@ import GetServiceRecords from '../components/api/getServiceRecords'
 import MapsSelector from '../components/api/mapsSelector'
 import CreateFullAddress from '../components/helpers/createFullAddress'
 import ToStrDate from '../components/helpers/toStringDate'
-import useWindowDimensions from '../components/useWindowDimensions'
 import SimpleCustomerView from '../components/simpleCustomerView'
 import ServiceRecordsList from '../components/serviceRecordsList'
 import SimpleSpeedDial from '../components/simpleSpeedDial'
 import moment from 'moment'
+import useAuth from '../components/api/useAuth'
 
 function Customer(){
-    const navigate = useNavigate();
+    useAuth();
     let { slug } = useParams(); 
     const [showQR, setShowQR] = useState(false)
-    const [status, setStatus] = useState({
-        loading: true,
-        success: true,
-    })
-    const [customer, setCustomer] = useState(customerExample)
+    const [customer, loading] = GetCustomer(slug)
 
     const downloadQR = () => {
         svg.saveSvgAsPng(document.getElementById("12345"), "qrcode.png");
@@ -41,7 +37,7 @@ function Customer(){
 
     return(
         <div>
-            <TopBar onClick={onClick} primary={status.success ? customer.first + ' ' + customer.last : 'Customer Not Found'} id={slug} secondary="Information"/>
+            <TopBar onClick={onClick} primary={!loading ? customer.first + ' ' + customer.last : 'Customer Not Found'} id={slug} secondary="Information"/>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={showQR}

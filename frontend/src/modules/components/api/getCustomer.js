@@ -1,15 +1,7 @@
-import Cookies from 'js-cookie'
+import useGet from './useGet'
 
-async function GetCustomer(id='') {
-    const requestOptions = {
-        method: 'GET',
-        mode: 'cors',
-        headers: { 
-            'Authorization': 'Bearer ' + Cookies.get('access_token')
-         },
-    };
-    const response = await fetch(`/api/customers/${id}`, requestOptions)
-    return response.json()
+function GetCustomer(id='') {
+    return useGet(`/api/customer/${id}`)
 }
 
-export default GetCustomer
+export default GetCustomer;

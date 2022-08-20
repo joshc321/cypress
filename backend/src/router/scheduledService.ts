@@ -19,11 +19,10 @@ router.post('/serviceschedule', authenticateToken, setCompany,(req, res, next) =
     }).catch(next);
 })
 
-router.get('/serviceschedule', authenticateToken, (req,res,next)=>{
+router.post('/serviceschedule/s', authenticateToken, (req,res,next)=>{
     
     const body = req.user.permissionLevel >= 2 ? {} : { company: req.user.company };
-
-    ServiceSchedule.find(body).sort('date').then(async (serviceschedules)=>{
+    ServiceSchedule.find(body).where('date').gt(req.body.gt).lt(req.body.lt).sort('date').then((serviceschedules)=>{
         res.send(serviceschedules);
     }).catch(next);
 });

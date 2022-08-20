@@ -32,14 +32,14 @@ function SimpleCustomerView({data})
             <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
             </>
             : ''}
-            <TextListItemButton text={data.address.street} icon={<PinDrop />} handleClick={() => MapsSelector(data.address.street)}/>
-            <TextListItem text={data.phone} icon={<Phone />} />
-            <TextListItem text={data.lastServiced.format()} icon={<Event />} />
-            <TextListItem text={data.nextService.format()} icon={<CalendarToday />} />
-            <TextListItem text={moment.duration(data.serviceInterval.duration, data.serviceInterval.unit).humanize()} icon={<EventRepeat />} />
+            <TextListItemButton text={data?.address?.street} icon={<PinDrop />} handleClick={() => MapsSelector(data?.address?.street)}/>
+            <TextListItem text={data?.phone} icon={<Phone />} />
+            <TextListItem text={moment(data?.lastServiced).format()} icon={<Event />} />
+            <TextListItem text={moment(data?.nextService).format()} icon={<CalendarToday />} />
+            <TextListItem text={moment.duration(data?.serviceInterval?.duration, data?.serviceInterval?.unit).humanize()} icon={<EventRepeat />} />
             <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
-            <TextListItem text={data.system} icon={<Note />} />
-            <TextListItem text={data.notes} icon={<Notes />} />
+            <TextListItem text={data?.system} icon={<Note />} />
+            <TextListItem text={data?.notes} icon={<Notes />} />
             <Divider sx={{ borderBottomWidth: 18 }}/>
         </>
     )

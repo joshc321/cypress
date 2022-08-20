@@ -1,29 +1,29 @@
-import {IconButton, Box, Typography, Stack, 
-        TextField,
+import { Box, Stack, 
     } from '@mui/material';
-import { ArrowBackIosNew
- } from '@mui/icons-material';
 import AppForm from '../components/AppForm';
 import PasswordTextField from '../components/formComponents/passwordTextField';
 import BottomNavigationBar from '../components/bottomNavigationBar';
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import MainButton from '../components/mainbutton';
 import { useNavigate } from 'react-router-dom';
 import PostUser from '../components/api/postUser';
-import CheckAuth from '../components/api/authorized';
 import SimpleTopBar from '../components/simpleTopBar';
 import SimpleFormTopper from '../components/simpleFormTopper';
 import NameField from '../components/formComponents/nameField';
 import EmailField from '../components/formComponents/emailField';
 import SelectionField from '../components/formComponents/selectionField';
+import useAuth from '../components/api/useAuth';
+import GetMe from '../components/api/getMe';
 
 function AddUser() {
 
-    const navigate = useNavigate();
+    useAuth();
 
+    const navigate = useNavigate();
+    const [self, loading] = GetMe()
     const [errorText, setErrorText] = useState("Please input required fields")
     const [error, setError] = useState(false);
-    const [values, setValues] = useState(userDemo);
+    const [values, setValues] = useState(emptyUser);
     
 
       const handleChange = (prop) => (event) => {
@@ -31,30 +31,41 @@ function AddUser() {
       };
 
 
-      const handleSubmit = async e => {
+      const handleSubmit = e => {
         e.preventDefault()
         setError(false)
         setErrorText('Please input required fields')
-        if(values.email === '' || values.password === '' || values.last === '' || values.first === ''){
-            setError(true)
-        }
 
         if(values.email && values.password && values.last && values.first){
-            //console.log(values);
-            const result = await PostUser(values)
-            if(result.status === 400){
-                setErrorText(result.message)
-                setError(true)
-            }
-            //console.log(result)
+            PostUser(values)
+              .then(rsp => {
+                const [body, status] = rsp;
+                switch(status)
+                {
+                    case 200:
+                        navigate(`/user/${body._id}`);
+                        break;
+                    case 422:
+                        setError(true);
+                        setErrorText('Invalid Email or Password');
+                        break;
+                    case 401:
+                        navigate('/logout');
+                        break;
+                    default:
+                        setError(true);
+                        setErrorText('Server Error')
+                }
+              })
         }
+        else setError(true)
       }
 
     return(
         <Box sx={{ pb: 10 }}>
             <SimpleTopBar to={-1} text="Add User"/>
             <AppForm top={1}>
-
+                {!loading &&
                 <form noValidate onSubmit={handleSubmit}>
                     <Stack spacing={2}>
                         <SimpleFormTopper text="Info" />
@@ -64,12 +75,12 @@ function AddUser() {
                             label="Role"
                             value={values.permissionLevel}
                             handleChange={handleChange('permissionLevel')}
-                            options={permissions.filter(perm => perm.value <= values.permissionLevel)}
+                            options={permissions.filter(perm => perm.value <= self?.permissionLevel)}
                         />
                         <PasswordTextField error={error} message={errorText} password={values.password} handleChange={handleChange('password')}/>
                         <MainButton text={"Create"} />
                     </Stack>
-                </form>
+                </form>}
             </AppForm>
             <BottomNavigationBar />
         </Box>
@@ -93,11 +104,10 @@ const permissions = [
     }
 ]
 
-const userDemo = {
-    first: 'Josh',
-    last: 'Cordero',
-    email: 'Josh@email.com',
+const emptyUser = {
+    first: '',
+    last: '',
+    email: '',
     permissionLevel: 0,
-    company: '9a8sd7f09a8sd',
-    password: 'my-password'
+    password: ''
 }

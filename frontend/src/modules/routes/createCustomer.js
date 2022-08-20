@@ -1,13 +1,11 @@
-import { IconButton, Box, Typography,
-    Stack, TextField, Grid
+import { Box, Typography,
+    Stack
 } from '@mui/material';
-import { ArrowBackIosNew } from '@mui/icons-material';
 import MainButton from '../components/mainbutton';
 import BottomNavigationBar from '../components/bottomNavigationBar';
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
 import AppForm from '../components/AppForm';
 import { useNavigate } from 'react-router-dom';
-import PostCustomer from '../components/api/postCustomer'
 import NameField from '../components/formComponents/nameField';
 import PhoneField from '../components/formComponents/phoneField';
 import AddressField from '../components/formComponents/addressField';
@@ -15,9 +13,12 @@ import MultiBaseField from '../components/formComponents/multiBaseField';
 
 
 import SimpleTopBar from '../components/simpleTopBar';
+import postCustomer from '../components/api/postCustomer';
+import useAuth from '../components/api/useAuth';
 
 function CreateCustomer() {
 
+    useAuth();
     const navigate = useNavigate();
 
 
@@ -26,10 +27,12 @@ function CreateCustomer() {
         first: '',
         last: '',
         phone: '',
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
+        address: {
+            street: '',
+            city: '',
+            state: '',
+            zip: '',
+        },
         system: '',
         notes: ''
       });
@@ -46,15 +49,29 @@ function CreateCustomer() {
       const handleSubmit = async e => {
         e.preventDefault()
         setError(false)
-        
-        if(values.last === '' || values.first === '' || values.phone === '' || values.address === ''){
-            setError(true)
-        }
 
         if(values.last && values.first && values.phone && values.address){
-            const data = await PostCustomer(values)
-            navigate(`/customer/:${data['id']}`)
+            postCustomer(values)
+                .then(rsp => {
+                    const [body, status] = rsp;
+                    switch(status)
+                    {
+                        case 200:
+                            navigate(`/customer/${body._id}`);
+                            break;
+                        case 422:
+                            setError(true);
+                            break;
+                        case 401:
+                            navigate('/logout');
+                            break;
+                        default:
+                            setError(true);
+                            console.log(rsp)
+                    }
+                })
         }
+        else setError(true)
       }
 
     return(
