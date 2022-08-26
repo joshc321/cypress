@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback } from 'react'
 import AppForm from '../components/AppForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import GetCustomer from '../components/api/getCustomer';
-import UpdateCustomer from '../components/api/updateCustomer';
+import putCustomer from '../components/api/putCustomer';
 import SimpleFormTopper from '../components/simpleFormTopper';
 import CheckAuth from '../components/api/authorized';
 import TopBar from '../components/topBar';
@@ -18,39 +18,60 @@ import PhoneField from '../components/formComponents/phoneField';
 import AddressField from '../components/formComponents/addressField';
 import DurationField from '../components/formComponents/durationField';
 import MultiBaseField from '../components/formComponents/multiBaseField';
+import useAuth from '../components/api/useAuth';
 
 function EditCustomer() {
+    useAuth();
     let { slug } = useParams(); 
-    slug = slug.substring(1);
 
     const navigate = useNavigate();
 
+    const [custCall, loading] = GetCustomer(slug);
+
     const [error, setError] = useState(false);
-    const [customer, setCustomer] = useState(customerExample);
+    const [customer, setCustomer] = useState(emptyCustomer);
     const [checked, setChecked] = useState(true);
-    
-      const handleChange = (prop) => (event) => {
-        setCustomer({ ...customer, [prop]: event.target.value });
-      };
-      const handleEmbededChange = (prop1) => (prop2) => (event) => {
-        setCustomer({ ...customer, [prop1]:{ ...customer[prop1], [prop2]: event.target.value } });
-      }
+
+    useEffect(() => {
+        if(!loading) setCustomer({...customer, ...custCall})
+    }, [loading])
+
+    const handleChange = (prop) => (event) => {
+    setCustomer({ ...customer, [prop]: event.target.value });
+    };
+    const handleEmbededChange = (prop1) => (prop2) => (event) => {
+    setCustomer({ ...customer, [prop1]:{ ...customer[prop1], [prop2]: event.target.value } });
+    }
 
 
-      const handleSubmit = async e => {
+    const handleSubmit = e => {
         e.preventDefault()
         setError(false)
-        
-        if(customer.last === '' || customer.first === '' || customer.phone === '' || customer.address === ''){
-            setError(true)
-        }
 
         if(customer.last && customer.first && customer.phone && customer.address){
-            //console.log(customer);
-            UpdateCustomer(customer, slug)
-            navigate(-1)
+            putCustomer(customer, slug)
+                .then(rsp => {
+                    const [_, status] = rsp;
+                    switch(status)
+                    {
+                        case 200:
+                            navigate(-1);
+                            break;
+                        case 422:
+                            setError(true);
+                            break;
+                        case 401:
+                            navigate('/logout');
+                            break;
+                        default:
+                            setError(true);
+                            console.error(rsp)
+                    }
+                })
         }
-      }
+        else setError(true)
+
+    }
 
     return(
         <div>
@@ -82,43 +103,21 @@ function EditCustomer() {
 
 export default EditCustomer
 
-const customerExample = {
-    _id: '98s7fd098',
-    first: 'Joshua',
-    last: 'Cordero',
-    phone: '951 537 4949',
+const emptyCustomer = {
+    _id: '',
+    first: '',
+    last: '',
+    phone: '',
     address: {
-        street: '1123 S State Street',
-        city: 'hemet',
-        state: 'CA',
-        zip: '92543',
+        street: '',
+        city: '',
+        state: '',
+        zip: '',
     },
-    system: 'has a thing',
-    notes: 'some notes here',
-    lastServiced: moment(),
+    system: '',
+    notes: '',
     serviceInterval: {
         duration: 1,
         unit: 'years',
-    },
-    nextService: moment().add(1, 'year'),
-    straggler: false,
-    active: true,
-    services: [
-        {
-            _id: '0897ydfs98g',
-            date: moment(),
-            service: 'serviced some things',
-            notes: 'notes mroe ww',
-            bill: '32',
-            cost: '10',
-        },
-        {
-            _id: '0897ydfs98g',
-            date: moment(),
-            service: 'serviced some things',
-            notes: 'notes mroe ww',
-            bill: '32',
-            cost: '10',
-        },
-    ]
+    }
 }

@@ -47,7 +47,7 @@ router.put('/users/:id', authenticateToken, permissionLevel, async (req,res,next
 
     const body = req.user.permissionLevel >= 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
-    if('password' in req.body) req.body['password'] = await encryptPassword(req.body['password']);
+    if('password' in req.body) delete req.body['password'];
     User.findOneAndUpdate(body,req.body).then(()=>{
         User.findOne(body).then((user)=>{
             if(user) res.send(user)

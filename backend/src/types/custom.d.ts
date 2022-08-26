@@ -5,6 +5,9 @@ declare global {
         */
       interface Request {
         user?: Context;
+        query?: {
+          q?: string 
+        }
       }
     }
   }

@@ -1,48 +1,63 @@
-import { IconButton, Box, Typography,
-    Stack, TextField
+import { Box, Typography,
+    Stack
 } from '@mui/material';
-import { ArrowBackIosNew } from '@mui/icons-material';
 import MainButton from '../components/mainbutton';
 import BottomNavigationBar from '../components/bottomNavigationBar';
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import AppForm from '../components/AppForm';
 import { useNavigate } from 'react-router-dom';
-import CheckAuth from '../components/api/authorized'
-import GetUser from '../components/api/getUser';
-import UpdateUser from '../components/api/updateUser';
+import putUser from '../components/api/putUser';
 import SimpleTopBar from '../components/simpleTopBar';
 import SimpleFormTopper from '../components/simpleFormTopper';
 import NameField from '../components/formComponents/nameField';
 import EmailField from '../components/formComponents/emailField';
+import GetMe from '../components/api/getMe';
+import useAuth from '../components/api/useAuth';
 
 function EditAccount() {
 
     const navigate = useNavigate();
-
-    const [userId, setUserId] = useState('')
+    useAuth();
+    const [user, loading] = GetMe();
     const [error, setError] = useState(false);
-    const [values, setValues] = useState(userDemo);
+    const [values, setValues] = useState(emptyUser);
+
+    useEffect(() => {
+        if(!loading) setValues({...values, ...user})
+    }, [loading])
+
+    const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+    };
 
 
-      const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-      };
-
-
-      const handleSubmit = (e) => {
-        e.preventDefault()
-        setError(false)
-        
-        if(values.email === ''|| values.last === '' || values.first === ''){
-            setError(true)
-        }
-
-        if(values.email && values.last && values.first){
-            //console.log(values)
-            UpdateUser(values, userId)
-            navigate(-1)
-        }
-      }
+    const handleSubmit = (e) => {
+    e.preventDefault()
+    setError(false)
+    
+    if(values.email && values.last && values.first){
+        putUser(values, values._id)
+            .then(rsp => {
+                const [_, status] = rsp;
+                switch(status)
+                {
+                    case 200:
+                        navigate(-1);
+                        break;
+                    case 422:
+                        setError(true);
+                        break;
+                    case 401:
+                        navigate('/logout');
+                        break;
+                    default:
+                        setError(true);
+                        console.error(rsp)
+                }
+            })
+    }
+    else setError(true)
+    }
 
     return(
         <Box sx={{ pb: 10 }}>
@@ -64,14 +79,12 @@ function EditAccount() {
     )
 }
 
-export default EditAccount
+export default EditAccount;
 
-
-const userDemo = {
-    first: 'Josh',
-    last: 'Cordero',
-    email: 'Josh@email.com',
-    permissionLevel: 2,
-    company: '9a8sd7f09a8sd',
-    password: 'my-password'
+const emptyUser = 
+{
+    _id: '',
+    first: '',
+    last: '',
+    email: '',
 }

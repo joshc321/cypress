@@ -48,7 +48,7 @@ function TopBar(props){
             <Box sx={{ pt: 19 }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ml: 2, mt: 1, mr: 2}}>
                     <Link onClick={props.onClick} fontWeight="fontWeightBold" variant="h4" underline="hover">{props.secondary}</Link>
-                    <Link onClick={()=> navigate(`/edit-customer/:${props.id}`)} color='inherit' underline="hover" variant='body1'>Edit</Link>
+                    <Link onClick={()=> navigate(`/edit-customer/${props.id}`)} color='inherit' underline="hover" variant='body1'>Edit</Link>
                 </Stack> 
                 <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/> 
             </Box>

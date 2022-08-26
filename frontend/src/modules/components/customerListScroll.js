@@ -2,22 +2,17 @@ import { Box, Grid } from '@mui/material'
 import { useState, useEffect } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component';
+import SearchCustomers from './api/search';
 
 import CustomerListSelect from "./customerListSelect";
 
 function CustomerListScroll({searchVal, linkTo})
 {
-    const [customers, setCustomers] = useState(customerList)
-    const [hasMore, setHasMore] = useState(true)
+  const [customers, loading, hasMore, getMore] = SearchCustomers(searchVal)
 
     useEffect(() => {
         console.log("new search woo", searchVal)
     }, [searchVal]);
-
-    const getMore = () => {
-        setCustomers([...customers, ...customerList])
-        setHasMore(false)
-    }
 
 
     return(
@@ -47,141 +42,3 @@ function CustomerListScroll({searchVal, linkTo})
 }
 
 export default CustomerListScroll;
-
-const customerList = [
-    {
-      _id: 'a098d7sf0asdf',
-      first: 'Coral',
-      last: 'Raymond',
-      phone: '951 537 4949',
-      address: 
-      {
-        city: 'Greenwood',
-        state: 'Coral',
-      }
-    },
-    {
-      _id: 'ldaf80d0a98d7f',
-      first: 'Elin',
-      last: 'Stamp',
-      phone: '951 537 4949',
-      address: 
-      {
-        city: 'Amarillo',
-        state: 'TX',
-      }
-    },
-    {
-      _id: 'aasd8sodify0ad',
-      first: 'Dominykas',
-      last: 'Crawford',
-      phone: '951 537 4949',
-      address: 
-      {
-        city: 'Bristow',
-        state: 'VA',
-      }
-    },
-    {
-      _id: 'a7se8dw6fy345',
-      first: 'Hugo',
-      last: 'Woodward',
-      phone: '951 537 4949',
-      address: 
-      {
-        _id: '0q19834a98wsd7yf',
-        city: 'Leland',
-        state: 'NC',
-      }
-    },
-    {
-        _id: 'a098d7sf0asdf',
-        first: 'Coral',
-        last: 'Raymond',
-        phone: '951 537 4949',
-        address: 
-        {
-          city: 'Greenwood',
-          state: 'Coral',
-        }
-      },
-      {
-        _id: 'ldaf80d0a98d7f',
-        first: 'Elin',
-        last: 'Stamp',
-        phone: '951 537 4949',
-        address: 
-        {
-          city: 'Amarillo',
-          state: 'TX',
-        }
-      },
-      {
-        _id: 'aasd8sodify0ad',
-        first: 'Dominykas',
-        last: 'Crawford',
-        phone: '951 537 4949',
-        address: 
-        {
-          city: 'Bristow',
-          state: 'VA',
-        }
-      },
-      {
-        _id: 'a7se8dw6fy345',
-        first: 'Hugo',
-        last: 'Woodward',
-        phone: '951 537 4949',
-        address: 
-        {
-          _id: '0q19834a98wsd7yf',
-          city: 'Leland',
-          state: 'NC',
-        }
-      },
-      {
-        _id: 'a098d7sf0asdf',
-        first: 'Coral',
-        last: 'Raymond',
-        phone: '951 537 4949',
-        address: 
-        {
-          city: 'Greenwood',
-          state: 'Coral',
-        }
-      },
-      {
-        _id: 'ldaf80d0a98d7f',
-        first: 'Elin',
-        last: 'Stamp',
-        phone: '951 537 4949',
-        address: 
-        {
-          city: 'Amarillo',
-          state: 'TX',
-        }
-      },
-      {
-        _id: 'aasd8sodify0ad',
-        first: 'Dominykas',
-        last: 'Crawford',
-        phone: '951 537 4949',
-        address: 
-        {
-          city: 'Bristow',
-          state: 'VA',
-        }
-      },
-      {
-        _id: 'a7se8dw6fy345',
-        first: 'Hugo',
-        last: 'Woodward',
-        phone: '951 537 4949',
-        address: 
-        {
-          _id: '0q19834a98wsd7yf',
-          city: 'Leland',
-          state: 'NC',
-        }
-      },
-  ]
