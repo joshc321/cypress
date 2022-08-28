@@ -1,15 +1,7 @@
-import Cookies from 'js-cookie'
+import useGet from './useGet'
 
-async function GetUser() {
-    const requestOptions = {
-        method: 'GET',
-        mode: 'cors',
-        headers: { 
-            'Authorization': 'Bearer ' + Cookies.get('access_token')
-         },
-    };
-    const response = await fetch(`/api/protected`, requestOptions)
-    return response.json()
+function GetUser(id='') {
+    return useGet(`/api/users/${id}`)
 }
 
-export default GetUser
+export default GetUser;

@@ -4,11 +4,13 @@
 
 import express from "express";
 import Customer from "../models/customer";
+import ServiceSchedule from "../models/scheduledservice";
 
 //helpers
 import authenticateToken from "../middleWare/authorization";
 import permissionLevel from "../middleWare/permissionLevel";
 import setCompany from "../middleWare/setCompany";
+import moment from "moment";
 
 const router = express.Router()
 
@@ -38,6 +40,12 @@ router.get('/customer/:id', authenticateToken, (req,res,next)=>{
         
         if(customer){
             await customer.populate('services')
+            await customer.populate({
+                path: 'scheduledService',
+                match: { date: { $gte: moment().startOf('day').unix() } },
+                options: { sort: { date: -1 }, limit: 1 },
+                select: '_id date -customer'
+            })
             res.send(customer)
         }
         else res.status(404).send({ 'error' : 'Customer not found' })

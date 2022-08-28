@@ -8,8 +8,8 @@ function UsersList({users})
     return(
         <Box sx={{ pt: 25, pb: 8 }}>
             <List>
-                {users.map((data, index) => (
-                    <ListItemThreeIn key={index} primaryText={`${data.first} ${data.last}`} secondaryText={data.email} topText={permissions[data.permissionLevel]} linkTo={`/user/${data._id}`}/>
+                {users.map((data) => (
+                    <ListItemThreeIn key={data?._id} primaryText={`${data?.first} ${data?.last}`} secondaryText={data?.email} topText={permissions[data?.permissionLevel]} linkTo={`/user/${data?._id}`}/>
                 ))}
             </List>
         </Box>

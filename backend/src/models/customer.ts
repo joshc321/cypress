@@ -13,6 +13,7 @@ interface Customer {
     phone: string;
     address: {
         street: string;
+        city: string;
         state: string;
         zip: string;
     };
@@ -129,6 +130,13 @@ CustomerSchema.virtual('services', {
     ref: 'ServiceRecord',
     localField: '_id',
     foreignField: 'customer'
+});
+
+CustomerSchema.virtual('scheduledService', {
+    ref: 'ServiceSchedule',
+    localField: '_id',
+    foreignField: 'customer',
+    justOne : true,
 });
 
 CustomerSchema.pre('save', async function(next){

@@ -1,17 +1,8 @@
-import Cookies from 'js-cookie'
+import postData from './postData'
 
-async function NewService(data={}, id='') {
-    const requestOptions = {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 
-            'Authorization': 'Bearer ' + Cookies.get('access_token'),
-            'Content-Type': 'application/json'
-         },
-        body: JSON.stringify(data)
-    };
-    const response = await fetch(`/api/services/${id}`, requestOptions)
-    return response.json()
+async function postService(data={}, id='') {
+    data.customer = id
+    return postData('/api/servicerecord', data);
 }
 
-export default NewService
+export default postService;

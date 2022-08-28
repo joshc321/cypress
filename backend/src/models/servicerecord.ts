@@ -8,6 +8,7 @@ interface ServiceRecord {
     date: string;
     address: {
         street: string;
+        city: string;
         state: string;
         zip: string;
     };
@@ -30,6 +31,10 @@ const ServiceRecordSchema = new Schema({
         street: {
             type: String,
             maxlength: 255,
+        },
+        city: {
+            type: String,
+            maxlength: 31,
         },
         state: {
             type: String,

@@ -13,12 +13,9 @@ import * as svg from 'save-svg-as-png'
 import GetCustomer from '../components/api/getCustomer'
 import GetServiceRecords from '../components/api/getServiceRecords'
 import MapsSelector from '../components/api/mapsSelector'
-import CreateFullAddress from '../components/helpers/createFullAddress'
-import ToStrDate from '../components/helpers/toStringDate'
 import SimpleCustomerView from '../components/simpleCustomerView'
 import ServiceRecordsList from '../components/serviceRecordsList'
 import SimpleSpeedDial from '../components/simpleSpeedDial'
-import moment from 'moment'
 import useAuth from '../components/api/useAuth'
 
 function Customer(){
@@ -37,7 +34,7 @@ function Customer(){
 
     return(
         <div>
-            <TopBar onClick={onClick} primary={!loading ? customer.first + ' ' + customer.last : 'Customer Not Found'} id={slug} secondary="Information"/>
+            <TopBar onClick={onClick} primary={customer?._id ? customer.first + ' ' + customer.last : 'Customer Not Found'} id={slug} secondary="Information"/>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={showQR}
@@ -60,7 +57,7 @@ function Customer(){
                 </Box>
                 <Divider sx={{pt: 1, borderBottomWidth: 3 }}/>
             </List>
-            <ServiceRecordsList services={customer.services} />
+            <ServiceRecordsList services={customer?.services} />
             </Box>
             <SimpleSpeedDial 
                 actions={[

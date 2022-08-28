@@ -13,6 +13,7 @@ router.get('/search', authenticateToken, (req,res,next)=>{
     const query : string = req.query.q as string;
     const page : number = req.query.page ? req.query.page as unknown as number : 0;
     const results = 10;
+
     if(query)
     {
         if(req.user.permissionLevel >= 2)

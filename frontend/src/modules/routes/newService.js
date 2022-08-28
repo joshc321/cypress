@@ -1,38 +1,30 @@
-import { IconButton, Box, Typography,
-    Stack, TextField, Grid, FormControlLabel,
-    Checkbox
+import { Box, Stack
 } from '@mui/material';
-import { ArrowBackIosNew } from '@mui/icons-material';
 import MainButton from '../components/mainbutton';
 import BottomNavigationBar from '../components/bottomNavigationBar';
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
 import AppForm from '../components/AppForm';
 import { useNavigate, useParams } from 'react-router-dom';
-import PostService from '../components/api/postService'
-import CheckAuth from '../components/api/authorized';
-import ConvertDate from '../components/helpers/convertDate';
+import postService from '../components/api/postService'
 import SimpleFormTopper from '../components/simpleFormTopper';
 import AddressField from '../components/formComponents/addressField';
 import DateField from '../components/formComponents/dateField';
 import PriceField from '../components/formComponents/priceField';
 import MultiBaseField from '../components/formComponents/multiBaseField';
-
 import moment from 'moment';
 import SimpleTopBar from '../components/simpleTopBar';
-import TextBaseField from '../components/formComponents/textBaseField';
+import useAuth from '../components/api/useAuth';
 
 function NewService() {
 
+    useAuth();
     const navigate = useNavigate();
 
     let { slug } = useParams(); 
-    slug = slug.substring(1);
-
     const [checked, setChecked] = useState(true);
-
-    const [values, setValues] = useState(serviceRecordExample);
+    const [values, setValues] = useState(emptyServiceRecord);
     
-      const handleCheck = (e) => {
+      const handleCheck = (_) => {
           setChecked(!checked)
       }
       const handleEmbededChange = (prop1) => (prop2) => (event) => {
@@ -43,30 +35,26 @@ function NewService() {
         setValues({ ...values, [prop]: event.target.value });
       };
 
-      const handleDate = (prop) => (event) => {
-          let value = Date.parse(event.target.value)
-        setValues({ ...values, [prop]: value });
-      };
-
-      const handleSubmit = async e => {
+      const handleSubmit = e => {
         e.preventDefault()
-        const data = {
-            date: new Date(values.date).toISOString(),
-            address: values.address,
-            city: values.city,
-            state: values.state,
-            zip: values.zip,
-            service: values.service,
-            notes: values.notes,
-            bill: values.bill,
-            price: values.price,
-        }
-        //console.log(values.date)
-        //console.log(data.date)
-        await PostService(data, slug)
-        //console.log(result);
-        navigate(-1);
-        //navigate(`/services/s?id=${data['id']}`)
+        
+        postService(values, slug)
+            .then(rsp => {
+                const [body, status] = rsp;
+                switch(status)
+                {
+                    case 200:
+                        navigate(-1);
+                        break;
+                    case 422:
+                        console.error('Server error uproccesable')
+                        break;
+                    case 401:
+                        navigate('/logout');
+                        break;
+                    default:
+                        console.error(rsp)
+                }})
       }
 
     return(
@@ -86,7 +74,7 @@ function NewService() {
                         
                         <MultiBaseField label={"Service"} value={values.service} handleChange={handleChange('service')} />
                         <MultiBaseField label={"Notes"} value={values.notes} handleChange={handleChange('notes')} />
-                        <TextBaseField label="Notes" value={values.notes} handleChange={handleChange('notes')}/>
+                        <PriceField value={values.cost} handleChange={handleChange('cost')} label="Cost"/>
                         <PriceField value={values.bill} handleChange={handleChange('bill')} label="Bill"/>
                         <MainButton text={"Create"} />
                     </Stack>
@@ -100,16 +88,16 @@ function NewService() {
 export default NewService
 
 
-const serviceRecordExample = {
+const emptyServiceRecord = {
     date: moment(),
     address: {
-        street: 'test',
-        city: 'uhhh',
-        state: 'CA',
-        zip: 'idk'
+        street: '',
+        city: '',
+        state: '',
+        zip: ''
     },
-    service: 'some things',
-    notes: 'ds;flaksd',
-    bill: '43',
-    cost: '23',
+    service: '',
+    notes: '',
+    bill: '',
+    cost: '',
 }

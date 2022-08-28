@@ -31,6 +31,7 @@ function EditCustomer() {
     const [error, setError] = useState(false);
     const [customer, setCustomer] = useState(emptyCustomer);
     const [checked, setChecked] = useState(true);
+    const [errorText, setErrorText] = useState("Please input required fields")
 
     useEffect(() => {
         if(!loading) setCustomer({...customer, ...custCall})
@@ -63,6 +64,10 @@ function EditCustomer() {
                         case 401:
                             navigate('/logout');
                             break;
+                        case 403:
+                            setErrorText('Not Authorized');
+                            setError(true);
+                            break;
                         default:
                             setError(true);
                             console.error(rsp)
@@ -90,7 +95,7 @@ function EditCustomer() {
                             {!checked ?
                             <DurationField duration={customer.serviceInterval} handleChange={handleEmbededChange('serviceInterval')}/>
                             : ''}
-                            {error ? <Typography variant="body2" color="error" >Please input required fields</Typography> : ""}
+                            {error ? <Typography variant="body2" color="error" >{errorText}</Typography> : ""}
                             <MainButton text={"Update"} />
                         </Stack>
                     </form>

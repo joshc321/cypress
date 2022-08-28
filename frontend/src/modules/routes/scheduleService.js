@@ -18,9 +18,11 @@ import PriceField from "../components/formComponents/priceField";
 import CustomerSelectorField from "../components/formComponents/customerSelectorField";
 import SimpleFormTopper from "../components/simpleFormTopper";
 import postScheduledService from "../components/api/postScheduledService";
+import useAuth from "../components/api/useAuth";
 
 function ScheduleService()
 {
+    useAuth();
     const navigate = useNavigate();
     const query = useQuery();
 

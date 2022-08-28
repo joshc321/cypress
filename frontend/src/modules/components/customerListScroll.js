@@ -1,5 +1,4 @@
 import { Box, Grid } from '@mui/material'
-import { useState, useEffect } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SearchCustomers from './api/search';
@@ -8,15 +7,11 @@ import CustomerListSelect from "./customerListSelect";
 
 function CustomerListScroll({searchVal, linkTo})
 {
-  const [customers, loading, hasMore, getMore] = SearchCustomers(searchVal)
-
-    useEffect(() => {
-        console.log("new search woo", searchVal)
-    }, [searchVal]);
+  const [customers, _, hasMore, getMore] = SearchCustomers(searchVal)
 
 
-    return(
-        <Box sx={{ pt: 10, pb: 8 }}>
+  return(
+      <Box sx={{ pt: 10, pb: 8 }}>
         <InfiniteScroll
           dataLength={customers.length}
           next={getMore}
@@ -31,13 +26,13 @@ function CustomerListScroll({searchVal, linkTo})
           }
           endMessage={
             <p style={{ textAlign: "center" }}>
-              <b>No more cutomers</b>
+              <b> No more cutomers </b>
             </p>
           }
         >
             <CustomerListSelect customers={customers} linkTo={linkTo} />
         </InfiniteScroll>
-        </Box>
+      </Box>
     )
 }
 

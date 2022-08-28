@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 function SearchCustomers(search='') {
 
+    const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(0);
 
-    const [error, setError] = useState(false)
 
     const requestOptions = {
         method: 'GET',
@@ -21,23 +22,28 @@ function SearchCustomers(search='') {
     useEffect(() => {
         setLoading(true)
         setHasMore(true)
-        fetch(`/api/search?q=${search}&page=${page}`, requestOptions)
+        setPage(0);
+
+        fetch(`/api/search?q=${search}`, requestOptions)
             .then(response => {
-                if(response.status != 200)
+                switch(response.status)
                 {
-                    setLoading(false)
-                    setError(true)
-                    console.log(response.status)
-                    throw('server errror')
+                    case 200:
+                        return response.json()
+                    case 401:
+                        navigate('/logout');
+                        break;
+                    default:
+                        setLoading(false)
+                        console.error(response.status)
+                        throw('server errror')
                 }
-                return response.json()
             })
             .then((rsp) => {
                 setLoading(false)
                 setCustomers(rsp)
-                if(rsp)
+                if(rsp && Array.isArray(rsp) && rsp.length > 10)
                 {
-                    setError(false)
                     setPage(page + 1)
                 }
                 else setHasMore(false)
@@ -46,26 +52,28 @@ function SearchCustomers(search='') {
     }, [search])
 
     const getMore = () => {
-        console.log('gettingm more')
         setLoading(true)
         setHasMore(true)
         fetch(`/api/search?q=${search}&page=${page}`, requestOptions)
             .then(response => {
-                if(response.status != 200)
+                switch(response.status)
                 {
-                    setLoading(false)
-                    setError(true)
-                    console.error(response.status)
-                    throw('server errror')
+                    case 200:
+                        return response.json()
+                    case 401:
+                        navigate('/logout');
+                        break;
+                    default:
+                        setLoading(false)
+                        console.error(response.status)
+                        throw('server errror')
                 }
-                return response.json()
             })
             .then((rsp) => {
                 setLoading(false)
                 setCustomers([...customers, ...rsp])
                 if(rsp)
                 {
-                    setError(false)
                     setPage(page + 1)
                 }
                 else setHasMore(false)

@@ -1,15 +1,16 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 import BottomNavigationBar from "../components/bottomNavigationBar"
 import useWindowDimensions from '../components/useWindowDimensions'
 import { useNavigate } from 'react-router-dom'
 import disableScroll from 'disable-scroll';
-import CheckAuth from '../components/api/authorized'
 import QrScanner from 'qr-scanner'
 import { RemoveScrollBar } from 'react-remove-scroll-bar'
 import AddButton from '../components/addButton'
+import useAuth from '../components/api/useAuth';
 
 function Scan(){
 
+    useAuth()
     const navigate = useNavigate();
 
     let { height, width } = useWindowDimensions();

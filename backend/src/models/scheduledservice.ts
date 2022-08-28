@@ -40,7 +40,7 @@ const ServiceScheduleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Customer',
         required: [true, 'Customer Field is Required'],
-        autopopulate: true
+        autopopulate: { maxDepth: 0 }
     }
 },
 {

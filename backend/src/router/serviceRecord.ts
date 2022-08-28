@@ -39,8 +39,12 @@ router.get('/servicerecord/:id', authenticateToken, (req,res,next)=>{
 
     const body = req.user.permissionLevel == 2 ? { _id: req.params.id } : { _id: req.params.id, company: req.user.company };
 
-    ServiceRecord.findOne(body).then((servicerecord) =>{
-        if(servicerecord) res.send(servicerecord)
+    ServiceRecord.findOne(body).then(async (servicerecord) =>{
+        if(servicerecord)
+        {
+            await servicerecord.populate('customer')
+            res.send(servicerecord)
+        }
         else res.status(404).send({ 'error' : 'Service Record not found' })
     }).catch(next);
 });

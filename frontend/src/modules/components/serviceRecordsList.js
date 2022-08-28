@@ -1,9 +1,10 @@
-import { Box, ListItemButton, List, ListItem, ListItemText, Typography, Divider } from '@mui/material'
+import { Box, ListItemButton, List, ListItem, Divider } from '@mui/material'
 import { Event, Note, Notes, LocalAtm, ArrowForwardIos } from '@mui/icons-material';
 
 import { Link } from 'react-router-dom';
 
 import TextListItem from './textListItem';
+import formatDate from '../components/helpers/formatDate'
 
 function ServiceRecordsList({services})
 {
@@ -26,7 +27,7 @@ function ServiceRecordsList({services})
                                 to={`/logs/${data._id}`}
                             >
                                 <List>
-                                    <TextListItem text={data.date.format()} icon={<Event />} />
+                                    <TextListItem text={formatDate(data.date)} icon={<Event />} />
                                     <TextListItem text={data.service} icon={<Note />} />
                                     <TextListItem text={data.notes} icon={<Notes />} />
                                     <TextListItem text={data.bill} icon={<LocalAtm />} />

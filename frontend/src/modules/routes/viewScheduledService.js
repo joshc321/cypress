@@ -1,45 +1,24 @@
-import { useState } from "react";
-
 import TopBar from "../components/topBar";
 import SimpleScheduledServiceView from "../components/simpleScheduledServiceView";
 import BottomNavigationBar from "../components/bottomNavigationBar";
 
-import moment from "moment";
 import { useParams } from 'react-router-dom'
+import useAuth from '../components/api/useAuth'
+import GetScheduledService from "../components/api/getScheduledService";
 
 function ViewScheduledService()
 {
-    const [error, setError] = useState(false)
-    const [data, setData] = useState(dataExample)
+    useAuth();
     let { slug } = useParams();
+    const [data, loading] = GetScheduledService(slug)
 
     return(
         <div>
-            <TopBar primary="Scheduled Service" secondary={!error ? "Information" : "Service Not Found"}/>
-            <SimpleScheduledServiceView data={data} />
+            <TopBar primary="Scheduled Service" secondary={data._id ? "Information" : "Service Not Found"}/>
+            {!loading && <SimpleScheduledServiceView data={data} />}
             <BottomNavigationBar />
         </div>
     )
 }
 
 export default ViewScheduledService;
-
-const dataExample = 
-{
-    date: moment(),
-    service: 'did some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsthingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some thingsdid some things',
-    notes: 'they were there',
-    estimate: '32.32',
-    customer: 
-    {
-      _id: 'a9s8df70a9d',
-      first: 'Coral',
-      last: 'Raymond',
-      address: {
-        street: '1123 S State Street',
-        city: 'hemet',
-        state: 'CA',
-        zip: '92543',
-        },
-    }
-}

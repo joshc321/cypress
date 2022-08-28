@@ -1,85 +1,52 @@
 import TopBarBase from "../components/topBarBase";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import UsersList from "../components/usersList";
 import BottomNavigationBar from "../components/bottomNavigationBar";
+import useAuth from "../components/api/useAuth";
+import GetUsers from "../components/api/getUsers";
+import GetMe from "../components/api/getMe"
+import getCompany from "../components/api/getCompany";
+import { useNavigate } from 'react-router-dom'
 
 function Users()
 {
+    useAuth();
+    const navigate = useNavigate();
+    const [me, loadingM] = GetMe();
+    const [users, loadingU] = GetUsers();
+    const [company, setCompany] = useState({name: 'loading'})
 
-    const [company, setCompany] = useState(companyDemo);
-    const [users, setUsers] = useState(usersDemo);
+    useEffect(() => {
+        if(me && me.company)
+        {
+            getCompany(me.company)
+              .then((rsp) => {
+                const [data, status] = rsp;
+                switch(status)
+                {
+                    case 200:
+                        setCompany(data)
+                        break;
+                    case 422:
+                        console.error(rsp)
+                        break;
+                    case 401:
+                        navigate('/logout');
+                        break;
+                    default:
+                        console.error(rsp)
+                }
+              })
+        }
+    }, [loadingM])
 
     return(
         <div>
             <TopBarBase primary={company?.name} secondary={"Users"}/>
-            <UsersList users={users} />
+            {!loadingU && <UsersList users={users} />}
             <BottomNavigationBar />
         </div>
     )
 }
 
 export default Users;
-
-const companyDemo = {
-    name: 'Aqua Works',
-    active: true,   
-}
-
-const usersDemo = [
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 2,
-    },
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 2,
-    },
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 2,
-    },
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 1,
-    },
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 0,
-    },
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 1,
-    },
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 1,
-    },
-    {
-        _id: '0s98f7dg098sdfg',
-        first: 'Josh',
-        last: 'Cordero',
-        email: 'joshcordero2134@gmail.com',
-        permissionLevel: 0,
-    }
-]

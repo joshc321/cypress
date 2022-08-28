@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react'
 
-function useGet(url, body={}) {
+function useGet(url) {
 
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);

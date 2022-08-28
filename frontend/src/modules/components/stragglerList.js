@@ -1,15 +1,16 @@
 import ListItemThreeIn from "./listItemThreeIn";
 import { List, Box } from "@mui/material";
+import formatDate from "./helpers/formatDate";
 
 // change key to data._id when connecting to backed
 
-function StragglerList({test})
+function StragglerList({customers})
 {
     return(
         <Box sx={{pt: 25, pb: 8}}>
             <List>
-                {test.map((data, index) => (
-                    <ListItemThreeIn key={index} primaryText={`${data.first} ${data.last}`} secondaryText={data.nextService.format()} topText={data.phone} linkTo={`/customer/${data._id}`}/>
+                {customers.map((data) => (
+                    <ListItemThreeIn key={data._id} primaryText={`${data.first} ${data.last}`} secondaryText={formatDate(data.nextService)} topText={data.phone} linkTo={`/customer/${data._id}`}/>
                 ))}
             </List>
         </Box>
