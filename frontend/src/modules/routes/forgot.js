@@ -14,7 +14,7 @@ function Forgot(){
     const [email, setEmail] = useState('')
     const [error, setError] = useState(false)
 
-    const handleChange = () => (event) => {
+    const handleChange =  (event) => {
         setEmail(event.target.value)
     }
 
@@ -27,6 +27,7 @@ function Forgot(){
         }
 
         if(email){
+            console.log(email)
             PostForgot({email: email})
             navigate('/login')
         }
@@ -38,7 +39,7 @@ function Forgot(){
             <AppForm>
                 <form noValidate onSubmit={handleSubmit}>
                     <Stack spacing={2}>
-                    <EmailField value={email} error={error} handleChange={handleChange('email')}/>
+                    <EmailField value={email} error={error} handleChange={handleChange}/>
                     {error ? <Typography variant="body2" color="error" >Input valid email</Typography> : ""}
                     <MainButton text={"Send"} />
                     </Stack>

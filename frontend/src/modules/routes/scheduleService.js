@@ -68,7 +68,7 @@ function ScheduleService()
                         setError(true);
                         console.error(body)
                 }
-              })
+              }).catch(e => console.log("server error"))
         }
     }
 

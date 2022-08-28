@@ -54,7 +54,7 @@ function EditAccount() {
                         setError(true);
                         console.error(rsp)
                 }
-            })
+            }).catch(e => console.log("server error"))
     }
     else setError(true)
     }

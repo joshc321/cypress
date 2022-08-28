@@ -15,7 +15,7 @@ function Users()
     const [me, loadingM] = GetMe();
     const [users, loadingU] = GetUsers();
     const [company, setCompany] = useState({name: 'loading'})
-
+    
     useEffect(() => {
         if(me && me.company)
         {
@@ -36,7 +36,7 @@ function Users()
                     default:
                         console.error(rsp)
                 }
-              })
+              }).catch(e => console.log("server error"))
         }
     }, [loadingM])
 

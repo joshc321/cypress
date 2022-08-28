@@ -64,7 +64,7 @@ router.put('/customer/:id', authenticateToken, permissionLevel, async (req,res,n
                 res.send(customer);
             }
             else res.status(404).send({ 'error' : 'Customer not found' })
-        });
+        }).catch(next);
     }).catch(next);
 });
 

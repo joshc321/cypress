@@ -19,6 +19,7 @@ import AddressField from '../components/formComponents/addressField';
 import DurationField from '../components/formComponents/durationField';
 import MultiBaseField from '../components/formComponents/multiBaseField';
 import useAuth from '../components/api/useAuth';
+import SelectionField from '../components/formComponents/selectionField';
 
 function EditCustomer() {
     useAuth();
@@ -72,7 +73,7 @@ function EditCustomer() {
                             setError(true);
                             console.error(rsp)
                     }
-                })
+                }).catch(e => console.log("server error"))
         }
         else setError(true)
 
@@ -93,10 +94,13 @@ function EditCustomer() {
                             <MultiBaseField label={"System"} value={customer.system} handleChange={handleChange('system')} />
                             <MultiBaseField label={"Notes"} value={customer.notes} handleChange={handleChange('notes')} />
                             {!checked ?
-                            <DurationField duration={customer.serviceInterval} handleChange={handleEmbededChange('serviceInterval')}/>
+                            <>
+                                <DurationField duration={customer.serviceInterval} handleChange={handleEmbededChange('serviceInterval')}/>
+                                <SelectionField label="Status" />
+                            </>
                             : ''}
                             {error ? <Typography variant="body2" color="error" >{errorText}</Typography> : ""}
-                            <MainButton text={"Update"} />
+                            <MainButton text={"Update"} value={false} handleChange={handleChange('straggler')}/>
                         </Stack>
                     </form>
                 </AppForm>
@@ -124,5 +128,6 @@ const emptyCustomer = {
     serviceInterval: {
         duration: 1,
         unit: 'years',
-    }
+    },
+    straggler: false,
 }

@@ -8,11 +8,10 @@ import useAuth from '../components/api/useAuth'
 function Account(){
     useAuth();
     const [user, loading] = GetMe();
-
-    if(!loading){
+    
     return(
         <Box sx={{pb: 10}}>
-            <TopBarLarge primary={"Cypress"} secondary={user.first + ' ' +user.last}/>
+            <TopBarLarge primary={"Cypress"} secondary={!loading && (user.first + ' ' +user.last)}/>
             <Box>
                 <nav aria-label="main user actions">
                     <List>
@@ -29,21 +28,7 @@ function Account(){
             <BottomNavigationBar value={4} />
         </Box>
 
-    )}
-    else{
-        return(
-            'loading...'
-        )
-    }
+    )
 }
 
-export default Account
-
-const userDemo = {
-    first: 'Josh',
-    last: 'Cordero',
-    email: 'Josh@email.com',
-    permissionLevel: 2,
-    company: '9a8sd7f09a8sd',
-    password: 'a-9sd8fyvn-a9w8dufaiousdyf098a7sdf'
-}
+export default Account;

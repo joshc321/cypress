@@ -54,7 +54,7 @@ function NewService() {
                         break;
                     default:
                         console.error(rsp)
-                }})
+                }}).catch(e => console.log("server error"))
       }
 
     return(

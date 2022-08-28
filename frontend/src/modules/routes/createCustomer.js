@@ -69,7 +69,7 @@ function CreateCustomer() {
                             setError(true);
                             console.log(rsp)
                     }
-                })
+                }).catch(e => console.log("server error"))
         }
         else setError(true)
       }

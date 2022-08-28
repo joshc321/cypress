@@ -43,6 +43,7 @@ function AddUser() {
                 switch(status)
                 {
                     case 200:
+                        console.log(body)
                         navigate(`/user/${body._id}`);
                         break;
                     case 422:
@@ -56,7 +57,7 @@ function AddUser() {
                         setError(true);
                         setErrorText('Server Error')
                 }
-              })
+              }).catch(e => console.log("server error"))
         }
         else setError(true)
       }

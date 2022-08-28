@@ -17,7 +17,7 @@ export default function useScheduledServices(selectedDate)
           .then((rsp) => {
             const [body, status] = rsp;
             if(status === 200) setServices(body)
-          })
+          }).catch(e => console.log("server error"))
     }, [selectedDate])
 
     return services;

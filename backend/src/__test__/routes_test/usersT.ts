@@ -137,6 +137,7 @@ function testUsers(app) {
         await supertest(app)
             .put(`/api/users/${user0.id}`)
             .set('Authorization', 'bearer ' + auth)
+            // deepcode ignore NoHardcodedPasswords/test: <please specify a reason of ignoring this>
             .send({ password: 'newpassword' })
             .expect(200)
             .then(async (response) => {

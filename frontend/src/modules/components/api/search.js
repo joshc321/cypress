@@ -42,7 +42,7 @@ function SearchCustomers(search='') {
             .then((rsp) => {
                 setLoading(false)
                 setCustomers(rsp)
-                if(rsp && Array.isArray(rsp) && rsp.length > 10)
+                if(rsp && Array.isArray(rsp) && rsp.length >= 10)
                 {
                     setPage(page + 1)
                 }

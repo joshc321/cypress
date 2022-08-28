@@ -20,6 +20,7 @@ const user1 = {
     first: "user",
     last: "one",
     email: "usr1@gmail.com",
+    // deepcode ignore NoHardcodedPasswords/test: <please specify a reason of ignoring this>
     password: "123456",
     permissionLevel: 1
 }

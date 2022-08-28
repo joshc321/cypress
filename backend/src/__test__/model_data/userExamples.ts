@@ -6,6 +6,7 @@ const noCompanyUser = {
     first: "no",
     last: "company",
     email: "aa@gmail.com",
+    // deepcode ignore NoHardcodedPasswords/test: <please specify a reason of ignoring this>, deepcode ignore NoHardcodedPasswords/test: <please specify a reason of ignoring this>
     password: "akjsdhf&78",
 }
 

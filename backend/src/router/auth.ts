@@ -23,7 +23,7 @@ router.post('/login', (req,res,next)=>{
     User.findOne({ email: req.body.email }).then( async (user)=>{
         if(user && await user.validatePassword(req.body.password)){
             const token = generateAccessToken({id: user._id, permissionLevel: user.permissionLevel, company: user.company});
-            res.send({user, token: token});
+            res.send({token: token});
         }
         else{
             res.status(401).send({error: 'Invalid Login'});

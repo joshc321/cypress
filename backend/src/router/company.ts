@@ -32,7 +32,7 @@ router.put('/company/:id',authenticateToken, permissionLevel, checkCompany, asyn
         Company.findOne({_id: req.params.id}).then((company)=>{
             if(!company) res.status(404).send({ 'error': 'Company not found' });
             else res.send(company);
-        });
+        }).catch(next);
     }).catch(next);
 });
 

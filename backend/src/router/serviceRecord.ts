@@ -20,7 +20,7 @@ router.post('/servicerecord', authenticateToken, setCompany,(req, res, next) => 
             Customer.findByIdAndUpdate(servicerecord.customer, {nextService: servicerecord.date}).then((customer) => {
                 customer.setNextServiceDate();
                 customer.save();
-            })
+            }).catch(next);
         }
         res.send(servicerecord);
     }).catch(next)
@@ -57,7 +57,7 @@ router.put('/servicerecord/:id', authenticateToken, permissionLevel, async (req,
         ServiceRecord.findOne(body).then((servicerecord)=>{
             if(servicerecord) res.send(servicerecord)
             else res.status(404).send({ 'error' : 'Service Record not found' })
-        });
+        }).catch(next);
     }).catch(next);
 });
 

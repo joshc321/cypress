@@ -53,7 +53,7 @@ function User()
                     setError(true);
                     console.error(rsp)
             }
-        })
+        }).catch(e => console.log('server error'))
     }
     
     const handleSubmit = e => {
@@ -79,7 +79,7 @@ function User()
                         setError(true);
                         console.error(rsp)
                 }
-            })
+            }).catch(e => console.log("server error"))
         }
         else setError(true)
     }
