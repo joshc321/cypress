@@ -1,5 +1,5 @@
 import { ListItem, Divider, ListItemButton, ListItemText, Typography } from '@mui/material'
-import { PinDrop, Phone, Event, Note, Notes, EventRepeat, CalendarToday, ArrowForwardIos } from '@mui/icons-material';
+import { PinDrop, Phone, Event, Note, Notes, Autorenew, AccessTime, ArrowForwardIos } from '@mui/icons-material';
 import { Link } from 'react-router-dom'
 
 import MapsSelector from './api/mapsSelector';
@@ -36,8 +36,8 @@ function SimpleCustomerView({data})
             <TextListItemButton text={data?.address?.street} icon={<PinDrop />} handleClick={() => MapsSelector(data?.address?.street)}/>
             <TextListItem text={data?.phone} icon={<Phone />} />
             <TextListItem text={formatDate(data?.lastServiced)} icon={<Event />} />
-            <TextListItem text={formatDate(data?.nextService)} icon={<CalendarToday />} />
-            <TextListItem text={moment.duration(data?.serviceInterval?.duration, data?.serviceInterval?.unit).humanize()} icon={<EventRepeat />} />
+            <TextListItem text={formatDate(data?.nextService)} icon={<AccessTime />} />
+            <TextListItem text={moment.duration(data?.serviceInterval?.duration, data?.serviceInterval?.unit).humanize()} icon={<Autorenew />} />
             <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
             <TextListItem text={data?.system} icon={<Note />} />
             <TextListItem text={data?.notes} icon={<Notes />} />

@@ -42,7 +42,7 @@ router.get('/customer/:id', authenticateToken, (req,res,next)=>{
             await customer.populate('services')
             await customer.populate({
                 path: 'scheduledService',
-                match: { date: { $gte: moment().startOf('day').unix() } },
+                match: { date: { $gte: moment().startOf('day').valueOf() } },
                 options: { sort: { date: -1 }, limit: 1 },
                 select: '_id date -customer'
             })

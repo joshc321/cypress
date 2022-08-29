@@ -1,7 +1,8 @@
 import useGet from './useGet'
+import moment from 'moment';
 
-function GetUpcoming() {
-    return useGet('/api/scheduleplanner')
+function GetUpcoming(date = moment()) {
+    return useGet(`/api/scheduleplanner?month=${date.month()+1}&year=${date.year()}`)
 }
 
 export default GetUpcoming;

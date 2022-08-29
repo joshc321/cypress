@@ -21,7 +21,7 @@ function useGet(url) {
             setData(rsp)
             setLoading(false)
         })
-        .catch((e) => console.error('Server Connection Error'))
+        .catch((e) => console.error('Server Connection Error', e))
     }, [url])
     
     return [data, loading]

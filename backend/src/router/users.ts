@@ -8,7 +8,6 @@ import User from "../models/user"
 import { encryptPassword } from "../helpers/encryption";
 import authenticateToken from "../middleWare/authorization";
 import permissionLevel from "../middleWare/permissionLevel";
-import escapeHtml from 'escape-html'
 
 const router = express.Router()
 
@@ -24,7 +23,7 @@ router.get('/users', authenticateToken, (req,res,next)=>{
     const body = req.user.permissionLevel >= 2 ? {} : { company: req.user.company };
 
     User.find(body).select(['-password']).then((users)=>{
-        res.send(escapeHtml(users));
+        res.send(users);
     }).catch(next);
 });
 

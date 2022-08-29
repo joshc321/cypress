@@ -3,17 +3,25 @@ import StragglerList from "../components/stragglerList";
 import BottomNavigationBar from "../components/bottomNavigationBar";
 import useAuth from '../components/api/useAuth';
 import GetUpcoming from "../components/api/getUpcoming";
+import TopBarDateSelector from "../components/topBarDateSelector";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 
 function NeededServices()
 {
     useAuth();
     
-    const [stragglers, loading] = GetUpcoming();
+    const [selectedDate, setSelectedDate] = useState(moment())
+    const [stragglers, loading] = GetUpcoming(selectedDate);
+
+    const handleChange = (event) => {
+        setSelectedDate(moment(event.target.value))
+    }
 
     return(
         <>
-            <TopBar primary="Upcoming" secondary={"Customers"}/>
+            <TopBarDateSelector primary="Upcoming" secondary="Customers" date={selectedDate} handleChange={handleChange}/>
             {!loading && <StragglerList customers={stragglers} />}
             <BottomNavigationBar value={3} />
         </>

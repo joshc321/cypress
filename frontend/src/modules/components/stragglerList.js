@@ -8,11 +8,12 @@ function StragglerList({customers})
 {
     return(
         <Box sx={{pt: 25, pb: 8}}>
+            {Array.isArray(customers) ?
             <List>
                 {customers.map((data) => (
                     <ListItemThreeIn key={data._id} primaryText={`${data.first} ${data.last}`} secondaryText={formatDate(data.nextService)} topText={data.phone} linkTo={`/customer/${data._id}`}/>
                 ))}
-            </List>
+            </List> : ''}
         </Box>
     )
 }

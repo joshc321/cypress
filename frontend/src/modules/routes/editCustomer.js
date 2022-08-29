@@ -33,9 +33,16 @@ function EditCustomer() {
     const [customer, setCustomer] = useState(emptyCustomer);
     const [checked, setChecked] = useState(true);
     const [errorText, setErrorText] = useState("Please input required fields")
+    const [status, setStatus] = useState('active');
 
     useEffect(() => {
-        if(!loading) setCustomer({...customer, ...custCall})
+        if(!loading) 
+        {
+            setCustomer({...customer, ...custCall})
+            if(custCall?.active === false) setStatus('disabled')
+            else if(custCall?.straggler === true) setStatus('straggler')
+            else if(custCall?.straggler === false) setStatus('active')
+        }
     }, [loading])
 
     const handleChange = (prop) => (event) => {
@@ -43,6 +50,24 @@ function EditCustomer() {
     };
     const handleEmbededChange = (prop1) => (prop2) => (event) => {
     setCustomer({ ...customer, [prop1]:{ ...customer[prop1], [prop2]: event.target.value } });
+    }
+
+    const handleStatusChange = (event) => {
+        switch(event.target.value)
+        {
+            case 'disabled':
+                setStatus('disabled');
+                setCustomer({ ...customer, 'active': false });
+                break;
+            case 'straggler':
+                setStatus('straggler');
+                setCustomer({ ...customer, 'straggler': true, 'active': true });
+                break;
+            case 'active':
+                setCustomer({ ...customer, 'straggler': false, 'active': true });
+                setStatus('active')
+                break;
+        }
     }
 
 
@@ -96,7 +121,7 @@ function EditCustomer() {
                             {!checked ?
                             <>
                                 <DurationField duration={customer.serviceInterval} handleChange={handleEmbededChange('serviceInterval')}/>
-                                <SelectionField label="Status" />
+                                <SelectionField label="Status" value={status} handleChange={handleStatusChange} options={customerOptions}/>
                             </>
                             : ''}
                             {error ? <Typography variant="body2" color="error" >{errorText}</Typography> : ""}
@@ -111,6 +136,21 @@ function EditCustomer() {
 }
 
 export default EditCustomer
+
+const customerOptions = [
+    {
+        value: 'straggler',
+        text: 'straggler'
+    },
+    {
+        value: 'active',
+        text: 'active',
+    },
+    {
+        value: 'disabled',
+        text: 'disabled',
+    }
+]
 
 const emptyCustomer = {
     _id: '',
@@ -130,4 +170,5 @@ const emptyCustomer = {
         unit: 'years',
     },
     straggler: false,
+    active: true,
 }
