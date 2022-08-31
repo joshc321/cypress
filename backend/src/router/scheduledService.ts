@@ -4,6 +4,7 @@
 
 import express from "express";
 import ServiceSchedule from "../models/scheduledservice";
+import Customer from "../models/customer";
 
 //helpers
 import authenticateToken from "../middleWare/authorization";
@@ -14,7 +15,11 @@ const router = express.Router()
 
 router.post('/serviceschedule', authenticateToken, setCompany,(req, res, next) => {
     ServiceSchedule.create(req.body).then((serviceschedule) =>{
-        res.send(serviceschedule);
+        Customer.findById(serviceschedule.customer).then((customer) => {
+            customer._serviceDate = serviceschedule.date;
+            customer.save()
+            res.send(serviceschedule);
+        }).catch(next);
     }).catch(next);
 })
 
@@ -42,7 +47,15 @@ router.put('/serviceschedule/:id', authenticateToken, permissionLevel, async (re
 
     ServiceSchedule.findOneAndUpdate(body,req.body).then(()=>{
         ServiceSchedule.findOne(body).then((serviceschedule)=>{
-            if(serviceschedule) res.send(serviceschedule)
+            
+            if(serviceschedule)
+            {
+                Customer.findById(serviceschedule.customer).then((customer) => {
+                    customer._serviceDate = serviceschedule.date;
+                    customer.save()
+                    res.send(serviceschedule);
+                }).catch(next);
+            }
             else res.status(404).send({ 'error' : 'Service Schedule not found' })
         }).catch(next);
     }).catch(next);

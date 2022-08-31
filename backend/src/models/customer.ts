@@ -116,6 +116,12 @@ const CustomerSchema = new Schema({
         type: Boolean,
         default: true,
         required: [true, 'Active Field is Required']
+    },
+    _serviceDate: {
+        type: Date,
+        default: Date.now,
+        required: true,
+        select: false,
     }
 },
 {
@@ -141,11 +147,11 @@ CustomerSchema.virtual('scheduledService', {
 
 CustomerSchema.pre('save', async function(next){
     if(!this.isModified('lastService') && !this.isModified('serviceInterval.duration') && !this.isModified('serviceInterval.unit')) return next();
-    this.nextService = addToDate(this.lastService, this.serviceInterval.duration, this.serviceInterval.unit)
+    this.nextService = addToDate(this.lastServiced, this.serviceInterval.duration, this.serviceInterval.unit)
 })
 
 CustomerSchema.methods.setNextServiceDate = async function(next: NextFunction){
-    this.nextService = addToDate(this.lastService, this.serviceInterval.duration, this.serviceInterval.unit);
+    this.nextService = addToDate(this.lastServiced, this.serviceInterval.duration, this.serviceInterval.unit);
     next
 };
 

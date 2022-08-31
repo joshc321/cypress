@@ -16,7 +16,9 @@ function NeededServices()
     const [stragglers, loading] = GetUpcoming(selectedDate);
 
     const handleChange = (event) => {
-        setSelectedDate(moment(event.target.value))
+        const date = moment(event.target.value, "yyyy-MM", true)
+        if(date.isValid())  setSelectedDate(moment(event.target.value))
+        else console.error('invalid date')
     }
 
     return(
