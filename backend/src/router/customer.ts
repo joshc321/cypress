@@ -39,7 +39,10 @@ router.get('/customer/:id', authenticateToken, (req,res,next)=>{
     Customer.findOne(body).then(async (customer) =>{
         
         if(customer){
-            await customer.populate('services')
+            await customer.populate({
+                path: 'services',
+                options: { sort: { date: -1 } }
+            })
             await customer.populate({
                 path: 'scheduledService',
                 match: { date: { $gte: moment().startOf('day').valueOf() } },

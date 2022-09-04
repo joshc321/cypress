@@ -14,6 +14,7 @@ import MultiBaseField from '../components/formComponents/multiBaseField';
 import moment from 'moment';
 import SimpleTopBar from '../components/simpleTopBar';
 import useAuth from '../components/api/useAuth';
+import SelectionField from '../components/formComponents/selectionField';
 
 function NewService() {
 
@@ -69,7 +70,10 @@ function NewService() {
                         <DateField value={values.date} handleChange={handleChange('date')} required={false} />
 
                         {!checked ? 
-                            <AddressField address={values.address} handleChange={handleEmbededChange('address')} required={false} />
+                            <>
+                                <SelectionField label="Type" value={values.fullService} handleChange={handleChange('fullService')} options={serviceOptions}/>
+                                <AddressField address={values.address} handleChange={handleEmbededChange('address')} required={false} />
+                            </>
                         : ''}
                         
                         <MultiBaseField label={"Service"} value={values.service} handleChange={handleChange('service')} />
@@ -87,6 +91,16 @@ function NewService() {
 
 export default NewService
 
+const serviceOptions = [
+    {
+        value: true,
+        text: 'Full Service'
+    },
+    {
+        value: false,
+        text: 'Partial Service',
+    },
+]
 
 const emptyServiceRecord = {
     date: moment(),
@@ -100,4 +114,5 @@ const emptyServiceRecord = {
     notes: '',
     bill: '',
     cost: '',
+    fullService: true,
 }
