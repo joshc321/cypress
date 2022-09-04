@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { useState } from 'react';
 import CalendarTopBar from '../components/calendarTopBar';
-import { Box, Button } from '@mui/material'
+import { Box, Button, Link } from '@mui/material'
 
 
 function Test() {
@@ -19,6 +19,7 @@ function Test() {
                 <Button onClick={() => setSelectedDate(moment(selectedDate).add(1,'day').startOf('day'))}>
                   Forward
                 </Button>
+                <Link to={'t'} color='inherit' underline="hover" variant='body1'>Edit</Link>
             </Box>
         </>
     )

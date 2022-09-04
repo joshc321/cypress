@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-export default function TextBaseField({label, value, handleChange})
+export default function TextBaseField({label, value, handleChange, disabled=false})
 {
     return(
         <TextField 
@@ -9,6 +9,11 @@ export default function TextBaseField({label, value, handleChange})
             type="text"
             value={value}
             onChange={handleChange}
+            disabled={disabled}
+
+            InputLabelProps={{
+                shrink: disabled,
+                }}
         />
     )
 }

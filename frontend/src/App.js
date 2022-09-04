@@ -24,6 +24,7 @@ import Stragglers from './modules/routes/stragglers';
 import NeededServices from './modules/routes/neededServices';
 import Users from './modules/routes/users';
 import User from './modules/routes/user';
+import EditScheduled from './modules/routes/editScheduled';
 import Logout from './modules/routes/logout';
 
 import Test from './modules/routes/test';
@@ -47,6 +48,7 @@ function App() {
         <Route path="/scan" element={<Scan />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/scheduleservice" element={<ScheduleService />} />
+        <Route path="/edit-scheduled/:slug" element={<EditScheduled />} />
         <Route path="/selectcustomer" element={<SelectCustomer />} />
         <Route path="/viewscheduledservice/:slug" element={<ViewScheduledService />} />
         <Route path="/stragglers" element={<Stragglers />} />

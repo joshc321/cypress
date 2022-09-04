@@ -34,7 +34,7 @@ function Customer(){
 
     return(
         <div>
-            <TopBar onClick={onClick} primary={customer?._id ? customer.first + ' ' + customer.last : 'Customer Not Found'} id={slug} secondary="Information"/>
+            <TopBar onClick={onClick} primary={customer?._id ? customer.first + ' ' + customer.last : 'Customer Not Found'} id={slug} to='/edit-customer' secondary="Information"/>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={showQR}
@@ -49,7 +49,7 @@ function Customer(){
                     </IconButton>
                 </Box>
             </Backdrop>
-            <Box sx={{pt: 0, pb: 8}}>
+            <Box sx={{pt: 25, pb: 8}}>
             <List>
                 <SimpleCustomerView data={customer}/>
                 <Box sx={{ml: 2, mt: 1}}>

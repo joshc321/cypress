@@ -14,7 +14,7 @@ function ViewScheduledService()
 
     return(
         <div>
-            <TopBar primary="Scheduled Service" secondary={data._id ? "Information" : "Service Not Found"}/>
+            <TopBar primary="Scheduled Service" secondary={data._id ? "Information" : "Service Not Found"} id={slug} to="/edit-scheduled"/>
             {!loading && <SimpleScheduledServiceView data={data} />}
             <BottomNavigationBar />
         </div>
