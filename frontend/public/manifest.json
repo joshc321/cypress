@@ -3,13 +3,27 @@
   "short_name": "Cypress",
   "lang": "en-US",
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#1f1f1f",
   "icons": [
     {
       "src": "icons-512.png",
+      "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     }
   ],
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "shortcuts": [
+    {
+      "name": "Schedule Service",
+      "short_name": "Schedule",
+      "description": "Create a new scheduled service",
+      "url": "/scheduleservice"
+    }
+  ]
 }
