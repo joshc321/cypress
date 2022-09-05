@@ -15,6 +15,7 @@ import serviceRecordRoute    from './router/serviceRecord'
 import scheduledServiceRoute from './router/scheduledService'
 import schedulePlannerRoute  from './router/schedulePlanner'
 import CustomerSearchRoute   from './router/customerSearch'
+import resetPasswordRoute    from './router/resetPassword'
 
 import CreateFirstUser from './helpers/createFirstUser'
 
@@ -39,6 +40,7 @@ app.use('/api', CustomerSearchRoute);
 app.use('/api', serviceRecordRoute);
 app.use('/api', scheduledServiceRoute);
 app.use('/api', schedulePlannerRoute);
+app.use('/api', resetPasswordRoute);
 
 app.use((req, res, next)=>{
   res.status(404).send({error: 'not found'});

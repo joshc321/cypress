@@ -17,9 +17,14 @@ const router = express.Router()
 router.post('/servicerecord', authenticateToken, setCompany,(req, res, next) => {
     ServiceRecord.create(req.body).then((servicerecord) =>{
         if(servicerecord.fullService){
-            Customer.findByIdAndUpdate(servicerecord.customer, {lastServiced: servicerecord.date}).then((customer) => {
-                customer.setNextServiceDate(next);
-                customer.save();
+            console.log(req.body)
+            Customer.findById(servicerecord.customer).then(async (customer) => {
+                if(customer)
+                {
+                    customer.lastServiced = servicerecord.date;
+                    await customer.setNextServiceDate();
+                    await customer.save();
+                }
             }).catch(next);
         }
         res.send(servicerecord);

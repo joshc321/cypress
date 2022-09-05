@@ -1,12 +1,6 @@
-async function PostResetPassword(data={}) {
-    const requestOptions = {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    };
-    const response = await fetch('/api/auth/reset', requestOptions)
-    return response.json()
-}
+import postData from "./postData";
 
-export default PostResetPassword
+export default function PostResetPassword(data={})
+{
+    return postData('/api/reset', data)
+}

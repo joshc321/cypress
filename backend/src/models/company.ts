@@ -2,9 +2,9 @@
  @module Company
 */
 
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-interface Company {
+interface Company extends mongoose.Document {
     name: string;
     active: boolean;
 }
@@ -25,6 +25,6 @@ const CompanySchema = new Schema({
     timestamps: true
 });
 
-const Company = model('Company', CompanySchema);
+const Company = model<Company>('Company', CompanySchema);
 
 export default Company;

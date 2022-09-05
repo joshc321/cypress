@@ -29,7 +29,8 @@ function Forgot(){
         if(email){
             console.log(email)
             PostForgot({email: email})
-            navigate('/login')
+             .then((rsp) => navigate('/login'))
+             .catch(e => console.log(e))
         }
     }
 

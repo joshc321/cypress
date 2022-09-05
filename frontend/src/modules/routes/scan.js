@@ -52,6 +52,7 @@ function Scan(){
               }
         );
         qrScanner.start()
+        QrScanner.listCameras().then(rst => console.log(rst))
         
         const scanFileQr = event => {
             const selected = file.current.files[0];

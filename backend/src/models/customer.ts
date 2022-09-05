@@ -2,12 +2,12 @@
  @module Customer
 */
 
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import { NextFunction } from 'express';
 
 import addToDate from '../helpers/addToDate'
 
-interface Customer {
+interface Customer extends mongoose.Document {
     first: string;
     last: string;
     phone: string;
@@ -26,8 +26,11 @@ interface Customer {
         duration: Number;
         unit: String;
     };
+    nextService: Date;
     straggler: boolean;
     active: boolean;
+    _serviceDate: Date;
+    setNextServiceDate: Function;
 }
 
 const CustomerSchema = new Schema({
@@ -147,7 +150,10 @@ CustomerSchema.virtual('scheduledService', {
 
 CustomerSchema.pre('save', async function(next){
     if(!this.isModified('lastService') && !this.isModified('serviceInterval.duration') && !this.isModified('serviceInterval.unit')) return next();
-    this.nextService = addToDate(this.lastServiced, this.serviceInterval.duration, this.serviceInterval.unit)
+    if(this.serviceInterval)
+    {
+        this.nextService = new Date(addToDate(this.lastServiced, this.serviceInterval.duration, this.serviceInterval.unit));
+    }
 })
 
 CustomerSchema.methods.setNextServiceDate = async function(next: NextFunction){
@@ -155,6 +161,6 @@ CustomerSchema.methods.setNextServiceDate = async function(next: NextFunction){
     next
 };
 
-const Customer = model('Customer', CustomerSchema);
+const Customer = model<Customer>('Customer', CustomerSchema);
 
 export default Customer;

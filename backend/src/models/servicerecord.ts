@@ -2,10 +2,10 @@
  @module ServiceRecord
 */
 
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-interface ServiceRecord {
-    date: string;
+interface ServiceRecord extends mongoose.Document {
+    date: Date;
     address: {
         street: string;
         city: string;
@@ -81,6 +81,6 @@ const ServiceRecordSchema = new Schema({
     timestamps: true
 });
 
-const ServiceRecord = model('ServiceRecord', ServiceRecordSchema);
+const ServiceRecord = model<ServiceRecord>('ServiceRecord', ServiceRecordSchema);
 
 export default ServiceRecord;

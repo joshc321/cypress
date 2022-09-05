@@ -40,7 +40,7 @@ function Customer(){
                 open={showQR}
                 onClick={onClick}
             >
-                <Box alignItems="center" justifyContent="center">
+                <Box sx={{ pt: 25 }} alignItems="center" justifyContent="center">
                     <IconButton onClick={downloadQR}>
                     <QrCode 
                         id="12345"

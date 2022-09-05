@@ -17,4 +17,12 @@ function generateAccessToken(payload: object) {
     return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1800s' });
 }
 
-export { encryptPassword, checkPassword, generateAccessToken } 
+function generatePasswordToken(payload: object) {
+    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '300s' })
+}
+
+function decodeToken(token) {
+    return jwt.verify(token, process.env.SECRET_KEY)
+}
+
+export { encryptPassword, checkPassword, generateAccessToken, generatePasswordToken, decodeToken } 

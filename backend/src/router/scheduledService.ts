@@ -16,9 +16,12 @@ const router = express.Router()
 router.post('/serviceschedule', authenticateToken, setCompany,(req, res, next) => {
     ServiceSchedule.create(req.body).then((serviceschedule) =>{
         Customer.findById(serviceschedule.customer).then((customer) => {
-            customer._serviceDate = serviceschedule.date;
-            customer.save()
-            res.send(serviceschedule);
+            if(customer)
+            {
+                customer._serviceDate = serviceschedule.date;
+                customer.save()
+                res.send(serviceschedule);
+            }
         }).catch(next);
     }).catch(next);
 })
@@ -51,9 +54,12 @@ router.put('/serviceschedule/:id', authenticateToken, permissionLevel, async (re
             if(serviceschedule)
             {
                 Customer.findById(serviceschedule.customer).then((customer) => {
-                    customer._serviceDate = serviceschedule.date;
-                    customer.save()
-                    res.send(serviceschedule);
+                    if(customer)
+                    {
+                        customer._serviceDate = serviceschedule.date;
+                        customer.save()
+                        res.send(serviceschedule);
+                    }
                 }).catch(next);
             }
             else res.status(404).send({ 'error' : 'Service Schedule not found' })

@@ -7,7 +7,7 @@ import Company from '../models/company'
 
 import prompts from 'prompts'
 
-const adminCompany: Company = {
+const adminCompany = {
     name: "Cypress",
     active: true,
 }

@@ -29,10 +29,11 @@ function Reset(){
         if(password.length >= 6){
             //console.log(password)
             PostResetPassword({
-                reset_token: slug,
+                resetToken: slug,
                 password: password
             })
-            navigate('/login')
+              .then((rsp) => navigate('/login'))
+              .catch(e => console.log(e))
         }
     };
 

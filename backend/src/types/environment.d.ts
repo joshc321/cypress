@@ -20,6 +20,7 @@ declare global {
             GITHUB_ADMIN_USERNAMES: string;
             ADMIN_EMAILS: string;
             SALT_WORK_FACTOR: number;
+            SENDGRID_API_KEY: string;
         }
     }
 }

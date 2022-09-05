@@ -2,9 +2,9 @@
  @module ServiceSchedule
 */
 
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-interface ServiceSchedule {
+interface ServiceSchedule extends mongoose.Document {
     date: Date;
     service: string;
     notes: string;
@@ -50,6 +50,6 @@ const ServiceScheduleSchema = new Schema({
 ServiceScheduleSchema.plugin(require('mongoose-autopopulate'));
 
 
-const ServiceSchedule = model('ServiceSchedule', ServiceScheduleSchema);
+const ServiceSchedule = model<ServiceSchedule>('ServiceSchedule', ServiceScheduleSchema);
 
 export default ServiceSchedule;

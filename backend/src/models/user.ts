@@ -3,16 +3,18 @@
 */
 
 import { NextFunction } from "express";
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import bcrypt from "bcrypt";
 
-interface User {
+interface User extends mongoose.Document {
     first: string;
     last: string;
     email: string;
     permissionLevel: Number,
     company: Schema.Types.ObjectId;
     password: string;
+    validatePassword: Function;
+    encryptPassword: Function;
 }
 
 const SALT_WORK_FACTOR = Number(process.env.SALT_WORK_FACTOR)
@@ -73,6 +75,6 @@ UserSchema.methods.validatePassword = async function(pass: string) {
     return same;
 };
 
-const User = model('User', UserSchema);
+const User = model<User>('User', UserSchema);
 
 export default User;
