@@ -86,12 +86,11 @@ const CreateFirstUser =  () => {
     User.estimatedDocumentCount().then(count =>{
         if(count === 0)
         {
-            run()
+            run();
         }
     })
     .catch(err => {
         console.log(err);
-        run();
     })
 }
 
