@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react"
-import { Box, Stack, Typography, TextField, InputAdornment, Input } from "@mui/material"
-import { ArrowForwardIos } from "@mui/icons-material";
+import { Box, Stack, Typography } from "@mui/material"
 
 import moment from 'moment';
-import { useNavigate, Link, useParams } from 'react-router-dom';
-
-import useQuery from "../components/hooks/useQuery";
+import { useNavigate, useParams } from 'react-router-dom';
 
 import SimpleTopBar from "../components/simpleTopBar"
 import BottomNavigationBar from "../components/bottomNavigationBar"
@@ -38,7 +35,7 @@ function EditScheduled()
             setValues({...values, ...data})
         }
 
-    }, [loading])
+    }, [loading, data])
     
     const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });

@@ -1,18 +1,15 @@
 import { Box, Typography,
-    Stack, TextField, Grid, FormControlLabel, Checkbox, MenuItem
+    Stack
 } from '@mui/material';
-import { ArrowBackIosNew } from '@mui/icons-material';
 import MainButton from '../components/mainbutton';
 import BottomNavigationBar from '../components/bottomNavigationBar';
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import AppForm from '../components/AppForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import GetCustomer from '../components/api/getCustomer';
 import putCustomer from '../components/api/putCustomer';
 import SimpleFormTopper from '../components/simpleFormTopper';
-import CheckAuth from '../components/api/authorized';
 import TopBar from '../components/topBar';
-import moment from 'moment';
 import NameField from '../components/formComponents/nameField';
 import PhoneField from '../components/formComponents/phoneField';
 import AddressField from '../components/formComponents/addressField';
@@ -43,7 +40,7 @@ function EditCustomer() {
             else if(custCall?.straggler === true) setStatus('straggler')
             else if(custCall?.straggler === false) setStatus('active')
         }
-    }, [loading])
+    }, [loading, custCall])
 
     const handleChange = (prop) => (event) => {
     setCustomer({ ...customer, [prop]: event.target.value });
@@ -67,6 +64,9 @@ function EditCustomer() {
                 setCustomer({ ...customer, 'straggler': false, 'active': true });
                 setStatus('active')
                 break;
+            default:
+                setCustomer({ ...customer, 'straggler': false, 'active': true });
+                setStatus('active');
         }
     }
 
@@ -78,7 +78,7 @@ function EditCustomer() {
         if(customer.last && customer.first && customer.phone && customer.address){
             putCustomer(customer, slug)
                 .then(rsp => {
-                    const [_, status] = rsp;
+                    const [, status] = rsp;
                     switch(status)
                     {
                         case 200:

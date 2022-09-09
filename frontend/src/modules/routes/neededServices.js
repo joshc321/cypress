@@ -1,10 +1,9 @@
-import TopBar from "../components/topBar";
 import StragglerList from "../components/stragglerList";
 import BottomNavigationBar from "../components/bottomNavigationBar";
 import useAuth from '../components/api/useAuth';
 import GetUpcoming from "../components/api/getUpcoming";
 import TopBarDateSelector from "../components/topBarDateSelector";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import moment from "moment";
 
 

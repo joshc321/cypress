@@ -1,18 +1,14 @@
-import { Box,Typography, List, ListItemText,
-    ListItemButton, ListItem, Divider,
-     ListItemIcon, Fab, Backdrop, IconButton
+import { Box,Typography, List, Divider, Backdrop, IconButton
  } from '@mui/material'
-import { Schedule, Build, CalendarMonth
+import { Build, CalendarMonth
  } from '@mui/icons-material'
 import BottomNavigationBar from '../components/bottomNavigationBar'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import TopBar from '../components/topBar'
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
 import  QrCode  from 'react-qr-code'
 import * as svg from 'save-svg-as-png'
 import GetCustomer from '../components/api/getCustomer'
-import GetServiceRecords from '../components/api/getServiceRecords'
-import MapsSelector from '../components/api/mapsSelector'
 import SimpleCustomerView from '../components/simpleCustomerView'
 import ServiceRecordsList from '../components/serviceRecordsList'
 import SimpleSpeedDial from '../components/simpleSpeedDial'
@@ -22,7 +18,7 @@ function Customer(){
     useAuth();
     let { slug } = useParams(); 
     const [showQR, setShowQR] = useState(false)
-    const [customer, loading] = GetCustomer(slug)
+    const [customer, ] = GetCustomer(slug)
 
     const downloadQR = () => {
         svg.saveSvgAsPng(document.getElementById("12345"), "qrcode.png");

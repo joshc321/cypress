@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
-import { Box, Stack, Typography, TextField, InputAdornment, Input } from "@mui/material"
-import { ArrowForwardIos } from "@mui/icons-material";
+import { useState } from "react"
+import { Box, Stack, Typography } from "@mui/material"
 
 import moment from 'moment';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useQuery from "../components/hooks/useQuery";
 
@@ -12,7 +11,6 @@ import BottomNavigationBar from "../components/bottomNavigationBar"
 import AppForm from "../components/AppForm"
 import MainButton from "../components/mainbutton"
 import DateField from "../components/formComponents/dateField";
-import TextBaseField from "../components/formComponents/textBaseField";
 import MultiBaseField from "../components/formComponents/multiBaseField";
 import PriceField from "../components/formComponents/priceField";
 import CustomerSelectorField from "../components/formComponents/customerSelectorField";
@@ -28,7 +26,7 @@ function ScheduleService()
     const query = useQuery();
 
     const [custID, setCustId] = useState(query.get('custid'))
-    const [customer, loading] = GetCustomer(custID)
+    const [customer, loading] = GetCustomer(custID);
     const [error, setError] = useState(false)
     const [values, setValues] = useState({
         customer: custID != null ? custID : '',
@@ -83,7 +81,7 @@ function ScheduleService()
                 <form noValidate onSubmit={handleSubmit}>
                         <Stack spacing={2}>
                             <SimpleFormTopper text="Info" />
-                            <CustomerSelectorField value={!loading && customer ? customer.first + ' ' + customer.last : ''} error={error} />
+                            <CustomerSelectorField value={!loading && customer.first ? customer.first + ' ' + customer.last : ''} error={error} />
                             <DateField value={values.date} handleChange={handleChange('date')} error={error} required/>
                             <MultiBaseField label="Service" value={values.service} handleChange={handleChange('service')} />
                             <PriceField  value={values.estimate} handleChange={handleChange('estimate')} />

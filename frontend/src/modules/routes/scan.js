@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import BottomNavigationBar from "../components/bottomNavigationBar"
 import useWindowDimensions from '../components/useWindowDimensions'
 import { useNavigate } from 'react-router-dom'
-import disableScroll from 'disable-scroll';
 import QrScanner from 'qr-scanner'
 import { RemoveScrollBar } from 'react-remove-scroll-bar'
 import AddButton from '../components/addButton'
@@ -38,6 +37,16 @@ function Scan(){
         }
     }
 
+    const handleDecodeError = (e) => {
+        switch(e)
+        {
+            case 'Scanner error: No QR code found':
+                break
+            default:
+                console.log(e)
+        }
+    }
+
     const scanFile = () => {
         file.current.click();
     }
@@ -49,10 +58,10 @@ function Scan(){
             {
                 highlightScanRegion: true,
                 calculateScanRegion: scanRegion,
+                onDecodeError: handleDecodeError,
               }
         );
         qrScanner.start()
-        QrScanner.listCameras().then(rst => console.log(rst))
         
         const scanFileQr = event => {
             const selected = file.current.files[0];
