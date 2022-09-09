@@ -43,59 +43,55 @@ const questions = [
     }
 ];
 
-// const admin: User = {
-//     first: "admin",
-//     last: "admin",
-//     email: "admin@gmail.com",
-//     permissionLevel: 2,
-//     //company: "null",
-//     password: "admin1",
-// }
+const run = () => {
+    console.log("-----------------------------------------------");
+    console.log("|            Cypress Initial Setup            |");
+    console.log("-----------------------------------------------\n");
+    console.log("Please Input initial admin account details below");
+    
+    prompts(questions).then((response: admin) => {
+        console.log("User Info:")
+        console.log("Company: ", adminCompany.name);
+        console.log("First: ", response.first);
+        console.log("Last: ", response.last);
+        console.log("Email: ", response.email);
+        console.log("Password: ", response.password);
+
+        const admin = 
+        {
+            first: response.first,
+            last: response.last,
+            email: response.email,
+            permissionLevel: 2,
+            company: null,
+            password: response.password,
+        }
+
+        Company.create(adminCompany).then((comp) => {
+            admin.company = comp._id;
+            User.create(admin);
+        })
+
+        console.log("-----------------------------------------------");
+        console.log("|        Cypress Initial Setup Complete       |");
+        console.log("-----------------------------------------------\n");
+
+        console.log("server started...")
+
+    })
+}
 
 const CreateFirstUser =  () => {
 
     User.estimatedDocumentCount().then(count =>{
         if(count === 0)
         {
-            console.log("-----------------------------------------------");
-            console.log("|            Cypress Initial Setup            |");
-            console.log("-----------------------------------------------\n");
-            console.log("Please Input initial admin account details below");
-            
-            prompts(questions).then((response: admin) => {
-                console.log("User Info:")
-                console.log("Company: ", adminCompany.name);
-                console.log("First: ", response.first);
-                console.log("Last: ", response.last);
-                console.log("Email: ", response.email);
-                console.log("Password: ", response.password);
-
-                const admin = 
-                {
-                    first: response.first,
-                    last: response.last,
-                    email: response.email,
-                    permissionLevel: 2,
-                    company: null,
-                    password: response.password,
-                }
-
-                Company.create(adminCompany).then((comp) => {
-                    admin.company = comp._id;
-                    User.create(admin);
-                })
-
-                console.log("-----------------------------------------------");
-                console.log("|        Cypress Initial Setup Complete       |");
-                console.log("-----------------------------------------------\n");
-
-                console.log("server started...")
-
-            })
+            run()
         }
     })
     .catch(err => {
         console.log(err);
+        run();
     })
 }
 
