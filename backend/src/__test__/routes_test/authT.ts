@@ -42,7 +42,8 @@ function testAuth(app) {
             .then(async (response) => {
                 expect(response.body.password === noCompanyUser.password).toBeFalsy()
                 const usr = await User.findById(response.body._id)
-                expect(await usr.validatePassword(noCompanyUser.password)).toBeTruthy()
+                expect(usr).toBeTruthy()
+                if(usr) expect(await usr.validatePassword(noCompanyUser.password)).toBeTruthy()
             })
 
     })

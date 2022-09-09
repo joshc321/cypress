@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon src/app.ts",
+    "start": "tsc && node src/index.js",
     "dev": "tsc && npx nodemon src/app.ts",
     "test": "jest"
   },

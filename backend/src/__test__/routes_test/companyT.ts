@@ -143,7 +143,8 @@ function testCompanys(app) {
             .then(async (response) => {
                 expect(response.body).toBeTruthy()
                 const pcomp = await Company.findById(usr1.company)
-                expect(pcomp.name).toBe('another')
+                expect(pcomp).toBeTruthy()
+                if(pcomp) expect(pcomp.name).toBe('another')
             })
         
         await supertest(app)
@@ -166,7 +167,8 @@ function testCompanys(app) {
             .then(async (response) => {
                 expect(response.body).toBeTruthy()
                 const pcomp = await Company.findById(comp2._id)
-                expect(pcomp.name).toBe('new name')
+                expect(pcomp).toBeTruthy()
+                if(pcomp) expect(pcomp.name).toBe('new name')
             })
     });
 

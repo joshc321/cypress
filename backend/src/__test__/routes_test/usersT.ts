@@ -143,8 +143,8 @@ function testUsers(app) {
             .then(async (response) => {
                 expect(response.body.password === 'newpassword').toBeFalsy()
                 const usr = await User.findById(response.body._id);
-                expect(await usr.validatePassword('newpassword')).toBeTruthy()
-                expect(await usr.validatePassword(user0.password)).toBeFalsy()
+                expect(usr && await usr.validatePassword('newpassword')).toBeTruthy()
+                expect(usr && await usr.validatePassword(user0.password)).toBeFalsy()
             })
     })
 
@@ -173,7 +173,7 @@ function testUsers(app) {
         .then(async (response) => {
             expect(response.body).toBeTruthy()
             const euser = await User.findById(user0.id) 
-            expect(euser.first).toBe('put1')
+            expect(euser && euser.first).toBe('put1')
         })
         //test level2 user modifying name of user in different company
         await supertest(app)
@@ -184,7 +184,7 @@ function testUsers(app) {
         .then(async (response) => {
             expect(response.body).toBeTruthy()
             const euser = await User.findById(userC.id) 
-            expect(euser.first).toBe('put2')
+            expect(euser && euser.first).toBe('put2')
         })
 
         //test level1 user modifying user in different company fails
@@ -195,7 +195,7 @@ function testUsers(app) {
         .expect(404)
         .then(async () => {
             const euser = await User.findById(userC.id);
-            expect(euser.first !== 'put3').toBeTruthy();
+            expect(euser && euser.first !== 'put3').toBeTruthy();
         })
 
 
