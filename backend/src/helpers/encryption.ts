@@ -14,7 +14,7 @@ async function checkPassword(plainPassword: string, encryptedPassword: string) {
 };
 
 function generateAccessToken(payload: object) {
-    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1800s' });
+    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '30d' });
 }
 
 function generatePasswordToken(payload: object) {

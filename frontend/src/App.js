@@ -26,6 +26,7 @@ import Users from './modules/routes/users';
 import User from './modules/routes/user';
 import EditScheduled from './modules/routes/editScheduled';
 import Logout from './modules/routes/logout';
+import Dashboard from './modules/routes/dashboard';
 
 import Test from './modules/routes/test';
 
@@ -56,6 +57,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/user/:slug" element={<User />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

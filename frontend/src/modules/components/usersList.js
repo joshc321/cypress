@@ -5,15 +5,18 @@ import { List, Box } from "@mui/material";
 
 function UsersList({users})
 {
-    return(
-        <Box sx={{ pt: 25, pb: 8 }}>
-            <List>
-                {users.map((data) => (
-                    <ListItemThreeIn key={data?._id} primaryText={`${data?.first} ${data?.last}`} secondaryText={data?.email} topText={permissions[data?.permissionLevel]} linkTo={`/user/${data?._id}`}/>
-                ))}
-            </List>
-        </Box>
-    );
+    if(Array.isArray(users))
+    {
+        return(
+            <Box sx={{ pt: 25, pb: 8 }}>
+                <List>
+                    {users.map((data) => (
+                        <ListItemThreeIn key={data?._id} primaryText={`${data?.first} ${data?.last}`} secondaryText={data?.email} topText={permissions[data?.permissionLevel]} linkTo={`/user/${data?._id}`}/>
+                    ))}
+                </List>
+            </Box>
+        );
+    }
 }
 
 export default UsersList;

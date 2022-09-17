@@ -10,14 +10,14 @@ function BottomNavigationBar(props){
     return(
         <Paper sx={{position: 'fixed' ,bottom: 0, left: 0, right: 0, height: 70, zIndex: 100,}} elevation={2}>
             <BottomNavigation
-                showLabels
+                showLabels={false}
                 value={props.value}
             >
-            <BottomNavigationAction component={Link} to={'/'} label="HOME" icon={<Home />} />
-            <BottomNavigationAction component={Link} to={'/calendar'} label="CALENDAR" icon={<CalendarMonth />} />
-            <BottomNavigationAction component={Link} to={'/scan'}  label="SCAN" icon={<CropFree />} />
-            <BottomNavigationAction component={Link} to={'/upcoming'} label="UPCOMING" icon={<Event />} />
-            <BottomNavigationAction component={Link} to={'/account'}  label="ACCOUNT" icon={<AccountCircle />} />
+            <BottomNavigationAction component={Link} to={'/'} icon={<Home />} />
+            <BottomNavigationAction component={Link} to={'/calendar'} icon={<CalendarMonth />} />
+            <BottomNavigationAction component={Link} to={'/scan'}  icon={<CropFree />} />
+            <BottomNavigationAction component={Link} to={'/upcoming'}  icon={<Event />} />
+            <BottomNavigationAction component={Link} to={'/account'}   icon={<AccountCircle />} />
             </BottomNavigation>
         </Paper>
     )

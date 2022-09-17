@@ -3,6 +3,7 @@
 */
 
 import * as jwt from "jsonwebtoken"
+import User from "../models/user";
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
@@ -13,9 +14,14 @@ function authenticateToken(req, res, next) {
     jwt.verify(token, process.env.SECRET_KEY as string, (err: any, user: any) => {
         
         if (err) return res.status(401).send({error: 'Unauthorized'});
-    
-        req.user = user;
-        next();
+        User.findById(user.id).select('permissionLevel company').then((user) => {
+          if(user)
+          {
+            req.user = user;
+            next();
+          }
+          else res.status(401).send({error: 'Unauthorized'});
+        }).catch(next)
       })
   }
 

@@ -1,5 +1,4 @@
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useGet from "./useGet";
 import { useNavigate } from "react-router-dom";
 

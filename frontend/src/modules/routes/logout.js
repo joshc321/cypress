@@ -9,6 +9,6 @@ export default function Logout()
     })
 
     return(
-        <Navigate replace to='/login'/>
+        <Navigate replace to='/login?redirect=true'/>
     )
 }

@@ -18,7 +18,7 @@ function Scan(){
 
     function scanRegion(video) {
         const smallestDimension = Math.min(height, width);
-        const scanRegionSize = Math.round((1 / 3) * smallestDimension);
+        const scanRegionSize = Math.round((2 / 3) * smallestDimension);
         const _legacyCanvasSize = 400;
         return {
             x: Math.round((video.videoWidth - scanRegionSize) / 2),

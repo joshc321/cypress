@@ -9,6 +9,7 @@ import TopBase from '../components/topbase';
 import PasswordTextField from '../components/formComponents/passwordTextField';
 import MainButton from '../components/mainbutton'
 import { useNavigate } from 'react-router-dom'
+import useQuery from '../components/hooks/useQuery';
 import Cookies from 'js-cookie'
 import PostLogin from '../components/api/postLogin'
 import EmailField from '../components/formComponents/emailField';
@@ -17,6 +18,7 @@ import EmailField from '../components/formComponents/emailField';
 function Login(){
 
     const navigate = useNavigate();
+    const query = useQuery();
 
     const [error, setError] = useState(false)
     const [checked, setChecked] = useState(false)
@@ -50,7 +52,8 @@ function Login(){
                     {
                         if(checked) Cookies.set('access_token', rsp.token, { expires: 7 })
                         else Cookies.set('access_token', rsp.token)
-                        navigate('/')
+                        if(query.get('redirect')) navigate(-1);
+                        else navigate('/')
                     }
                     else console.log(rsp)
                 })

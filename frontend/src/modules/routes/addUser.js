@@ -43,7 +43,6 @@ function AddUser() {
                 switch(status)
                 {
                     case 200:
-                        console.log(body)
                         navigate(`/user/${body._id}`);
                         break;
                     case 422:
