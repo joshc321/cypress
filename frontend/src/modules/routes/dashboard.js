@@ -1,4 +1,4 @@
-import { Box, AppBar, Toolbar, Stack, Drawer, Divider, List, ListItem, ListItemIcon, 
+import { Box, Paper, Toolbar, Stack, Drawer, Divider, List, ListItem, ListItemIcon, 
         ListItemText, ListItemButton
 } from '@mui/material'
 import { Store, Assessment, Group, AddBusiness, TableChart } from '@mui/icons-material'
@@ -7,8 +7,9 @@ import MainButton from '../components/mainbutton';
 import { useState } from 'react';
 import SimpleTextField from '../components/formComponents/simpleTextField';
 import TopBarLarge from '../components/topBarLarge'
+import { Link } from 'react-router-dom';
 
-const drawerWidth = '15%';
+const drawerWidth = '15vw';
 
 function Dashboard()
 {
@@ -43,29 +44,35 @@ function Dashboard()
                 anchor="left"
             >
                     <List>
-                    {initial.map(({label, icon}) => (
-                        <ListItem key={label} disablePadding>
-                        <ListItemButton onClick={() => console.log(label)}>
-                            <ListItemIcon>
-                            {icon}
-                            </ListItemIcon>
-                            <ListItemText primary={label} />
-                        </ListItemButton>
+                        <ListItem key={"Company"} disablePadding>
+                            <ListItemButton component={Link} to={"/dashboard"}>
+                                <ListItemIcon>
+                                    <AddBusiness />
+                                </ListItemIcon>
+                                <ListItemText primary={"Company"} />
+                            </ListItemButton>
                         </ListItem>
-                    ))}
+                        <ListItem key={"Process"} disablePadding>
+                            <ListItemButton component={Link} to={"process"}>
+                                <ListItemIcon>
+                                    <TableChart />
+                                </ListItemIcon>
+                                <ListItemText primary={"Process"} />
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                     <Divider />
                     <List>
-                    {second.map(({label, icon}) => (
-                        <ListItem key={label} disablePadding>
-                        <ListItemButton onClick={() => console.log(label)}>
-                            <ListItemIcon>
-                            {icon}
-                            </ListItemIcon>
-                            <ListItemText primary={label} />
-                        </ListItemButton>
-                        </ListItem>
-                    ))}
+                        {second.map(({label, icon}) => (
+                            <ListItem key={label} disablePadding>
+                                <ListItemButton component={Link} to={label.toLowerCase()}>
+                                        <ListItemIcon>
+                                            {icon}
+                                        </ListItemIcon>
+                                    <ListItemText primary={label} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
                     </List>
             </Drawer>
             <Box
