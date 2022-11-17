@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-export default function SimpleTextField({label, value, handleChange})
+export default function SimpleTextField({label, value, handleChange, error})
 {
     return(
         <TextField 
@@ -9,6 +9,7 @@ export default function SimpleTextField({label, value, handleChange})
             type="text"
             value={value}
             onChange={handleChange}
+            error={error}
         />
     )
 }

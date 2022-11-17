@@ -25,7 +25,7 @@ function ScheduleService()
     const navigate = useNavigate();
     const query = useQuery();
 
-    const [custID, setCustId] = useState(query.get('custid'))
+    const [custID, setCustId] = useState(query.get('custid'));
     const [customer, loading] = GetCustomer(custID);
     const [error, setError] = useState(false)
     const [values, setValues] = useState({

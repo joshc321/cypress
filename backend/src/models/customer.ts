@@ -10,16 +10,16 @@ import addToDate from '../helpers/addToDate'
 interface Customer extends mongoose.Document {
     first: string;
     last: string;
-    phone: string;
-    address: {
-        street: string;
-        city: string;
-        state: string;
-        zip: string;
+    phone?: string;
+    address?: {
+        street?: string;
+        city?: string;
+        state?: string;
+        zip?: string;
     };
-    system: string;
-    notes: string;
-    email: string;
+    system?: string;
+    notes?: string;
+    email?: string;
     company: Schema.Types.ObjectId;
     lastServiced: Date;
     serviceInterval: {
@@ -122,7 +122,7 @@ const CustomerSchema = new Schema({
     },
     _serviceDate: {
         type: Date,
-        default: Date.now,
+        default: '2003-02-28',
         required: true,
         select: false,
     }

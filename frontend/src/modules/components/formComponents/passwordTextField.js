@@ -4,9 +4,9 @@ import { FormControl, InputLabel,
     } from '@mui/material';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
+import { useState } from 'react'; 
 
-function PasswordTextField(props){
+function PasswordTextField({error, password, handleChange, message}){
     const [showPassword, setShowPassword] = useState(false)
 
     const handleClickShowPassword = () => {
@@ -19,13 +19,13 @@ function PasswordTextField(props){
 
     return(
       <div>
-        <FormControl variant="outlined" error={props.error} fullWidth>
+        <FormControl variant="outlined" error={error} fullWidth>
             <InputLabel htmlFor="outlined-adornment-password">Password*</InputLabel>
             <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? 'text' : 'password'}
-                value={props.password}
-                onChange={props.handleChange}
+                value={password}
+                onChange={handleChange}
                 required
                 endAdornment={
                 <InputAdornment position="end">
@@ -41,9 +41,9 @@ function PasswordTextField(props){
                 }
                 label="Password"
             />
-            {props.error && (
+            {error && (
                 <FormHelperText error id="accountId-error">
-                { props.message || 'Invalid Email or Password'}
+                { message || 'Invalid Email or Password'}
                 </FormHelperText>
             )}
         </FormControl>

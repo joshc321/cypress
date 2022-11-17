@@ -1,32 +1,16 @@
-import { Box, Paper, Toolbar, Stack, Drawer, Divider, List, ListItem, ListItemIcon, 
+import { Box, Drawer, Divider, List, ListItem, ListItemIcon, 
         ListItemText, ListItemButton
 } from '@mui/material'
 import { Store, Assessment, Group, AddBusiness, TableChart } from '@mui/icons-material'
-import AppForm from '../components/AppForm';
-import MainButton from '../components/mainbutton';
-import { useState } from 'react';
-import SimpleTextField from '../components/formComponents/simpleTextField';
-import TopBarLarge from '../components/topBarLarge'
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import useAuth from '../components/api/useAuth';
 
 const drawerWidth = '15vw';
 
 function Dashboard()
 {
-
-    const [company, setCompany] = useState('')
-
-    const handleChange = (e) => {
-        setCompany(e.target.value)
-    }
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        if(company)
-        {
-            console.log('creating company:', company)
-        }
-    }
+    // auth
+    useAuth();
 
     return(
         <Box sx={{ display: 'flex' }}>
@@ -75,20 +59,7 @@ function Dashboard()
                         ))}
                     </List>
             </Drawer>
-            <Box
-                component="main"
-                sx={{ flexGrow: 1 }}
-            >
-                <TopBarLarge primary={"Cypress"} secondary={"Create Company"}/>
-                <AppForm top={1}>
-                    <form noValidate onSubmit={handleSubmit}>
-                        <Stack spacing={2} pt={2}>
-                            <SimpleTextField label="Company Name" value={company} handleChange={handleChange}/>
-                            <MainButton text={"Submit"} />
-                        </Stack>
-                    </form>
-                </AppForm>
-            </Box>
+            <Outlet />
         </Box>
     )
 }

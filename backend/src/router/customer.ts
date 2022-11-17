@@ -3,17 +3,18 @@
 */
 
 import express from "express";
+import multer from "multer";
 import Customer from "../models/customer";
-import ServiceSchedule from "../models/scheduledservice";
 
 //helpers
 import authenticateToken from "../middleWare/authorization";
 import permissionLevel from "../middleWare/permissionLevel";
 import setCompany from "../middleWare/setCompany";
 import moment from "moment";
+import adminPermissionLevel from "../middleWare/adminPermissionLevel";
 
 const router = express.Router()
-
+const upload = multer({});
 
 router.post('/customer', authenticateToken, setCompany,(req, res, next) => {
     Customer.create(req.body).then((customer) =>{
@@ -22,6 +23,33 @@ router.post('/customer', authenticateToken, setCompany,(req, res, next) => {
         res.send(customer);
     }).catch(next)
 })
+
+router.post('/customer/many', authenticateToken, adminPermissionLevel, upload.single('file'), (req,res,next) => {
+
+    const data = JSON.stringify(req.file);
+    const js = JSON.parse(data);
+    if(js.size > 2 * 2024 * 1024)
+    {
+        res.status(413).send({'error' : 'File must be less than 2MB'});
+        return;
+    }
+        
+
+    const buf = Buffer.from(js.buffer.data).toString();
+    const jsb = JSON.parse(buf);
+    if(!("data" in jsb))
+    {
+        res.status(422).send({'error': 'Invalid File Format'});
+        return;
+    }
+    Customer.insertMany(jsb.data).then((customers) => {
+        customers.map( async (customer) => {
+            await customer.setNextServiceDate();
+            await customer.save();
+        });
+        res.send({'data': 'updated successfully'});
+    }).catch(next);
+});
 
 router.get('/customer', authenticateToken, (req,res,next)=>{
     
