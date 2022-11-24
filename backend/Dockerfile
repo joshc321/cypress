@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1
+#  Dockerfile for Node Express Backend
+
+FROM node:16-alpine 
+RUN apk add --no-cache python3 g++ make
+
+# Create App Directory
+WORKDIR /usr/src/app
+
+# Install Dependencies
+COPY package*.json ./
+
+RUN npm install
+
+# Copy app source code
+COPY . .
+RUN npm run build
+
+# Exports
+EXPOSE 4000
+
+CMD ["node","dist/app.js"]
+

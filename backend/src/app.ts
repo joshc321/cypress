@@ -21,35 +21,41 @@ import CreateFirstUser from './helpers/createFirstUser'
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI);
-mongoose.Promise = global.Promise;
+async function run() {
 
-app.use(express.static('public'));
+  await mongoose.connect(process.env.MONGO_URI);
+  mongoose.Promise = global.Promise;
 
-app.use(express.json());
+  app.use(express.static('public'));
 
-//Create First User, only run once
-CreateFirstUser();
+  app.use(express.json());
 
-// Define Custom Routes
-app.use('/api',authRoute);
-app.use('/api',usersRoute);
-app.use('/api', companyRoute);
-app.use('/api', customerRoute);
-app.use('/api', CustomerSearchRoute);
-app.use('/api', serviceRecordRoute);
-app.use('/api', scheduledServiceRoute);
-app.use('/api', schedulePlannerRoute);
-app.use('/api', resetPasswordRoute);
+  //Create First User, only run once
+  await CreateFirstUser();
 
-app.use((req, res, next)=>{
-  res.status(404).send({error: 'not found'});
-})
+  // Define Custom Routes
+  app.use('/api',authRoute);
+  app.use('/api',usersRoute);
+  app.use('/api', companyRoute);
+  app.use('/api', customerRoute);
+  app.use('/api', CustomerSearchRoute);
+  app.use('/api', serviceRecordRoute);
+  app.use('/api', scheduledServiceRoute);
+  app.use('/api', schedulePlannerRoute);
+  app.use('/api', resetPasswordRoute);
 
-app.use((err,req,res,next)=>{
-    res.status(422).send({error: err.message});
-})
+  app.use((req, res, next)=>{
+    res.status(404).send({error: 'not found'});
+  })
 
-app.listen(process.env.port, () =>{
-    console.log(`server started on port ${process.env.port}`);
-})
+  app.use((err,req,res,next)=>{
+      res.status(422).send({error: err.message});
+  })
+
+  app.listen(process.env.port, () =>{
+      console.log(`server started on port ${process.env.port}`);
+  })
+
+}
+
+run();

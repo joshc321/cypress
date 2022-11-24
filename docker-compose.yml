@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  server:
+    container_name: node-app
+    image: node-app
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports: 
+      - 4000:4000
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+  
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - app-network
+  
+  client:
+    container_name: react-app
+    image: react-app
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    links:
+      - server
+    depends_on:
+      - server
+    networks:
+      - app-network
+
+volumes:
+  mongodata:
+
+networks:
+  app-network:
+    driver: bridge  

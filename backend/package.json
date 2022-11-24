@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "NODE_PATH=./dist node dist/app.js",
     "dev": "tsc && npx nodemon src/app.ts",
+    "build": "tsc -p .",
     "test": "jest"
   },
   "keywords": [],

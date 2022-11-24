@@ -81,12 +81,38 @@ const run = () => {
     })
 }
 
-const CreateFirstUser =  () => {
+const runAuto = () => {
+    console.log("-----------------------------------------------");
+    console.log("|            Cypress Initial Setup            |");
+    console.log("-----------------------------------------------\n");
+    const admin = 
+        {
+            first: 'Josh',
+            last: 'Cordro',
+            email: 'joshcordero2134@gmail.com',
+            permissionLevel: 2,
+            company: null,
+            password: '12345678',
+        }
+    Company.create(adminCompany).then((comp) => {
+        admin.company = comp._id;
+        User.create(admin);
+    })
 
-    User.estimatedDocumentCount().then(count =>{
+    console.log("-----------------------------------------------");
+    console.log("|        Cypress Initial Setup Complete       |");
+    console.log("-----------------------------------------------\n");
+
+    console.log("server started...")
+
+}
+
+async function CreateFirstUser(){
+
+    await User.estimatedDocumentCount().then(count =>{
         if(count === 0)
         {
-            run();
+            runAuto();
         }
     })
     .catch(err => {
