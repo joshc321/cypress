@@ -7,8 +7,14 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    env_file:
-      - ./backend/config/dev.env
+    environment:
+      - MONGO_URI=${MONGO_TEST_URI}
+      - port=${port}
+      - SECRET_KEY=${SECRET_KEY}
+      - SALT_WORK_FACTOR=${SALT_WORK_FACTOR}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - INITIAL_USER_EMAIL=${INITIAL_USER_EMAIL}
+      - INITIAL_USER_PASSW=${INITIAL_USER_PASSW}
     ports: 
       - 4000:4000
     links:

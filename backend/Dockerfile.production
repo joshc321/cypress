@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 #  Dockerfile for Node Express Backend
 
-FROM node:16-alpine 
+FROM node:18-alpine 
 RUN apk add --no-cache python3 g++ make
 
 # Create App Directory

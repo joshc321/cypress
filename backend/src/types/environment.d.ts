@@ -21,6 +21,8 @@ declare global {
             ADMIN_EMAILS: string;
             SALT_WORK_FACTOR: number;
             SENDGRID_API_KEY: string;
+            INITIAL_USER_EMAIL: string;
+            INITIAL_USER_PASSW: string;
         }
     }
 }

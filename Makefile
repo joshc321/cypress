@@ -15,10 +15,13 @@ build-local:
 	cd frontend && $(MAKE) build-local
 
 run-local:
-	ENV=local docker compose -f docker-compose-production.yml up
-	
+	docker compose -f docker-compose-production.yml up -d
+
+logs:
+	docker compose -f docker-compose-production.yml logs
+
 stop-local:
-	ENV=local docker compose -f docker-compose-production.yml down
+	docker compose -f docker-compose-production.yml down
 
 ####
 
@@ -27,15 +30,17 @@ build-production:
 	cd frontend && $(MAKE) build-production
 
 run-production:
-	ENV=production docker compose -f docker-compose-production.yml up
+	docker compose -f docker-compose-production.yml up -d
 
 stop-production:
-	ENV=production docker compose -f docker-compose-production.yml down
+	docker compose -f docker-compose-production.yml down
 
-SSH_STRING:=root@143.110.237.51
-
+include .env
 ssh:
 	ssh $(SSH_STRING)
 
 copy-files:
 	scp -r ./* $(SSH_STRING):/root/
+
+copy-env:
+	scp -r ./.env $(SSH_STRING):/root/

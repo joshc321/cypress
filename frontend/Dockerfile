@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Build react client
-FROM node:16-alpine 
+FROM node:18-alpine 
 
 # Working directory be app
 WORKDIR /usr/src/app

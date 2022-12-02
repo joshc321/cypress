@@ -89,10 +89,10 @@ const runAuto = () => {
         {
             first: 'Josh',
             last: 'Cordro',
-            email: 'joshcordero2134@gmail.com',
+            email: process.env.INITIAL_USER_EMAIL,
             permissionLevel: 2,
             company: null,
-            password: '12345678',
+            password: process.env.INITIAL_USER_PASSW,
         }
     Company.create(adminCompany).then((comp) => {
         admin.company = comp._id;
