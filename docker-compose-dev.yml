@@ -1,13 +1,14 @@
 version: '3.7'
 
 services:
-  server:
-    container_name: node-app
-    image: node-app
-    restart: unless-stopped
+  api-server:
+    container_name: api-server
+    image: api-server
     build:
       context: ./backend
       dockerfile: Dockerfile
+    env_file:
+      - ./backend/config/dev.env
     ports: 
       - 4000:4000
     links:
@@ -16,35 +17,41 @@ services:
       - mongo
     networks:
       - app-network
+    volumes:
+      - ./backend/:/usr/src/app
+      - /usr/src/app/node_modules
   
   mongo:
     container_name: mongo
-    image: mongo
+    image: mongo:6.0-focal
     volumes:
-      - mongodata:/data/db
+      - mongo-data:/data/db
     ports:
       - 27017:27017
     networks:
       - app-network
   
-  client:
+  react-app:
     container_name: react-app
     image: react-app
-    restart: unless-stopped
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - 3000:3000
     links:
-      - server
+      - api-server
     depends_on:
-      - server
+      - api-server
     networks:
       - app-network
+    volumes:
+      - ./frontend/:/usr/src/app
+      - /usr/src/app/node_modules
 
 volumes:
-  mongodata:
+  mongo-data:
+    driver: local
 
 networks:
   app-network:

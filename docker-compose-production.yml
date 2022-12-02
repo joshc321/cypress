@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  api-server:
+    container_name: api-server-production
+    image: api-server-production
+    restart: unless-stopped
+    env_file:
+      - ./backend/config/${ENV}.env
+    ports: 
+      - 4000:4000
+    networks:
+      - app-network
+  
+  react-app:
+    container_name: react-app-production
+    image: react-app-production:${ENV}
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - api-server
+    depends_on:
+      - api-server
+    networks:
+      - app-network
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+  
+
+volumes:
+  caddy-data:
+    driver: local
+  caddy-config:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge  

@@ -14,10 +14,10 @@ RUN npm install
 
 # Copy app source code
 COPY . .
-#RUN npm run build
+RUN npm run build
 
 # Exports
 EXPOSE 4000
 
-CMD ["npm","run","dev"]
+CMD ["npm","start"]
 

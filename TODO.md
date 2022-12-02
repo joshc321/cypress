@@ -1,5 +1,5 @@
 # TODO
-
+ - [x] dockerize and create production pipeline
 ### FEATURES
 - [x] add option to set month to view on upcoming services
 - [x] add an edit page for scheduled services
