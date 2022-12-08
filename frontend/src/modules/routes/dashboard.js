@@ -66,17 +66,6 @@ function Dashboard()
 
 export default Dashboard;
 
-const initial = [
-    {
-        label: 'Company',
-        icon: <AddBusiness />,
-    },
-    {
-        label: 'Process',
-        icon: <TableChart />,
-    }
-]
-
 const second = [
     {
         label: 'Users',

@@ -149,6 +149,8 @@ function CalendarTopBar({selectedDate, setSelectedDate})
           onSlideChangeTransitionEnd={onEndSlideChange}
           initialSlide={initialSlide.current}
           onAfterInit={() => setSelectedDate(moment().startOf('day'))}
+          shortSwipes={false}
+          longSwipesRatio={0.4}
           virtual
         >
           {slides.map((slideContent, index) => (

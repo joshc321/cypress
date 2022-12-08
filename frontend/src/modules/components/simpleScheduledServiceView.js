@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemButton, 
-    ListItemText, Typography, Divider, ListItemIcon,
+    ListItemText, Typography, Divider,
     Box,
 } from '@mui/material'
 

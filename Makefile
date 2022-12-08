@@ -39,6 +39,6 @@ ssh:
 	ssh $(SSH_STRING)
 
 copy-files:
-		scp ./.env ./docker-compose-production.yml ./Makefile $(SSH_STRING):/home/josh
+		scp ./.env ./docker-compose-production.yml ./Makefile $(SSH_STRING):/root
 
 
