@@ -17,12 +17,6 @@ build-local:
 run-local:
 	docker compose -f docker-compose-production.yml up -d
 
-logs:
-	docker compose -f docker-compose-production.yml logs
-
-stop-local:
-	docker compose -f docker-compose-production.yml down
-
 ####
 
 build-production:
@@ -32,15 +26,19 @@ build-production:
 run-production:
 	docker compose -f docker-compose-production.yml up -d
 
-stop-production:
+####
+logs:
+	docker compose -f docker-compose-production.yml logs
+stop:
 	docker compose -f docker-compose-production.yml down
+
+####
 
 include .env
 ssh:
 	ssh $(SSH_STRING)
 
 copy-files:
-	scp -r ./* $(SSH_STRING):/root/
+		scp ./.env ./docker-compose-production.yml ./Makefile $(SSH_STRING):/home/josh
 
-copy-env:
-	scp -r ./.env $(SSH_STRING):/root/
+

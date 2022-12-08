@@ -88,7 +88,7 @@ const runAuto = () => {
     const admin = 
         {
             first: 'Josh',
-            last: 'Cordro',
+            last: 'Cordero',
             email: process.env.INITIAL_USER_EMAIL,
             permissionLevel: 2,
             company: null,
@@ -103,7 +103,7 @@ const runAuto = () => {
     console.log("|        Cypress Initial Setup Complete       |");
     console.log("-----------------------------------------------\n");
 
-    console.log("server started...")
+    console.log("Initial User created...")
 
 }
 

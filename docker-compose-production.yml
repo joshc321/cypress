@@ -2,8 +2,7 @@ version: '3.7'
 
 services:
   api-server:
-    container_name: api-server-production
-    image: api-server-production
+    image: joshcord/cypress-api
     restart: unless-stopped
     environment:
       - MONGO_URI=${MONGO_URI}
@@ -17,8 +16,7 @@ services:
       - 4000:4000
   
   react-app:
-    container_name: react-app-production
-    image: react-app-production:${ENV}
+    image: joshcord/cypress-app:${ENV}
     ports:
       - 80:80
       - 443:443
