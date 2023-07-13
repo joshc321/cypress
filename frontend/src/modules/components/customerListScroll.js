@@ -5,17 +5,17 @@ import SearchCustomers from './api/search';
 
 import CustomerListSelect from "./customerListSelect";
 
-function CustomerListScroll({searchVal, linkTo})
+function CustomerListScroll({searchVal, filterVal, linkTo})
 {
-  const [customers, _, hasMore, getMore] = SearchCustomers(searchVal)
-
+  const [customers, _, hasMore, getMore] = SearchCustomers(searchVal, filterVal);
 
   return(
-      <Box sx={{ pt: 10, pb: 8 }}>
+      <Box sx={{ pt: 13, pb: 8 }}>
         <InfiniteScroll
           dataLength={customers.length}
           next={getMore}
           hasMore={hasMore}
+          initialScrollY={0}
           loader={
             <Grid container
               spacing={0}

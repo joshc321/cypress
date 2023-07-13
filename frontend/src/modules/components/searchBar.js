@@ -1,13 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Paper, Box, InputLabel, FilledInput, 
-    InputAdornment, IconButton, FormControl, Divider } from '@mui/material'
+    InputAdornment, IconButton, FormControl, Divider} from '@mui/material'
 
 import { Search } from '@mui/icons-material'
+import SelectionFieldSmall from './formComponents/selectionFieldSmall';
 
-function SearchBar({ setSearchVal })
+function SearchBar({ setSearchVal, placeholder, placeholderFilter })
 {
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(placeholder);
+  const [filter, setFilter] = useState(placeholderFilter || 'last');
+
+  useEffect(() => {
+    setSearch(placeholder);
+    setFilter(placeholderFilter || 'last');
+  }, [placeholder, placeholderFilter]);
+
+  useEffect(() => {
+    setSearchVal(search, filter);
+  }, [filter])
 
   const handleChange = (e) => {
       setSearch(e.target.value)
@@ -15,7 +26,7 @@ function SearchBar({ setSearchVal })
 
   const handleSubmit = (e) => {
       e.preventDefault();
-      setSearchVal(search)
+      setSearchVal(search, filter);
   }
 
     return(
@@ -24,9 +35,9 @@ function SearchBar({ setSearchVal })
         elevation={0}
         sx={{
           position: "fixed",
-          zIndex: "tooltip",
+          zIndex: "5",
           width: "100%",
-          height: 90,
+          height: 118,
           p: 3,
         }}
       >
@@ -58,9 +69,31 @@ function SearchBar({ setSearchVal })
             </FormControl>
           </Box>
         </form>
-        <Divider sx={{ pt: 2 }} />
+        <Box mt={1}>
+          <SelectionFieldSmall label={'Sort By'} value={filter} options={sortByOptions} handleChange={(e) => setFilter(e.target.value)}/>
+        </Box>
+        <Divider sx={{ pt: 1 }} />
       </Paper>
     )
 }
 
 export default SearchBar;
+
+const sortByOptions = [
+  {
+    value: 'first',
+    text: 'first name'
+  },
+  {
+    value: 'last',
+    text: 'last name'
+  },
+  {
+    value: 'city',
+    text: 'city'
+  },
+  {
+    value: 'zip',
+    text: 'zip code'
+  }
+]

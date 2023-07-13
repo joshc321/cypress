@@ -47,7 +47,7 @@ router.post('/customer/many', authenticateToken, adminPermissionLevel, upload.si
             await customer.setNextServiceDate();
             await customer.save();
         });
-        res.send({'data': 'updated successfully'});
+        res.send({'data': 'updated sxuccessfully'});
     }).catch(next);
 });
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 
-function SearchCustomers(search='') {
+function SearchCustomers(search='', filter='') {
 
     const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
@@ -20,11 +20,12 @@ function SearchCustomers(search='') {
     };
 
     useEffect(() => {
+        setCustomers([]);
         setLoading(true)
         setHasMore(true)
         setPage(0);
 
-        fetch(`/api/search?q=${search}`, requestOptions)
+        fetch(`/api/search?q=${search}&f=${filter}`, requestOptions)
             .then(response => {
                 switch(response.status)
                 {
@@ -40,21 +41,21 @@ function SearchCustomers(search='') {
                 }
             })
             .then((rsp) => {
-                setLoading(false)
-                setCustomers(rsp)
+                setLoading(false);
+                setCustomers(rsp);
                 if(rsp && Array.isArray(rsp) && rsp.length >= 10)
                 {
-                    setPage(page + 1)
+                    setPage(1)
                 }
                 else setHasMore(false)
             })
             .catch(e => console.error('server error'))
-    }, [search])
+    }, [search, filter])
 
     const getMore = () => {
         setLoading(true)
         setHasMore(true)
-        fetch(`/api/search?q=${search}&page=${page}`, requestOptions)
+        fetch(`/api/search?q=${search}&page=${page}&f=${filter}`, requestOptions)
             .then(response => {
                 switch(response.status)
                 {
@@ -72,9 +73,9 @@ function SearchCustomers(search='') {
             .then((rsp) => {
                 setLoading(false)
                 setCustomers([...customers, ...rsp])
-                if(rsp)
+                if(rsp && Array.isArray(rsp) && rsp.length >= 10)
                 {
-                    setPage(page + 1)
+                    setPage(page + 1);
                 }
                 else setHasMore(false)
             })

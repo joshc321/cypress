@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import SearchBar from "../components/searchBar";
 import CustomerListScroll from '../components/customerListScroll';
@@ -8,12 +8,33 @@ import useAuth from '../components/api/useAuth';
 function SelectCustomer()
 {
     useAuth();
-    const [searchVal, setSearchVal] = useState("")
+    const [searchParams, setSearchParams] = useSearchParams();
+    
+    const setSearch = (val,filter) => {
+        const currentParams = Object.fromEntries([...searchParams]);
+        if(val)
+        {
+        currentParams['q'] = val;
+        }
+        else if('q' in currentParams)
+        {
+        delete currentParams['q']
+        }
+        if(filter)
+        {
+        currentParams['f'] = filter;
+        }
+        else if('f' in currentParams)
+        {
+        delete currentParams['f']
+        }
+        setSearchParams(currentParams);
+    }
 
     return(
         <>
-            <SearchBar setSearchVal={setSearchVal} />
-            <CustomerListScroll searchVal={searchVal} linkTo={'/scheduleservice?custid='} />
+            <SearchBar setSearchVal={setSearch} placeholder={searchParams.get('q') || ''} placeholderFilter={searchParams.get('f') || ''}/>
+            <CustomerListScroll searchVal={searchParams.get('q') || ''} filterVal={searchParams.get('f') || ''} linkTo={'/scheduleservice?custid='} />
             <BottomNavigationBar />
         </>
     )

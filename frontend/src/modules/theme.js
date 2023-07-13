@@ -8,6 +8,7 @@ const rawTheme = createTheme({
       light: '#69696a',
       main: '#28282a',
       dark: '#1e1e1f',
+      contrastText: '#fff'
     },
     secondary: {
         light: '#D9D9D9',

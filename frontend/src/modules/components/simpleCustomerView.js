@@ -7,6 +7,8 @@ import TextListItemButton from './textListItemButton';
 import TextListItem from './textListItem';
 import useWindowDimensions from './useWindowDimensions';
 import formatDate from './helpers/formatDate';
+import formatAddress from './helpers/formatAddress';
+import formatDuration from './helpers/formatDuration';
 
 import moment from 'moment';
 
@@ -33,11 +35,11 @@ function SimpleCustomerView({data})
             <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
             </>
             : ''}
-            <TextListItemButton text={data?.address?.street} icon={<PinDrop />} handleClick={() => MapsSelector(data?.address?.street)}/>
+            <TextListItemButton text={formatAddress(data?.address)} icon={<PinDrop />} handleClick={() => MapsSelector(formatAddress(data?.address))}/>
             <TextListItem text={data?.phone} icon={<Phone />} />
             <TextListItem text={formatDate(data?.lastServiced)} icon={<Event />} />
             <TextListItem text={formatDate(data?.nextService)} icon={<AccessTime />} />
-            <TextListItem text={moment.duration(data?.serviceInterval?.duration, data?.serviceInterval?.unit).humanize()} icon={<Autorenew />} />
+            <TextListItem text={formatDuration(data?.serviceInterval?.duration, data?.serviceInterval?.unit)} icon={<Autorenew />} />
             <Divider sx={{ mt: 1,borderBottomWidth: 3 }}/>
             <TextListItem text={data?.system} icon={<Note />} />
             <TextListItem text={data?.notes} icon={<Notes />} />

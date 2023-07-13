@@ -1,7 +1,11 @@
 # TODO
  - [ ] dockerize and create production pipeline
- - [ ] format dates and addresses
  - [ ] add more test
+ - [ ] different calendar view [day,week,month]
+ - [ ] highlight matching search terms on search
+ - [ ] group upcoming by zipcode / distance from eachother ( future map grouped by distance and projected scheduled date )
+ - [ ] sort options for search,upcoming...
+ - [ ] add deactivated customers page
 ### FEATURES
 - [x] add option to set month to view on upcoming services
 - [x] add an edit page for scheduled services
