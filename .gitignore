@@ -1,8 +1,10 @@
 # misc
 .DS_Store
+*.pem
 .env
 .env.test
 node_modules/
+/node_modules
 coverage/
 dist/
 data/
@@ -26,3 +28,22 @@ yarn-error.log*
 
 # production
 build/
+
+# next.js
+/.next/
+/out/
+
+
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+#idea
+/.idea
