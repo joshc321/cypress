@@ -43,7 +43,6 @@ build/
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 #idea
-/.idea
+.idea/
