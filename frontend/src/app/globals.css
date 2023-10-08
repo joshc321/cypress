@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+
+  * {
+    /*border: 0.1px dotted #ff6c6c;*/
+  }
+
   body {
-    @apply bg-gray-light
   }
 }
