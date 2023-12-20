@@ -7,9 +7,11 @@ export default function InputAdornment(
         htmlFor,
         type,
         id,
-        placeholder,
+        onChange,
+        value,
         adornmentElement,
         className,
+        placeholder,
     }: InputAdornmentSpec) {
     return (
         <label htmlFor={htmlFor} className="flex relative">
@@ -22,6 +24,8 @@ export default function InputAdornment(
                 className={`pr-11 ${className} `}
                 type={type}
                 id={id}
+                onChange={onChange}
+                value={value}
                 placeholder={placeholder}
             />
         </label>

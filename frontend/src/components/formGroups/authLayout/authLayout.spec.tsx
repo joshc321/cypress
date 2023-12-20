@@ -5,5 +5,7 @@ export interface AuthLayoutSpec {
     formLabel: string,
     primaryText?: string,
     buttonText: string,
+    footerText?: string | null,
+    footerHref?: string | null,
     children: React.ReactNode
 }

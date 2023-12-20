@@ -1,7 +1,10 @@
+import {ChangeEventHandler} from "react";
 
 export interface InputBaseSpec {
     className?: string,
     type?: string,
     id?: string,
-    placeholder?: string
+    onChange: ChangeEventHandler<HTMLInputElement>,
+    value: string | number,
+    placeholder: string,
 }

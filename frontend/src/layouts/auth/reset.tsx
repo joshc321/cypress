@@ -1,12 +1,17 @@
 'use client';
 
 import AuthFormLayout from "@/components/formGroups/authLayout";
-import {FormEvent} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import InputBase from "@/components/baseComponents/inputBase";
 import PasswordInput from "@/components/formComponents/passwordInput";
+import {useFormControl} from "@/helpers/hooks/useFormControl";
 
 
 export default function ResetLayout() {
+
+    const [formValues, handleFormChange] = useFormControl({
+        password: '',
+    });
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -18,8 +23,13 @@ export default function ResetLayout() {
             onSubmit={handleSubmit}
             formLabel={"Reset Password"}
             buttonText={"Reset"}
+            footerText={"Back to Login"}
+            footerHref={"/login"}
         >
-            <PasswordInput />
+            <PasswordInput
+                onChange={handleFormChange('password')}
+                value={formValues.password}
+            />
 
         </AuthFormLayout>
     )

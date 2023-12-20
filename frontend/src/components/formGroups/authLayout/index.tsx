@@ -1,6 +1,7 @@
 import {AuthLayoutSpec} from "@/components/formGroups/authLayout/authLayout.spec";
 import ButtonBase from "@/components/baseComponents/buttonBase";
 import PrimaryButton from "@/components/formComponents/primaryButton";
+import Link from 'next/link';
 
 export default function AuthFormLayout(
     {
@@ -8,6 +9,8 @@ export default function AuthFormLayout(
         formLabel,
         primaryText="Cypress",
         buttonText="Submit",
+        footerText=null,
+        footerHref=null,
         children
     } : AuthLayoutSpec) {
     return (
@@ -17,10 +20,14 @@ export default function AuthFormLayout(
                     <h2 className="text-base font-normal text-secondary-dark">{formLabel}</h2>
                 </div>
                 <div className="flex items-center flex-col gap-20">
-                    <h1 className="text-7xl font-semibold text-secondary-dark">{primaryText}</h1>
+                    <h2 className="text-7xl font-semibold text-secondary-dark">{primaryText}</h2>
                     <form noValidate onSubmit={onSubmit} className="flex w-full flex-col gap-4 justify-between">
                         {children}
                         <PrimaryButton text={buttonText} />
+                        {footerText !== null &&
+                            <Link className="text-center hover:underline" href={{pathname: footerHref}}>{footerText}</Link>
+                        }
+
                     </form>
                 </div>
             </div>

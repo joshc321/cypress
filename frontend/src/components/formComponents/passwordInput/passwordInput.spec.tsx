@@ -1,4 +1,6 @@
+import {ChangeEventHandler} from "react";
 
-interface PasswordInputSpec {
-
+export interface PasswordInputSpec {
+    onChange: ChangeEventHandler,
+    value: string | number,
 }
