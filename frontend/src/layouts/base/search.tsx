@@ -3,12 +3,15 @@
 import SearchBarComponent from "@/components/functionalComponents/searchBarComponent";
 import {useFormControl} from "@/helpers/hooks/useFormControl";
 import DataList from "@/components/baseComponents/dataList";
+import getCustomers from "@/helpers/data_fetching/specific/getCustomers";
 
 export default function SearchLayout() {
 
     const [formValues, handleFormChange] = useFormControl({
         "searchVal": "",
     })
+
+    const customer_data = getCustomers();
 
 
     const runSearch = () => {
@@ -22,65 +25,8 @@ export default function SearchLayout() {
             </div>
             <hr className={"border-secondary-light mx-3"} />
             <div className="pb-20">
-                <DataList data={data} linkTo={"/user?id="} />
+                <DataList data={customer_data.data} linkTo={"/customer?id="} />
             </div>
         </main>
     )
 }
-
-const data = [
-    {
-        first: "John",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Beck",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Ohio",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Ohio",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Ohio",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Ohio",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Ohio",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Ohio",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-    {
-        first: "Ohio",
-        address: "120 address ave hemet ca",
-        phone: "952134213",
-        _id: "3-28412"
-    },
-]
