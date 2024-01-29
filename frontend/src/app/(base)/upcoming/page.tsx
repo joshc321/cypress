@@ -3,7 +3,7 @@
 export default function Page() {
     return (
         <main>
-            <h1>scan</h1>
+            <h1>upcoming</h1>
         </main>
     )
 }

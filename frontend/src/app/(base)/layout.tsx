@@ -1,4 +1,5 @@
 import React from "react";
+import NavBarComponent from "@/components/functionalComponents/navBarComponent";
 
 export default function UserViewLayout({
     children, // will be a page or nested layout
@@ -9,7 +10,7 @@ export default function UserViewLayout({
         <main>
             {children}
 
-            <h1>herro</h1>
+            <NavBarComponent />
         </main>
     )
 }

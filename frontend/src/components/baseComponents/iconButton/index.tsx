@@ -9,7 +9,7 @@ export default function IconButton(
     return(
         <button
             type="button"
-            className="active:opacity-80 hover:bg-secondary-light rounded-full p-1"
+            className="border-none active:opacity-80 hover:bg-secondary-light rounded-full p-1"
             onClick={onClick}
         >
             {icon}
