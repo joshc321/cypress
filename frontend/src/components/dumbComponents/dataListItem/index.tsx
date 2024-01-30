@@ -1,4 +1,4 @@
-import {DataListItemSpec} from "@/components/baseComponents/dataListItem/dataListItem.spec";
+import {DataListItemSpec} from "@/components/dumbComponents/dataListItem/dataListItem.spec";
 import { MdArrowForwardIos } from "react-icons/md"
 import Link from "next/link"
 

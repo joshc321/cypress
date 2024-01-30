@@ -37,7 +37,23 @@ const dummy_data =
     "__v": 0,
     "createdAt": "2022-12-09T05:48:08.873Z",
     "updatedAt": "2022-12-09T05:51:12.990Z",
-    "services": [],
+    "services": [
+        {
+            "date": "2021-12-08T00:00:00.000Z",
+            "system": "whatevs",
+            "service": "287,400, 422",
+            "notes": "hello there sir",
+            "bill": "0",
+            "id": "6392cc174a8514d8f531b73f"
+        },
+        {
+            "date": "2021-12-08T00:00:00.000Z",
+            "service": "287,waa, 422",
+            "notes": "hello there sir",
+            "bill": "0",
+            "id": "6392cc174a8524dkjs31b73f"
+        }
+    ],
     "scheduledService": null,
     "id": "6392cc174a8514d8f531b73e"
 };

@@ -2,7 +2,7 @@
 
 import SearchBarComponent from "@/components/functionalComponents/searchBarComponent";
 import {useFormControl} from "@/helpers/hooks/useFormControl";
-import DataList from "@/components/baseComponents/dataList";
+import DataList from "@/components/dumbComponents/dataList";
 import getCustomers from "@/helpers/data_fetching/specific/getCustomers";
 
 export default function SearchLayout() {

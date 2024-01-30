@@ -1,5 +1,5 @@
-import {DataListSpec} from "@/components/baseComponents/dataList/dataList.spec";
-import DataListItem from "@/components/baseComponents/dataListItem";
+import {DataListSpec} from "@/components/dumbComponents/dataList/dataList.spec";
+import DataListItem from "@/components/dumbComponents/dataListItem";
 
 export default function DataList(
     {

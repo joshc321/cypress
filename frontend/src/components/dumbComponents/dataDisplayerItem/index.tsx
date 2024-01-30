@@ -1,4 +1,4 @@
-import { DataDisplayerItemSpec } from "@/components/baseComponents/dataDisplayerItem/dataDisplayerItem.spec";
+import { DataDisplayerItemSpec } from "@/components/dumbComponents/dataDisplayerItem/dataDisplayerItem.spec";
 
 export default function DataDisplayerItem(
     {

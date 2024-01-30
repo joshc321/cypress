@@ -1,6 +1,5 @@
 
 export interface DataDisplayerViewSpec {
-    // define data to be a JSON object containing the keys first, last, email, phone, address and optionally service_data and notes
     data: {
         address?: {
             street: string,
@@ -8,6 +7,10 @@ export interface DataDisplayerViewSpec {
             state: string,
             zip: string
         },
+        serviceInterval?: {
+            duration: number,
+            unit: string,
+        }
         phone?: string,
         email?: string,
         notes?: string,
