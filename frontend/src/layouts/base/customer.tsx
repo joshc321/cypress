@@ -4,11 +4,15 @@ import DataDisplayerView from "@/components/dumbComponents/dataDisplayerView";
 import ServiceRecordList from "@/components/dumbComponents/serviceRecordList";
 import TopBar from "@/components/dumbComponents/topbar";
 import getCustomer from "@/helpers/data_fetching/specific/getCustomer";
+import { useSearchParams } from "next/navigation";
 
 
 export default function CustomerLayout() {
 
-    const customer = getCustomer("1");
+    // get query param id
+    const searchParams = useSearchParams();
+
+    const customer = getCustomer(searchParams.get('id') || '');
 
     return (
         <div>

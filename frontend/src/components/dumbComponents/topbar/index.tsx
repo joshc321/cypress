@@ -28,11 +28,11 @@ export default function TopBar(
 
                 <h2 className="text-white text-4xl font-medium truncate">{primaryText}</h2>
             </div>
-            {(secondaryText && to) && 
+            {(secondaryText) && 
                 <div className="bg-white">
                     <div className="flex items-center justify-between p-2">
                         <h3 className="text-2xl font-semibold">{secondaryText}</h3>
-                        <Link className="font-light" href={to}>Edit</Link>
+                        {to && <Link className="font-light" href={to}>Edit</Link>}
                     </div>
                     <hr className={"border-secondary-light border-2"} />
                 </div>
