@@ -28,11 +28,11 @@ const dummy_data =
     phone: "765-2020",
     system: "",
     notes: "287,400, 422",
-    "email": "",
-    "company": "6392cbdf4a8514d8f531b738",
-    "lastServiced": "2021-12-08T00:00:00.000Z",
-    "straggler": false,
-    "active": true,
+    email: "",
+    company: "6392cbdf4a8514d8f531b738",
+    lastServiced: "2021-12-08T00:00:00.000Z",
+    status: "active",
+    id: "6392cc174a8514d8f531b73e",
     "nextService": "2022-12-08T00:00:00.000Z",
     "__v": 0,
     "createdAt": "2022-12-09T05:48:08.873Z",
@@ -55,5 +55,4 @@ const dummy_data =
         }
     ],
     "scheduledService": null,
-    "id": "6392cc174a8514d8f531b73e"
 };

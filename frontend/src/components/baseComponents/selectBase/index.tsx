@@ -16,7 +16,7 @@ export default function SelectBase (
                 id={label}
                 value={value}
                 onChange={onChange}
-                className="w-full focus:outline-secondary-dark rounded-lg border-solid border border-secondary border-box p-3"
+                className="w-full focus:outline-secondary-dark rounded-lg border-solid border border-secondary border-box p-3 h-full"
             >
                 {options.map((option, index) => {
                     return (

@@ -36,7 +36,7 @@ export default function SearchInput(
             placeholder="Search"
             leftAdornmentElement={
                 <IconButton
-                    icon={<MdSearch className="w-6 h-6" />}
+                    icon={<MdSearch className="w-6 h-6 z-auto" />}
                     onClick = {handleSearch}
                 />
             }

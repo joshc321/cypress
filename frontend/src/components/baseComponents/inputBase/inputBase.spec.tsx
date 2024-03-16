@@ -9,4 +9,5 @@ export interface InputBaseSpec {
     placeholder: string,
     multiline?: boolean,
     maxRows?: number,
+    label?: string,
 }

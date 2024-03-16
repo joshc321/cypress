@@ -16,7 +16,7 @@ export default function InputAdornment(
     return (
         <label htmlFor={htmlFor} className="flex relative">
             <div
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 inline-flex items-center justify-center"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 inline-flex items-center justify-center z-10"
             >
                 {adornmentElement}
             </div>

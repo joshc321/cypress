@@ -29,7 +29,7 @@ export default function EditCustomerLayout() {
         notes: customer.data.notes,
         duration: customer.data.serviceInterval.duration,
         unit: customer.data.serviceInterval.unit,
-        status: customer.data.active
+        status: customer.data.status
     });
     const [unitVal, setUnitVal] = useState(customer.data.serviceInterval.unit);
     const handleUnitChange = (e: FormEvent<HTMLSelectElement>) => {
@@ -65,11 +65,13 @@ export default function EditCustomerLayout() {
                     <InputBase multiline onChange={handleFormChange('notes')} value={formValues.notes} placeholder="Notes" />
                     
                     <div className="flex flex-row gap-3">
-                        <InputBase type='number' onChange={handleFormChange('duration')} value={formValues.duration} placeholder="Duration" />
-                        <SelectBase label="test" options={["years", "months", "weeks", "days"]} value={unitVal} onChange={handleUnitChange} />
+                        <InputBase label="Service Interval" type="number" onChange={handleFormChange('duration')} value={formValues.duration} placeholder="Duration" />
+                        <SelectBase label="unit" options={["years", "months", "weeks", "days"]} value={formValues.unit} onChange={handleFormChange('duration')} />
 
                     </div>
 
+                    <SelectBase label="Status" options={["active", "inactive"]} value={formValues.status} onChange={handleFormChange('status')} />
+                    
                 </BaseFormLayout>
             </div>
         </div>
