@@ -12,14 +12,18 @@ type SearchValues = {
 };
 
 type SearchBarProps = {
+  searchValue: string;
   onSubmit: SubmitHandler<SearchValues>;
 };
 
-export const SearchBar = ({ onSubmit }: SearchBarProps) => {
+export const SearchBar = ({ searchValue, onSubmit }: SearchBarProps) => {
 
   return (
       <Form<SearchValues, typeof schema>
         onSubmit={onSubmit}
+        options={{
+          values: { query: searchValue },
+        }}
         schema={schema}
       >
         {({ register, formState }) => (
