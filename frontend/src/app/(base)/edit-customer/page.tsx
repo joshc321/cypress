@@ -1,4 +1,4 @@
-import EditCustomerLayout from "@/layouts/base/editCustomer";
+import { EditCustomerLayout } from "@/features/customers";
 
 export default function Page() {
     return (

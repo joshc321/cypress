@@ -1,4 +1,6 @@
-import ForgotLayout from "@/layouts/auth/forgot";
+'use client';
+
+import { ForgotLayout } from "@/features/auth";
 
 
 export default function Page() {

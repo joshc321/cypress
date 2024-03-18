@@ -1,5 +1,6 @@
-import ResetLayout from "@/layouts/auth/reset";
+'use client';
 
+import { ResetLayout } from "@/features/auth";
 
 export default function Page() {
     return (

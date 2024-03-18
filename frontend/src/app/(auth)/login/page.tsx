@@ -1,4 +1,6 @@
-import LoginLayout from "@/layouts/auth/login";
+'use client';
+
+import { LoginLayout } from "@/features/auth"
 
 export default function Page() {
     return (

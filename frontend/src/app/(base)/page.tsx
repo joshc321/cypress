@@ -1,10 +1,7 @@
-import SearchLayout from "@/layouts/base/search";
+import { CustomerSearchLayout } from "@/features/search";
 
 export default function Home() {
-
-
-
   return (
-    <SearchLayout />
+    <CustomerSearchLayout />
   )
 }

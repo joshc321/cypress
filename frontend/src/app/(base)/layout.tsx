@@ -1,5 +1,5 @@
 import React from "react";
-import NavBarComponent from "@/components/functionalComponents/navBarComponent";
+import { MainLayout } from "@/components/Layout";
 
 export default function UserViewLayout({
     children, // will be a page or nested layout
@@ -7,10 +7,8 @@ export default function UserViewLayout({
     children: React.ReactNode
 }) {
     return (
-        <main>
+        <MainLayout>
             {children}
-
-            <NavBarComponent />
-        </main>
+        </MainLayout>
     )
 }

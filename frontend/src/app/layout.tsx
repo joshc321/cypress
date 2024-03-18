@@ -1,3 +1,5 @@
+import { Inter } from 'next/font/google'
+import { AppProvider } from '@/providers'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
@@ -6,6 +8,12 @@ const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-montserrat',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 })
 
 export const metadata: Metadata = {
@@ -20,7 +28,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable}`}>{children}</body>
+      <body className={inter.className}>
+        <AppProvider>
+          <main>{children}</main>
+        </AppProvider>
+      </body>
     </html>
   )
 }
