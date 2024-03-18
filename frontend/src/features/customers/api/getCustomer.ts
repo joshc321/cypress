@@ -68,7 +68,6 @@ const dummy_data =
     serviceRecords: [
       {
         id: "0897sd09f8a7s0d9",
-        customer: "6392cc174a8514d8f531b73e",
         system: "this is a system yup",
         date: "2021-12-08T00:00:00.000Z",
         notes: 'here are some notes for this yea',
@@ -78,7 +77,6 @@ const dummy_data =
       },
       {
         id: "lakjsdf0a87sdf",
-        customer: "6392cc174a8514d8f531b73e",
         system: "this is a system yup",
         date: "2021-12-08T00:00:00.000Z",
         notes: 'here are some notes for this yea',
@@ -88,7 +86,6 @@ const dummy_data =
       },
       {
         id: "lakjsdf087asd6f0",
-        customer: "6392cc174a8514d8f531b73e",
         system: "this is a system yup",
         date: "2021-12-08T00:00:00.000Z",
         notes: 'here are some notes for this yea',

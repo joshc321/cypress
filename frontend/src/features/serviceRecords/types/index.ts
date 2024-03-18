@@ -1,7 +1,7 @@
 
 export type ServiceRecord = {
     id: string;
-    customer: {
+    customer?: {
         id: string;
         first: string;
         last: string;
