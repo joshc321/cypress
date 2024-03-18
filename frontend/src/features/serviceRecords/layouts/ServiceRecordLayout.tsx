@@ -1,6 +1,6 @@
 'use client';
 
-import { TopBar, DisplayButton, Divider } from "@/components/Elements";
+import { TopBar, DisplayButtonLink, Divider } from "@/components/Elements";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ServiceRecordDataViewer } from '../components/ServiceRecordDataViewer';
 import { useServiceRecord } from "../api/getServiceRecord";
@@ -19,7 +19,7 @@ export const ServiceRecordLayout = () => {
             <div className="pt-52">
                 { serviceRecord.data?.customer &&
                     <>
-                        <DisplayButton 
+                        <DisplayButtonLink 
                             info="Customer" 
                             primary={serviceRecord.data.customer.first + ' ' + serviceRecord.data.customer.last} 
                             to={`customer?id=${serviceRecord.data.customer.id}`} 

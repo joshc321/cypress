@@ -1,9 +1,7 @@
-
+import { AccountLayout } from "@/features/account"
 
 export default function Page() {
     return (
-        <main>
-            <h1>account</h1>
-        </main>
+        <AccountLayout />
     )
 }

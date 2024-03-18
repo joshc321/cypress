@@ -9,7 +9,6 @@ import { CreateScheduledServiceDTO, useCreateScheduledService } from '../api/cre
 import { useCustomer } from '@/features/customers';
 import { ScheduledService } from '../types';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 const schema = z.object({
     date: z.date(),

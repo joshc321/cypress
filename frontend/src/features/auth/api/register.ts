@@ -17,9 +17,10 @@ export const registerWithEmailAndPassword = (
         jwt: 'jwt19802347',
         user: {
             id: '1',
+            company: '0198237409lhj',
             email: data.email,
-            firstName: 'Test',
-            lastName: 'User',
+            first: 'Test',
+            last: 'User',
             role: 'ADMIN'
         }
     });

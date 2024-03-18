@@ -28,7 +28,10 @@ module.exports = {
           light: '#f2f2f2',
           DEFAULT: '#6b7280',
           dark: '#1f2937',
-        }
+        },
+        'error': {
+          DEFAULT: '#a13434',
+        },
       },
     },
   },

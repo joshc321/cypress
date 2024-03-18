@@ -6,9 +6,10 @@ export const getUser = (): Promise<AuthUser> => {
 //   return axios.get('/auth/me');
     return Promise.resolve({
         id: '1',
+        company: '0198237409lhj',
         email: 'testemail@email.com',
-        firstName: 'Test',
-        lastName: 'User',
+        first: 'Test',
+        last: 'User',
         role: 'ADMIN'
     });
 

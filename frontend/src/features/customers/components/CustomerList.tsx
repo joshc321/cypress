@@ -1,4 +1,4 @@
-import { DisplayButton } from "@/components/Elements/DataButton";
+import { DisplayButtonLink } from "@/components/Elements/DataButton";
 import { Divider } from "@/components/Elements/Divider";
 import { Customer } from "../types";
 import { formatAddress, formatPhone } from "@/utils/format";
@@ -18,7 +18,7 @@ export const CustomerList = (
             <ul>
                 {data.map((item) => (
                     <li key={item.id}>
-                        <DisplayButton 
+                        <DisplayButtonLink 
                             primary={item.first}
                             secondary={formatAddress(item.address)}
                             info={formatPhone(item.phone)}

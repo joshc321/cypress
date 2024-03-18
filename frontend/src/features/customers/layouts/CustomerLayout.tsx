@@ -1,7 +1,7 @@
 'use client';
 
 import { SpeedDial, SpeedDialAction } from "@/components/Elements/SpeedDial";
-import { SectionHeading, TopBar, DisplayButton, Divider } from "@/components/Elements";
+import { SectionHeading, TopBar, DisplayButtonLink, Divider } from "@/components/Elements";
 import { useSearchParams, useRouter } from "next/navigation";
 import {MdDesignServices, MdCalendarMonth} from "react-icons/md";
 import { CustomerDataViewer } from '../components/CustomerDataViewer';
@@ -25,7 +25,7 @@ export const CustomerLayout = () => {
                 <SectionHeading text="Information" to={`customer/edit?id=${customer.data?.id}`}  />
                 { customer.data?.scheduledService &&
                     <>
-                        <DisplayButton 
+                        <DisplayButtonLink 
                         info="Scheduled Service" 
                         primary={formatDate(customer.data.scheduledService.date)} 
                         to={`scheduled-service?id=${customer.data.scheduledService.id}`} 

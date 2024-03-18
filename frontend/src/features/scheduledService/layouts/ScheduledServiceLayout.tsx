@@ -1,6 +1,6 @@
 'use client';
 
-import { TopBar, DisplayButton, Divider } from "@/components/Elements";
+import { TopBar, DisplayButtonLink, Divider } from "@/components/Elements";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ScheduledServiceDataViewer } from '../components/ScheduledServiceFormDataViewer';
 import { useScheduledService } from "../api/getScheduledService";
@@ -19,7 +19,7 @@ export const ScheduledServiceLayout = () => {
             <div className="pt-52">
                 { scheduledService.data?.customer &&
                     <>
-                        <DisplayButton 
+                        <DisplayButtonLink 
                             info="Customer" 
                             primary={scheduledService.data.customer.first + ' ' + scheduledService.data.customer.last} 
                             to={`customer?id=${scheduledService.data.customer.id}`} 
