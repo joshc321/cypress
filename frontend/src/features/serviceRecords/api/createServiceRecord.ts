@@ -28,21 +28,21 @@ type UseCreateServiceRecordOptions = {
 export const useCreateServiceRecord = ({ customerID, config }: UseCreateServiceRecordOptions) => {
   return useMutation({
     onMutate: async (newServiceRecord) => {
-      await queryClient.cancelQueries({queryKey: ['serviceRecords', customerID]});
+      await queryClient.cancelQueries({queryKey: ['servicerecords', customerID]});
 
-      const previousServiceRecords = queryClient.getQueryData<ServiceRecord[]>(['serviceRecords', customerID]);
+      const previousServiceRecords = queryClient.getQueryData<ServiceRecord[]>(['servicerecords', customerID]);
 
-      queryClient.setQueryData(['serviceRecords', customerID], [...(previousServiceRecords || []), newServiceRecord.data]);
+      queryClient.setQueryData(['servicerecords', customerID], [...(previousServiceRecords || []), newServiceRecord.data]);
 
       return { previousServiceRecords };
     },
     onError: (_, __, context: any) => {
       if (context?.previousServiceRecords) {
-        queryClient.setQueryData(['serviceRecords', customerID], context.previousServiceRecords);
+        queryClient.setQueryData(['servicerecords', customerID], context.previousServiceRecords);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['serviceRecords', customerID]});
+      queryClient.invalidateQueries({queryKey: ['servicerecords', customerID]});
     },
     ...config,
     mutationFn: createServiceRecord,

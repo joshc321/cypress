@@ -7,11 +7,15 @@ import { SearchBar } from "../components/SearchBar";
 import { CustomerList } from '@/features/customers'
 import { useCustomerSearch } from '../api/getCustomersSearch';
 
+
+
 export const CustomerSearchLayout = () => {
 
     const router = useRouter();
     const searchParams = useSearchParams();
     const [query, setQuery] = React.useState(searchParams.get('search') || '');
+
+    const directTo = searchParams.get('direct') || '/customer';
 
     const customerData = useCustomerSearch({ query: query });
 
@@ -30,7 +34,7 @@ export const CustomerSearchLayout = () => {
             </div>
             <Divider variant="middle" size="sm" />
             {customerData?.data &&
-                 <CustomerList data={customerData.data} linkTo={"/customer?id="} />
+                 <CustomerList data={customerData.data} linkTo={`${directTo}?id=`} />
             }
             {
                 customerData?.status === 'error' && <div>Error</div>

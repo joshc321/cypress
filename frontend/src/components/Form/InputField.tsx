@@ -10,10 +10,11 @@ export type InputFieldProps = FieldWrapperPassThroughProps & {
   endAdornment?: React.ReactNode;
   startAdornment?: React.ReactNode;
   placeholder?: string;
+  htmtInputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
 
 export const InputField = (props: InputFieldProps) => {
-  const { type = 'text', label, className, registration, error, endAdornment, placeholder, startAdornment } = props;
+  const { type = 'text', label, className, registration, error, endAdornment, placeholder, startAdornment, htmtInputProps } = props;
 
   return (
     <FieldWrapper label={label} error={error}>
@@ -28,6 +29,7 @@ export const InputField = (props: InputFieldProps) => {
                 startAdornment && 'pl-11',
             )}
             {...registration}
+            {...htmtInputProps}
             />
             {
                 startAdornment && (
