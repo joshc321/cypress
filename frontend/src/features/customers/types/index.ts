@@ -22,6 +22,9 @@ export type Customer = {
     lastServiced?: string;
     status: string;
     nextService: string;
-    scheduledService?: string;
+    scheduledService?: {
+        id: string;
+        date: string;
+    };
     serviceRecords?: ServiceRecord[];
 };

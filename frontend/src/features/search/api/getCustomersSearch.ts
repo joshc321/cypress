@@ -16,7 +16,7 @@ export const getCustomersSearch = ({query}: {query: string}): Promise<Customer[]
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(dummy_data);
-    })});
+    }, 10)});
 
 };
 
@@ -61,7 +61,6 @@ const dummy_data =
     lastServiced: "2021-12-08T00:00:00.000Z",
     status: "active",
     nextService: "2022-12-08T00:00:00.000Z",
-    scheduledService: "2022-12-08T00:00:00.000Z",
 },
 {
   id: "019823470198374",
@@ -87,7 +86,7 @@ const dummy_data =
   lastServiced: "2021-12-08T00:00:00.000Z",
   status: "active",
   nextService: "2022-12-08T00:00:00.000Z",
-  scheduledService: "2022-12-08T00:00:00.000Z",
+
 },
 {
   id: "laksjdfhou8807",
@@ -113,6 +112,5 @@ const dummy_data =
   lastServiced: "2021-12-08T00:00:00.000Z",
   status: "active",
   nextService: "2022-12-08T00:00:00.000Z",
-  scheduledService: "2022-12-08T00:00:00.000Z",
 }
 ];

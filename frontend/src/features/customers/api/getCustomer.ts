@@ -61,7 +61,10 @@ const dummy_data =
     lastServiced: "2021-12-08T00:00:00.000Z",
     status: "active",
     nextService: "2022-12-08T00:00:00.000Z",
-    scheduledService: "2022-12-08T00:00:00.000Z",
+    scheduledService: {
+      id: ";aksdjfia;sd00",
+      date: "2022-12-08T00:00:00.000Z",
+    },
     serviceRecords: [
       {
         id: "0897sd09f8a7s0d9",

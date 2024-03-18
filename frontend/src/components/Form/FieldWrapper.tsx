@@ -17,7 +17,7 @@ export const FieldWrapper = (props: FieldWrapperProps) => {
   return (
     <div className='relative w-full'>
       <div className="mt-1">{children}</div>
-      {label && <label htmlFor={label} className={clsx("absolute top-0 left-0 translate-x-3 -translate-y-1.5 px-2 bg-white text-sm", className)}>
+      {label && <label htmlFor={label} className={clsx("rounded absolute top-0 left-0 translate-x-3 -translate-y-1.5 px-2 bg-white text-sm", className)}>
         {label}
       </label>}
       {error?.message && (

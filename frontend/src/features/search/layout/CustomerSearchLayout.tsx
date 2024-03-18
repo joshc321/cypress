@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import React from "react";
 import { ActionButton, Divider } from "@/components/Elements";
 import { SearchBar } from "../components/SearchBar";
@@ -9,6 +9,7 @@ import { useCustomerSearch } from '../api/getCustomersSearch';
 
 export const CustomerSearchLayout = () => {
 
+    const router = useRouter();
     const searchParams = useSearchParams();
     const [query, setQuery] = React.useState(searchParams.get('search') || '');
 
@@ -34,7 +35,7 @@ export const CustomerSearchLayout = () => {
             {
                 customerData?.status === 'error' && <div>Error</div>
             }
-            <ActionButton className="fixed end-6 bottom-20" />
+            <ActionButton className="fixed end-6 bottom-20" onClick={() => router.push('/customer/create')} />
         </main>
     )
 }

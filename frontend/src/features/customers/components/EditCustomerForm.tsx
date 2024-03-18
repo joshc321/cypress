@@ -98,7 +98,7 @@ export const EditCustomerForm = ({ customerId }: EditCustomerFormProps) => {
             <TextAreaField label='Notes' placeholder="Notes" registration={register('notes')} />
             
             <div className="flex flex-row gap-3">
-                <InputField label="Duration" type="number" placeholder="Duration" registration={register('duration')} />
+                <InputField label="Duration" type="number" placeholder="Duration" registration={register('duration', {valueAsNumber: true})} />
                 <SelectField label="unit" options={
                     [
                         {label: "years", value: "years"}, 

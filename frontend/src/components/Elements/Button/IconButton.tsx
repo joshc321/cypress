@@ -37,20 +37,22 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     ref
   ) => {
     return (
-      <button
-        ref={ref}
-        type={type}
-        className={clsx(
-          'flex justify-center items-center disabled:opacity-70 rounded-full border-none active:opacity-80',
-          variants[variant],
-          sizes[size],
-          className
-        )}
-        {...props}
-      >
-        {isLoading && <Spinner size="sm" className="text-current" />}
-        <span>{props.children}</span>
-      </button>
+      <div>
+        <button
+          ref={ref}
+          type={type}
+          className={clsx(
+            'inline-flex justify-center items-center disabled:opacity-70 rounded-full border-none active:opacity-80',
+            variants[variant],
+            sizes[size],
+            className
+          )}
+          {...props}
+        >
+          {isLoading && <Spinner size="sm" className="text-current" />}
+          <span>{props.children}</span>
+        </button>
+      </div>
     );
     
   }

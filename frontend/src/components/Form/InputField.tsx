@@ -4,7 +4,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 
 export type InputFieldProps = FieldWrapperPassThroughProps & {
-  type?: 'text' | 'email' | 'password' | 'number' | 'datetime-local';
+  type?: 'text' | 'email' | 'password' | 'number' | 'datetime-local' | 'date';
   className?: string;
   registration: Partial<UseFormRegisterReturn>;
   endAdornment?: React.ReactNode;

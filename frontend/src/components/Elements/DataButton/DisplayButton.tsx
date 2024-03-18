@@ -33,16 +33,14 @@ export const DisplayButton =(
     } : DisplayButtonProps
   ) => {
     return (
-        <li className={clsx("hover:bg-gray-light relative overflow-scroll", className)}>
-            <Link href={to} className={"w-full flex flex-row items-center justify-between px-4 py-2"}>
-                <div>
-                    {info && <p className={"text-xs font-light text-secondary-dark"}>{info}</p>}
-                    <h3 className={clsx("text-secondary-dark", variants[variant])}>{primary}</h3>
-                    {secondary && <h4 className={"text-sm font-light text-secondary-dark"}>{secondary}</h4>}
-                </div>
-                <MdArrowForwardIos className={"h-6 w-6"} />
-            </Link>
-        </li>
+          <Link href={to} className={clsx("hover:bg-gray-light relative overflow-scroll w-full flex flex-row items-center justify-between px-4 py-2", className)}>
+              <div>
+                  {info && <p className={"text-xs font-light text-secondary-dark"}>{info}</p>}
+                  <h3 className={clsx("text-secondary-dark", variants[variant])}>{primary}</h3>
+                  {secondary && <h4 className={"text-sm font-light text-secondary-dark"}>{secondary}</h4>}
+              </div>
+              <MdArrowForwardIos className={"h-6 w-6"} />
+          </Link>
     );
   }
 );

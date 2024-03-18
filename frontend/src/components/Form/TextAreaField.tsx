@@ -14,9 +14,14 @@ type TextAreaFieldProps = FieldWrapperPassThroughProps & {
 };
 
 export const TextAreaField = (props: TextAreaFieldProps) => {
+
+
   const { label, className, registration, maxRows = 5, error, placeholder } = props;
+  const {ref, ...rest} = registration;
+
   const [rows, setRows] = React.useState(1);
-  const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
+  // const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
+  const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
 
   React.useEffect(() => {
@@ -52,9 +57,14 @@ export const TextAreaField = (props: TextAreaFieldProps) => {
           'w-full focus:outline-secondary-dark rounded-lg border-solid border border-secondary border-box p-3',
           className
         )}
-        {...registration}
+        {...rest}
         rows={rows}
-        ref={textAreaRef}
+        ref={(e) => {
+          if (ref) {
+            ref(e);
+          }
+          textAreaRef.current = e;
+        }}
         placeholder={placeholder}
       />
     </FieldWrapper>

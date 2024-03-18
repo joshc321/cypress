@@ -17,7 +17,7 @@ export const CustomerList = (
         <div className={"relative w-full overflow-y-scroll"}>
             <ul>
                 {data.map((item) => (
-                    <div key={item.id}>
+                    <li key={item.id}>
                         <DisplayButton 
                             primary={item.first}
                             secondary={formatAddress(item.address)}
@@ -25,7 +25,7 @@ export const CustomerList = (
                             to={`${linkTo}${item.id}`}
                         />
                         <Divider variant="middle" size="sm" />
-                    </div>
+                    </li>
                 ))}
             </ul>
         </div>
