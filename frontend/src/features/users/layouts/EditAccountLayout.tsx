@@ -24,11 +24,9 @@ export const EditAccountLayout = () => {
                 <MdArrowBack className="w-6 h-6" /> 
             </IconButton>
             <h1 className="text-xl font-semibold pb-5">Edit Account</h1>
-            {
-                user.data?.id &&
-                <EditUserForm onSuccess={onSuccess} authLevel={user.data.role} userId={user.data.id} />
             
-            }
+            <EditUserForm onSuccess={onSuccess} authLevel={user.data?.role} userId={user.data?.id || ''} />
+                
         </FormSpacing>
     )
 }

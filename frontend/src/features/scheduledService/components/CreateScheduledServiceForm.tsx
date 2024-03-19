@@ -18,14 +18,14 @@ const schema = z.object({
 });
 
 type CreateScheduledServiceFormProps = {
-    customerId?: string;
+    customerId: string;
     onSuccess: (scheduledService: ScheduledService) => void;
 };
 
 export const CreateScheduledServiceForm = ({ onSuccess, customerId }: CreateScheduledServiceFormProps) => {
   
   const router = useRouter();
-  const customer = customerId ? useCustomer({customerId: customerId}) : {data: undefined, isLoading: false};
+  const customer = useCustomer({customerId: customerId}) 
   const createScheduledServiceMutation = useCreateScheduledService();
 
   return (
