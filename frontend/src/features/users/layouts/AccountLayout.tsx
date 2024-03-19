@@ -20,8 +20,10 @@ export const AccountLayout = () => {
                     <Divider size='sm' />
                     <DisplayButtonLink primary='New User' variant='secondary' to='/account/create' />
                     <Divider size='sm' />
-                    <DisplayButtonLink primary='Users' variant='secondary' to='/account/users' />
+                    <DisplayButtonLink primary='Users' variant='secondary' to='/users' />
                     <Divider size='xl' />
+                    <DisplayButtonLink primary='Profile' variant='secondary' to='/account/profile' />
+                    <Divider size='sm' />
                     <DisplayButtonLink primary='Edit Account' variant='secondary' to='/account/edit' />
                     <Divider size='sm' />
                     <DisplayButton textColor='text-error' primary='Logout' variant='secondary' onClick={() => logout.mutate({})} />

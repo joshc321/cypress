@@ -4,6 +4,8 @@ export * from './api/register';
 export * from './api/resetpassword';
 export * from './api/forgotPassword';
 
+export * from './components/PasswordField';
+
 export * from './layouts';
 
 export * from './types';
