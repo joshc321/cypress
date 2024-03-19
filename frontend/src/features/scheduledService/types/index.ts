@@ -19,3 +19,19 @@ export type ScheduledService = {
         zip?: string;
     }
 };
+
+export type NeedScheduledService = {
+    date: string;
+    customer: {
+        id: string;
+        first: string;
+        last: string;
+        phone: string;
+    };
+    address: {
+        street: string;
+        city: string;
+        state: string;
+        zip: string;
+    };
+};

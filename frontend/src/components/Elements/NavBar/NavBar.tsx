@@ -1,6 +1,6 @@
 'use client';
 
-import { MdHome, MdCalendarMonth, MdQrCodeScanner, MdCalendarToday, MdAccountCircle } from "react-icons/md";
+import { MdHome, MdCalendarMonth, MdDirectionsCarFilled, MdCalendarToday, MdAccountCircle } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { IconType } from "react-icons";
@@ -23,7 +23,7 @@ export const  NavBarComponent =({}: NavBarComponentProps) => {
             <div className="grid h-full max-w-lg grid-cols-5 mx-auto font-medium">
                 <NavElement href={"/"} Icon={MdHome} text={"Home"} />
                 <NavElement href={"/calendar"} Icon={MdCalendarMonth} text={"Calendar"} />
-                <NavElement href={"/scan"} Icon={MdQrCodeScanner} text={"Scan"} />
+                <NavElement href={"/route"} Icon={MdDirectionsCarFilled} text={"Route"} />
                 <NavElement href={"/upcoming"} Icon={MdCalendarToday} text={"Upcoming"} />
                 <NavElement href={"/account"} Icon={MdAccountCircle} text={"Account"} />
             </div>
