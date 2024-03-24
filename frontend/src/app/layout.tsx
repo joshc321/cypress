@@ -28,9 +28,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
+      <body className={`${montserrat.className}`}>
         <AppProvider>
-          <main>{children}</main>
+          <main className='h-screen w-screen'>{children}</main>
         </AppProvider>
       </body>
     </html>

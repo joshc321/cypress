@@ -48,6 +48,7 @@ const dummy_data =
         id: "a4kdjsf8889asdf",
         first: "John",
         last: "Doe",
+        phone: "1234567890",
     },
     address: {
       street: "1234 Some Street",

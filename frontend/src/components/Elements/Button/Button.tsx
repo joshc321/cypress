@@ -5,15 +5,19 @@ import { Spinner } from '@/components/Elements/Spinner';
 
 const variants = {
   primary: 'bg-secondary-dark text-gray-light',
+  secondary: 'bg-secondary-light text-gray-dark',
+  dark: 'bg-primary-dark text-white',
   inverse: 'bg-white text-blue-600',
   danger: 'bg-red-600 text-white',
 };
 
 
 const sizes = {
+  xs: 'py-0.5 px-1 text-xs',
   sm: 'py-2 px-4 text-sm',
   md: 'py-2 px-6 text-md',
   lg: 'py-3 px-8 text-lg',
+  auto: 'py-0.5 px-1 text-xs md:py-2 md:px-6 md:text-md',
 };
 
 type IconProps =

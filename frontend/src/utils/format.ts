@@ -42,6 +42,21 @@ export const formatDate = (date: string | Date) => {
     })
 }
 
+/**
+ * 
+ * @param date - a string or date object containing the date and time to be formatted in ISO format
+ * @returns a string containing the formatted date and time in the format: "month day, year hour:minute"
+ */
+export const formatDateTime = (date: string | Date) => {
+    return new Date(date).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+    })
+}
+
 
 
 interface IntervalSpec {

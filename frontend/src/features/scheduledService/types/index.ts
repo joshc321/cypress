@@ -11,6 +11,7 @@ export type ScheduledService = {
         id: string;
         first: string;
         last: string;
+        phone: string;
     };
     address?: {
         street?: string;
